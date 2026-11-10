@@ -1,0 +1,81 @@
+/* Additions for the React build; colours only via tokens.css variables. */
+.sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
+.stat{cursor:pointer;min-height:76px;font:inherit;color:inherit}
+.stat[aria-pressed=true]{border-color:var(--ink)}
+.panel .panel-body pre{max-height:none}
+.decision .source-quote{margin:var(--space-2) 0}
+.box ul{margin:var(--space-2) 0;padding-left:var(--space-5);line-height:var(--leading-normal)}
+details>summary{cursor:pointer}
+.channel-entry select{border:1px solid var(--line);border-radius:var(--radius-sm);padding:var(--space-1) var(--space-2);background:var(--surface)}
+.row.between{justify-content:space-between}
+.mail-footer .link:disabled{color:var(--muted)}
+.console{max-height:260px;overflow:auto}
+main{min-height:60vh}
+.panel-toast{position:fixed;left:auto;right:24px;transform:none;bottom:24px;max-width:min(560px,calc(100vw - 48px))}
+/* The prototype hid this note in English for space; keep it visible in both languages. */
+html[lang=en] .mode.mode-note{display:inline}
+@media(max-width:950px){html[lang=en] .mode.mode-note,.mode.mode-note{display:none}}
+.account{max-width:min(560px,60vw);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+
+/* ---- Refactoring UI pass (rule IDs refer to the vendored skill, see docs/UI_AUDIT.md) ---- */
+/* §2.4 / §8.5.1: "important" is carried by one cue (accent edge), not border + tint + red tag together.
+   Red is reserved for real warnings (security, date conflicts). */
+.mail-card.important{border-left:3px solid var(--danger)}
+.mail-card.attention{border-left:3px solid var(--danger);background:var(--danger-soft)}
+.tag.ink{background:var(--ink);color:var(--surface)}
+/* §4.2.3 / §4.3 / §4.5: mail bodies are prose - text face, 45-75ch measure, line-height for small text */
+.mail-body{white-space:pre-wrap;overflow-wrap:anywhere;background:var(--soft);border-radius:var(--radius-sm);
+  padding:var(--space-4);font-size:var(--text-sm);line-height:var(--leading-normal);max-width:70ch;margin:0 0 var(--space-4)}
+/* §4.5: headings tighter than body text */
+h1,h2,h3,.brand,.stat strong,.mini strong{line-height:var(--leading-tight)}
+/* §3.6: a group's title sits closer to its content than to the previous group */
+.box h2{margin-bottom:var(--space-3)}
+.panel-body h3{margin-top:var(--space-5);margin-bottom:var(--space-2)}
+.panel-body h3:first-child{margin-top:0}
+.link.link-muted{color:var(--muted)}
+/* In-page confirmation (ConfirmButton) */
+.confirm-inline{display:inline-flex;flex-wrap:wrap;align-items:center;gap:var(--space-2);padding:var(--space-2) var(--space-3);border:1px solid var(--danger-line);background:var(--danger-soft);border-radius:var(--radius-sm)}
+.confirm-inline .confirm-message{font-size:var(--text-xs);color:var(--danger);white-space:pre-line;max-width:60ch}
+.confirm-inline button{min-height:32px;padding:var(--space-1) var(--space-3)}
+.button-link{display:inline-flex;align-items:center;min-height:36px;padding:var(--space-2) var(--space-3);border:1px solid var(--line);border-radius:var(--radius-sm);background:var(--surface);color:var(--accent);text-decoration:none;font-size:var(--text-xs)}
+.button-link:hover{background:var(--soft);text-decoration:underline}
+
+.boot-code{max-width:480px;margin:var(--space-7) auto;padding:0 var(--space-4)}
+.boot-code h1{font-size:var(--text-xl);margin:0 0 var(--space-3)}
+
+/* Date / time fields (components/DateTimeInputs.tsx): follow the UI language instead of the OS locale. */
+.dt-input{position:relative;display:flex;flex-direction:column;gap:var(--space-1);min-width:0}
+.dt-row{display:flex;gap:var(--space-1);align-items:stretch}
+.dt-row input{flex:1;min-width:0}
+.dt-toggle{flex:none;display:inline-flex;align-items:center;justify-content:center;width:40px;border:1px solid var(--line);
+  border-radius:var(--radius-sm);background:var(--surface);color:var(--ink-soft);cursor:pointer;padding:0}
+.dt-toggle:hover{background:var(--soft)}
+.dt-input input[aria-invalid="true"]{border-color:var(--danger)}
+.dt-error{color:var(--danger)!important}
+.dt-pair{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(170px,100%),1fr));gap:var(--space-2)}
+.field-wide{grid-column:span 2}
+@media(max-width:600px){.field-wide{grid-column:auto}}
+.dt-pop{position:absolute;top:calc(100% + var(--space-1));left:0;z-index:30;width:272px;padding:var(--space-3);
+  background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);box-shadow:0 8px 24px rgba(32,40,43,.14)}
+.dt-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:var(--space-2);font-size:var(--text-sm)}
+.dt-head button{border:0;background:transparent;font-size:var(--text-lg);line-height:1;width:32px;height:32px;
+  border-radius:var(--radius-sm);cursor:pointer;color:var(--ink-soft)}
+.dt-head button:hover{background:var(--soft)}
+.dt-grid{display:grid;grid-template-columns:repeat(7,1fr);gap:2px;text-align:center}
+.dt-wd{font-size:var(--text-xs);color:var(--muted);padding:var(--space-1) 0}
+.dt-day{border:0;background:transparent;border-radius:var(--radius-sm);height:32px;cursor:pointer;font-size:var(--text-sm)}
+.dt-day:hover{background:var(--accent-soft)}
+.dt-day.today{box-shadow:inset 0 0 0 1px var(--accent-line)}
+.dt-day.selected{background:var(--accent);color:#fff}
+.dt-foot{display:flex;justify-content:space-between;margin-top:var(--space-2);font-size:var(--text-xs)}
+
+/* conflict handling */
+.repair-option{border:1px solid var(--line);border-radius:var(--radius-sm);padding:var(--space-3) var(--space-4);margin:var(--space-3) 0;background:var(--surface)}
+.repair-option.recommended{border-color:var(--accent);box-shadow:0 0 0 1px var(--accent-line)}
+.repair-diff{margin-top:var(--space-2)}
+.event .event-edit{min-height:24px;padding:0;margin-top:2px}
+.event.study.locked{border-left-width:4px}
+.event.editing{outline:2px solid var(--accent);outline-offset:1px}
+.block-editor{border-color:var(--accent-line)}
+.checkins .decision input{min-height:32px}
+.demo-meeting summary{cursor:pointer}
