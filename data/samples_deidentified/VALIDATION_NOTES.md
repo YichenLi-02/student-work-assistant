@@ -1,4 +1,4 @@
-# 交付验证说明
+# Delivery Validation Notes
 
 本次完成的是数据筛选、标注初稿、语气画像、prompt 设计及文件验证。
 

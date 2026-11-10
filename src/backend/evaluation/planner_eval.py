@@ -517,11 +517,11 @@ def build_report(n: int = 200, seed: int = SEED) -> dict:
 
 def markdown(rep: dict) -> str:
     f, s = rep["fixed"], rep["seeded"]
-    lines = ["# 排程评测报告 / Planner evaluation", "", f"- 生成时间：{rep['generated_at']}（结构版本 {rep['schema_version']}）",
+    lines = ["# Planner Evaluation", "", f"- 生成时间：{rep['generated_at']}（结构版本 {rep['schema_version']}）",
              f"- 固定场景：{f['passed']}/{f['total']} 通过" + (f"；未通过：{', '.join(f['failed'])}" if f["failed"] else ""),
              f"- 已知缺口（预期按规则写，当前算法未达到）：{', '.join(f['known_gaps']) or '无'}",
              f"- 随机场景：{s['count']} 组，种子 {s['seed']}", "",
-             "## 固定场景", "", "| 编号 | 场景 | 类别 | 结果 | 状态 | 新增分钟 | 未排分钟 | 覆盖率 | 违规 |",
+             "## Fixed Scenarios", "", "| 编号 | 场景 | 类别 | 结果 | 状态 | 新增分钟 | 未排分钟 | 覆盖率 | 违规 |",
              "|---|---|---|---|---|---|---|---|---|"]
     for x in f["results"]:
         m = x["metrics"]
@@ -534,7 +534,7 @@ def markdown(rep: dict) -> str:
             lines += ["", f"**{x['id']} 不一致项**：" + "；".join(f"{c['check']} 预期 {c['expected']}，实际 {c['actual']}" for c in bad)]
             if x["known_gap"]:
                 lines.append(f"说明：{x['known_gap']}")
-    lines += ["", "## 随机场景汇总", "", f"- 状态分布：{s['by_status']}",
+    lines += ["", "## Random Scenarios: Summary", "", f"- 状态分布：{s['by_status']}",
               f"- 硬性规则违规：{s['violations']}（出现违规的场景 {s['scenarios_with_any_violation']} 组）",
               f"- 未安排分钟合计：{s['unplaced_minutes_total']}（{s['scenarios_with_unplaced']} 组有未安排）",
               f"- 覆盖率：平均 {s['coverage']['mean']}，最低 {s['coverage']['min']}，P10 {s['coverage']['p10']}",
@@ -547,7 +547,7 @@ def markdown(rep: dict) -> str:
               "单任务最优解由评测代码独立穷举（逐个时间格），不调用排程器；多任务场景的整体最优是更大的组合问题，未做穷举。"]
     rp = rep.get("repairs")
     if rp:
-        lines += ["", "## 冲突修复（在随机场景上加一个新会议）", "",
+        lines += ["", "## Conflict Repair (a new meeting added to the random scenarios)", "",
                   f"- 场景：{rp['count']} 组（其中新会议碰到已写入学习块的 {rp['written_hits']} 组，推荐方案都给出了移动：{rp['written_moved']} 组）",
                   f"- 推荐方案的硬性规则违规（独立检查，含新会议）：{rp['hard_violations']}",
                   f"- 完全解决（无未安排）：{rp['fully_resolved']}/{rp['count']}；未安排不比加会议前更多：{rp['no_worse_than_before']}/{rp['count']}",
@@ -562,7 +562,7 @@ def markdown(rep: dict) -> str:
     cal = rep.get("calibration")
     if cal:
         names = {"accurate": "估计准确的学生", "under": "习惯低估的学生", "over": "习惯高估的学生"}
-        lines += ["", "## 估计校准（模拟，不是真实学生数据）", "",
+        lines += ["", "## Estimate Calibration (simulated, not real student data)", "",
                   f"- {cal['students']} 个模拟学生，每人依次完成 {cal['tasks_per_student']} 个任务；三类各占三分之一，"
                   f"真实用时/估计的偏差范围 {cal['groups']}，每个任务另有随机波动（对数标准差 {cal['noise_sd']}）",
                   "- 每个任务开始前，校准规则只看到该学生之前完成的任务；“校准后”假设学生接受了每条建议",

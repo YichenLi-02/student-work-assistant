@@ -28,7 +28,7 @@ cd student-work-assistant
 
 ## 3. Sample data (already in the repo)
 
-The de-identified mail samples are in `data/AI项目数据源_去隐私/`, so you get them when you clone and have nothing else to prepare. Schools, courses and names have been replaced with fictional ones, and mail addresses now use `example.invalid`. See `去隐私说明.md` in that folder for details.
+The de-identified mail samples are in `data/samples_deidentified/`, so you get them when you clone and have nothing else to prepare. Schools, courses and names have been replaced with fictional ones, and mail addresses now use `example.invalid`. See `DEIDENTIFICATION.md` in that folder for details.
 
 > These samples are published with this public repository. De-identified does not mean fully anonymous: course content and date combinations could still indirectly identify someone. Use them only for demonstrating and testing this project.
 
@@ -116,9 +116,9 @@ Planner evaluation (27 fixed scenarios, 200 fixed-seed random scenarios and a co
 src/backend/.venv/Scripts/python scripts/eval-planner.py      # macOS / Linux: src/backend/.venv/bin/python
 ```
 
-**To demo conflict handling (no real calendar needed):** in demo mode, generate a plan on the **Study plan** page, expand **Simulate a new meeting**, place a meeting on a study block and click **Add meeting and check** to list the conflicts. Click **Show fix suggestions** to compare the options, pick one, then review and save as usual. **Edit** on a study block changes its time or length by hand. For details, see the "计划冲突处理" section of `docs/IMPLEMENTATION.md`.
+**To demo conflict handling (no real calendar needed):** in demo mode, generate a plan on the **Study plan** page, expand **Simulate a new meeting**, place a meeting on a study block and click **Add meeting and check** to list the conflicts. Click **Show fix suggestions** to compare the options, pick one, then review and save as usual. **Edit** on a study block changes its time or length by hand. For details, see the "Plan conflicts" section of `docs/IMPLEMENTATION.md`.
 
-**To demo estimate calibration:** on the same page, open **Estimates from your own history** and click **Load sample history** (synthetic data). You will see a suggested estimate for the sample report, with expandable reasoning, and a completion-rate hint. After accepting a suggestion, click **Re-plan**. In real use, data builds up as you enter the actual time when marking a task complete. For details, see the "根据打卡校准估计" section of `docs/IMPLEMENTATION.md`.
+**To demo estimate calibration:** on the same page, open **Estimates from your own history** and click **Load sample history** (synthetic data). You will see a suggested estimate for the sample report, with expandable reasoning, and a completion-rate hint. After accepting a suggestion, click **Re-plan**. In real use, data builds up as you enter the actual time when marking a task complete. For details, see the "Calibrating estimates from check-ins" section of `docs/IMPLEMENTATION.md`.
 
 ## 8. Optional: connect real services
 
@@ -148,7 +148,7 @@ Keep keys and secrets only in `.env` on your own computer. Do not put them in co
 | PowerShell refuses to run the script | Use `-ExecutionPolicy Bypass` exactly as shown in step 5 |
 | Port 8000 is in use | Stop the app you started earlier (Ctrl+C in its terminal), or start on a different port |
 | The page still looks old | Click **Reload** when the update notice appears at the top, or press Ctrl+F5 |
-| **Refresh mail** says it cannot find the sample data | Check that `data/AI项目数据源_去隐私/` exists, and leave `SAMPLE_DATA_DIR` in `.env` empty or set it to the correct path (use `/` on Windows) |
+| **Refresh mail** says it cannot find the sample data | Check that `data/samples_deidentified/` exists, and leave `SAMPLE_DATA_DIR` in `.env` empty or set it to the correct path (use `/` on Windows) |
 | Google's sign-in page says the app is unverified | This is normal in testing mode, so choose to continue. If you are told you have no access, you are not a test user yet |
 | `npm ci` reports a Node version error | Upgrade to Node 20.19+ or 22.12+ |
 
@@ -159,4 +159,4 @@ These documents are in Chinese.
 - `docs/RUNNING.md`: details on starting, testing and configuring external services
 - `docs/OUTLOOK_SETUP.md`: how to connect a real Outlook mailbox, and common errors
 - `docs/IMPLEMENTATION.md`: what is implemented, how it differs from the design contract, and what is still simulated
-- `docs/UI_AUDIT.md`: the interface design audit (based on `docs/design/refactoring-ui`)
+- `docs/UI_AUDIT.md`: the interface design audit (based on the open-source refactoring-ui guidelines)

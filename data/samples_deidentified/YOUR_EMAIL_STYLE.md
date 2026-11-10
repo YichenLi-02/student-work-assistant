@@ -1,8 +1,8 @@
-# 你的邮件风格画像
+# Your Email Style Profile
 
 依据：181 封带 Sent 标签的邮件中，挑选 10 封有明确用途的本人已发送邮件作为参考。画像是待你确认的初稿；并非对每封历史邮件都作了写作风格标注。
 
-## 正式学术请求/跟进
+## Formal Academic Requests and Follow-ups
 
 证据：M41, M42, M43, M47；支持程度：supported。
 
@@ -10,7 +10,7 @@
 
 长度：根据事项完整程度决定；正式说明可有数段，不要求所有邮件同样长度。
 
-## 熟悉教授/行政确认
+## Confirmations with Familiar Professors and Administrators
 
 证据：M44, M45；支持程度：supported。
 
@@ -18,7 +18,7 @@
 
 长度：通常一至三个短段。
 
-## 熟悉同事/项目沟通
+## Project Communication with Familiar Colleagues
 
 证据：M46, M48；支持程度：limited。
 
@@ -26,7 +26,7 @@
 
 长度：简短，进展复杂时可用完整一段；仅两份样本，不泛化为所有团队交流。
 
-## 短纠错
+## Short Corrections
 
 证据：M50；支持程度：limited。
 
@@ -34,19 +34,19 @@
 
 长度：一两句。
 
-## 招聘人员通信
+## Correspondence with Recruiters
 
 证据：当前样本没有直接证据；支持程度：unsupported。
 
 先用简洁、专业、明确的通用语气，待用户提供本人给招聘人员的已发送邮件后再个性化。
 
-## 中文邮件
+## Chinese Mail
 
 证据：当前样本没有直接证据；支持程度：unsupported。
 
 不能从英文样本宣称学会中文个人语气。
 
-## 起草时应保留与避免的内容
+## What to Keep and Avoid When Drafting
 
 保留礼貌称呼、先交代事实再明确请求的顺序，以及适合熟悉关系的短回复。正式长信和简短确认分别检索参考。修正明显语法错误；不把更复杂、更冗长当作更像你。
 

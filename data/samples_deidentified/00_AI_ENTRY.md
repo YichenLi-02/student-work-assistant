@@ -1,8 +1,8 @@
-# Track 4 AI 项目资料入口
+# Track 4 AI Project: Entry Point
 
 这是供后续 AI 阅读、理解需求和生成项目的资料包。资料整理日期为 2026-10-19；该日期是历史快照，后续运行应显式提供真实 reference_datetime。
 
-## 用户要求摘要
+## Summary of the User's Requirements
 
 构建学生日常事务 AI 助理，整合获授权的 Gmail/Outlook、Teams、Calendar，以及用户上传的课程大纲 PDF 和获认可的学年日历。演示完整流程：发现作业邮件 → 分类并提取任务/日期与证据 → 核对课程和会议 → 提出合理学习计划 → 时间不足时起草延期申请 → 用户审阅精确内容并确认后才发送。
 
@@ -21,19 +21,19 @@
 
 以上是原用户需求的整理，不表示用户已授权连接账号、上传全部邮箱、发送消息、修改日历、提交表单或发布项目。后续实际任务以用户在新会话中的请求和授权为准。
 
-## 建议读取顺序
+## Suggested Reading Order
 
 1. 先阅读本文件，确认范围、来源和限制。
-2. 阅读 `开始使用.md`：筛选方法、原邮箱统计、已发现的边界案例、评估和隐私。
+2. 阅读 `GETTING_STARTED.md`：筛选方法、原邮箱统计、已发现的边界案例、评估和隐私。
 3. 阅读 `prompts.md`：P00–P09 模块作为设计模板，按产品架构和真实用户要求选择应用。
-4. 读取 `style_profile.json` 和 `你的邮件风格.md`：有直接证据支持的英文语气与证据不足的范围。
+4. 读取 `style_profile.json` 和 `YOUR_EMAIL_STYLE.md`：有直接证据支持的英文语气与证据不足的范围。
 5. 程序逐行读取 `selected_50.jsonl` 和 `date_candidates.jsonl`，构建只读导入、来源展示及回归用例。
-6. 阅读 `draft_examples.json`、`synthetic_safety_tests.jsonl` 和 `验证说明.md`；明确哪些是新草稿、合成场景和已验证的文件性质。
-7. 用户审阅用 `邮件样本浏览.html` 或 `邮箱筛选50封.xlsx`；这两个文件与 JSONL 是同一份数据的展示视图，不应重复计为新样本。
+6. 阅读 `draft_examples.json`、`synthetic_safety_tests.jsonl` 和 `VALIDATION_NOTES.md`；明确哪些是新草稿、合成场景和已验证的文件性质。
+7. 用户审阅用 `sample_browser.html` 或 `mailbox_selection_50.xlsx`；这两个文件与 JSONL 是同一份数据的展示视图，不应重复计为新样本。
 
-只想传一个文档给后续 AI 时，使用 `Track4_AI项目数据源_汇总.md`：包含需求摘要、原使用说明、全部 prompts、风格画像、50 封邮件的 JSONL、32 条时间表达、草稿示例、20 条合成测试及评估脚本全文。完整程序导入优先使用独立 JSON/JSONL，避免重复摄入汇总文档与原文件。
+只想传一个文档给后续 AI 时，使用 `TRACK4_SOURCE_SUMMARY.md`：包含需求摘要、原使用说明、全部 prompts、风格画像、50 封邮件的 JSONL、32 条时间表达、草稿示例、20 条合成测试及评估脚本全文。完整程序导入优先使用独立 JSON/JSONL，避免重复摄入汇总文档与原文件。
 
-## 数据身份、信任和使用边界
+## Data Identity, Trust and Limits of Use
 
 - `selected_50.jsonl`：50 封真实来源邮件，40 封收件功能样本 + 10 封本人发件语气样本。正文是去标识、去引用/页脚的视图，不是原始 EML/MBOX。annotation 是 AI 辅助初稿，尚待人工复核。
 - `date_candidates.jsonl`：32 条时间表达，来自 24 封邮件；含真正截止、日期冲突和非任务时间。每个字符位置相对于对应 `body_redacted` 的 Unicode 字符序列，end 为开区间。不能当作 32 条已确认待办。
@@ -50,7 +50,7 @@
 
 交付中的姓名、邮箱、链接、验证码等已经按上一轮说明作去标识，但课程/日期/内容仍可能间接识别人；不保证匿名。没有可用真实收件地址或登录令牌，不可据此直接发送。原始 1.12 GB MBOX 未复制进本包；如获准回查，按 JSONL 的原序号/字节定位关联用户仍持有的同一原文件。不得自动上传原 MBOX。
 
-## 文件放置
+## File Locations
 
 用户指定的统一位置：`D:\DSS5105-track4\AI项目数据源`。
 

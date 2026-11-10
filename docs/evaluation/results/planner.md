@@ -1,11 +1,11 @@
-# 排程评测报告 / Planner evaluation
+# Planner Evaluation
 
 - 生成时间：2026-11-10T18:38:59+08:00（结构版本 1）
 - 固定场景：27/27 通过
 - 已知缺口（预期按规则写，当前算法未达到）：无
 - 随机场景：200 组，种子 5105
 
-## 固定场景
+## Fixed Scenarios
 
 | 编号 | 场景 | 类别 | 结果 | 状态 | 新增分钟 | 未排分钟 | 覆盖率 | 违规 |
 |---|---|---|---|---|---|---|---|---|
@@ -37,7 +37,7 @@
 | S26 | 两个任务同一天各自不超过单任务上限 | task_cap | 通过 | feasible | 300 | 0 | 100% | 0 |
 | S27 | 单任务上限下截止前排不下（可证明） | task_cap | 通过 | infeasible | 240 | 60 | 80% | 0 |
 
-## 随机场景汇总
+## Random Scenarios: Summary
 
 - 状态分布：{'feasible': 117, 'infeasible': 75, 'needs_adjustment': 3, 'needs_information': 5}
 - 硬性规则违规：{'overlaps_busy': 0, 'overlaps_flex': 0, 'overlaps_sessions': 0, 'break_violations': 0, 'daily_cap_exceeded': 0, 'buffer_violations': 0, 'outside_window': 0, 'short_sessions': 0, 'task_cap_exceeded': 0}（出现违规的场景 0 组）
@@ -49,7 +49,7 @@
 注：零违规不等于排得好（完全不安排也零违规），请同时看覆盖率和未安排分钟。固定场景的预期结果需人工复核。
 单任务最优解由评测代码独立穷举（逐个时间格），不调用排程器；多任务场景的整体最优是更大的组合问题，未做穷举。
 
-## 冲突修复（在随机场景上加一个新会议）
+## Conflict Repair (a new meeting added to the random scenarios)
 
 - 场景：191 组（其中新会议碰到已写入学习块的 4 组，推荐方案都给出了移动：4 组）
 - 推荐方案的硬性规则违规（独立检查，含新会议）：0
@@ -61,7 +61,7 @@
 
 注：会议可能真的占掉了截止前唯一的空闲时间，所以“完全解决”不是 100% 也可能是对的；关键是不比加会议前、也不比从头重排更差，同时改动更少。
 
-## 估计校准（模拟，不是真实学生数据）
+## Estimate Calibration (simulated, not real student data)
 
 - 200 个模拟学生，每人依次完成 8 个任务；三类各占三分之一，真实用时/估计的偏差范围 {'accurate': [1.0, 1.0], 'under': [1.2, 1.6], 'over': [0.6, 0.85]}，每个任务另有随机波动（对数标准差 0.2）
 - 每个任务开始前，校准规则只看到该学生之前完成的任务；“校准后”假设学生接受了每条建议

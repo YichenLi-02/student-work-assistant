@@ -9,7 +9,7 @@
   "annotation_status": "AI_assisted_proposal_pending_user_review",
   "files": [
     {
-      "name": "00_AI读取入口.md",
+      "name": "00_AI_ENTRY.md",
       "bytes": 6704,
       "sha256": "1e075e7fa50d184ccc4342ed1d1ea390097cbd2ab052cfa35f5c1969317336a9"
     },
@@ -59,37 +59,37 @@
       "sha256": "1b4f2224685b9ebd6789db160c08311878eb6dd4dcf307d41bff895d6a92976a"
     },
     {
-      "name": "Track4_AI项目数据源_汇总.md",
+      "name": "TRACK4_SOURCE_SUMMARY.md",
       "bytes": 198567,
       "sha256": "a8b19795fe848d5574627db318fbb26506034c37ad520479fb8ad0cdcb9075e8"
     },
     {
-      "name": "你的邮件风格.md",
+      "name": "YOUR_EMAIL_STYLE.md",
       "bytes": 2300,
       "sha256": "b820c0156efa4ff4d69e23d3da3069792543485c672855398c4043c98337fcab"
     },
     {
-      "name": "去隐私说明.md",
+      "name": "DEIDENTIFICATION.md",
       "bytes": 1217,
       "sha256": "9a7545864b2cf5b58ab6758de0a1ca2bee8a202c6f58a327becd759be59f0198"
     },
     {
-      "name": "开始使用.md",
+      "name": "GETTING_STARTED.md",
       "bytes": 9504,
       "sha256": "80a7b747c2fe6c7cbafc2e74ed614c3f1a04224048dee6331fa461bdcfcb41a1"
     },
     {
-      "name": "邮件样本浏览.html",
+      "name": "sample_browser.html",
       "bytes": 101828,
       "sha256": "c9bae434f8a78fee6b045d5eaeb011a7c628c0bba21a9a115c0dd180fec0a9f7"
     },
     {
-      "name": "邮箱筛选50封.xlsx",
+      "name": "mailbox_selection_50.xlsx",
       "bytes": 23066,
       "sha256": "078ab9f2ef4a90e5600f01878687c88bb90558aff5aa41806b38f34a7e80beeb"
     },
     {
-      "name": "验证说明.md",
+      "name": "VALIDATION_NOTES.md",
       "bytes": 1658,
       "sha256": "2003b24dc2fe468e45e04a6b8c3d90b035ae387c9073f4bcf4a438d422fd0011"
     }

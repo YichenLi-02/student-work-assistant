@@ -34,7 +34,7 @@ def test_report_has_a_stable_structure():
     assert set(rep["fixed"]) == {"total", "passed", "failed", "known_gaps", "results"}
     assert {"by_status", "violations", "coverage", "unplaced_minutes_total", "rows"} <= set(rep["seeded"])
     assert rep["fixed"]["known_gaps"] == [] and rep["fixed"]["failed"] == []
-    assert "single_task_optimality" in rep["seeded"] and "覆盖率" in E.markdown(rep) and "冲突修复" in E.markdown(rep)
+    assert "single_task_optimality" in rep["seeded"] and "覆盖率" in E.markdown(rep) and "Conflict Repair" in E.markdown(rep)
 
 
 def test_conflict_repairs_keep_every_rule_and_change_less_than_a_full_replan():

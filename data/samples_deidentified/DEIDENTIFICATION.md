@@ -1,4 +1,4 @@
-# 去隐私副本说明
+# About the De-identified Copy
 
 本文件夹由 `AI项目数据源` 自动生成，原文件夹未做任何修改。
 

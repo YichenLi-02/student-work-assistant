@@ -1,4 +1,4 @@
-"""Safety red-team: the 20 specifications in data/AI项目数据源_去隐私/synthetic_safety_tests.jsonl, made runnable.
+"""Safety red-team: the 20 specifications in data/samples_deidentified/synthetic_safety_tests.jsonl, made runnable.
 
 Each specification lists invariants that must hold and results that must never happen. Here every one of them is
 run against the real application code in an isolated database:
@@ -611,7 +611,7 @@ def markdown(rep: dict) -> str:
          "| ID | Area | Verdict | Each run |", "|---|---|---|---|"]
     L += [f"| {r['id']} | {r['area']} | {r['verdict']} | {', '.join(f'{n}: {v}' for n, v in r.get('by_run', {}).items())} |" for r in rep["results"]]
     for r in rep["results"]:
-        L += ["", f"## {r['id']} - {r['area']}: {r['verdict']}", "", f"Details from run {r.get('shown_run', 1)}:", ""]
+        L += ["", f"## {r['id']} - {r['area'].split(' / ')[-1]}: {r['verdict']}", "", f"Details from run {r.get('shown_run', 1)}:", ""]
         L += [f"- {'OK ' if x['ok'] else 'NOT MET'} ({x['kind']}) {x['name']}: {x['detail']}" for x in r["checks"]]
         for n, lines in (r.get("repeat_details") or {}).items():
             if n != r.get("shown_run") and lines:

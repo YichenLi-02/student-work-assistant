@@ -23,7 +23,7 @@ bound: synthetic mail is cleaner than a real inbox.
 2. **Labels before predictions.** The key was written with each mail and frozen (see `MANIFEST.json`) before the
    system saw any of them. No prompt, rule or label was changed after looking at results; if a label is later
    found to be wrong it is corrected only through a dated entry in the change log below, and both scores are kept.
-3. **Existing definitions.** Labels follow the project's own definitions in `data/AI项目数据源_去隐私/prompts.md`
+3. **Existing definitions.** Labels follow the project's own definitions in `data/samples_deidentified/prompts.md`
    (P01, P02), written weeks before this evaluation, not rules invented to fit the model.
 4. **Hard cases on purpose.** A quarter of the set targets cases that the earlier real-mailbox test showed to be
    weak (notification mails, code lifetimes, receipts, repeated and updated deadlines) and cases the Track 4 brief

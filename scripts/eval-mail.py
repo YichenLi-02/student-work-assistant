@@ -27,7 +27,7 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
 DATASET = ROOT / "data" / "synthetic" / "mail_eval_v1"
-SAMPLES = ROOT / "data" / "AI项目数据源_去隐私"
+SAMPLES = ROOT / "data" / "samples_deidentified"
 RESULTS = ROOT / "docs" / "evaluation" / "results"
 WORK = ROOT / "local-data" / "eval"
 sys.path.insert(0, str(ROOT / "src" / "backend"))
