@@ -2,7 +2,7 @@
 
 ## Prerequisites
 
-- Python 3.12 or later (tested on 3.14.7) and Node.js 20 or later (tested on 24.21).
+- Python 3.12 or later (tested on 3.14.7) and Node.js 20.19+ or 22.12+ (tested on 24.21).
 - By default the sample data is the **de-identified copy** in this repository, `data/samples_deidentified` (schools, course codes, people and project names are replaced with fictional ones; see `DEIDENTIFICATION.md` in that folder). The app reads `selected_50.jsonl`, `date_candidates.jsonl`, `style_profile.json` and `reference_view.json`. The original, non-de-identified mail export is never read by the app and is not in this repository.
 - The reference grouping (topic category, "important" flag, summary) comes from `reference_view.json` in the copy and is shown as a "suggested label". Only when that file is missing does the app fall back to the design pack's `ui/index.html`.
 - Both locations can be changed in `.env` with `SAMPLE_DATA_DIR` and `DESIGN_DIR`.
@@ -17,13 +17,15 @@ Open http://127.0.0.1:8000, go to the **Mail** page and click **Refresh mail** t
 
 On Windows you can also double-click `Start-Local.cmd` and `Stop-Local.cmd` once the dependencies are installed and the frontend is built.
 
+`run.ps1` checks Python dependencies on every run using `requirements-dev.txt` constrained by `requirements.lock`, reinstalls frontend dependencies with `npm ci`, and stops if any step fails. This also repairs interrupted installs. Add `-SetupOnly` to finish installation/build without starting the server. `Start-Local.cmd` controls a background service; the foreground server from `run.ps1` is stopped with Ctrl+C.
+
 ## Development mode (two terminals)
 
 ```powershell
 # Terminal 1: backend
 cd src/backend
 python -m venv .venv
-.venv\Scripts\python -m pip install -r requirements-dev.txt   # pinned versions in requirements.lock
+.venv\Scripts\python -m pip install -r requirements-dev.txt -c requirements.lock
 .venv\Scripts\python -m uvicorn app.main:app --host 127.0.0.1 --port 8000 --reload
 
 # Terminal 2: frontend (Vite proxies /api to port 8000)
@@ -36,7 +38,7 @@ npm run dev        # http://127.0.0.1:5173
 
 ```powershell
 cd src/backend
-.venv\Scripts\python -m pytest -q          # 145 backend tests; they use a temporary database and never touch local-data
+.venv\Scripts\python -m pytest -q          # temporary database; model/provider writes disabled
 cd ../frontend
 npm run build                              # TypeScript type check and production build
 cd ../..
@@ -44,6 +46,10 @@ src/backend/.venv/Scripts/python scripts/smoke.py   # smoke check against a runn
 ```
 
 The evaluation scripts (`scripts/eval-mail.py`, `scripts/eval-safety.py`, `scripts/eval-planner.py`) are described in `docs/evaluation/README.md`.
+
+Run `python scripts/build-sample-package.py --check` from the repository root to verify sample counts, human-review markers, exact date evidence, the English browser/overview and the file inventory. Omit `--check` to regenerate derived files. Original-language messages and reviewer records remain unchanged; see `data/samples_deidentified/GETTING_STARTED.md` for the language policy.
+
+Saved model results describe the public baseline linked in `docs/evaluation/PROVENANCE.md`. Later privacy fixes are covered by regression tests; the saved model evaluation has not been rerun for those fixes.
 
 ## Local data
 

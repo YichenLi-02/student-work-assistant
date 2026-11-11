@@ -1,0 +1,243 @@
+{
+  "original_evaluation_commit": "14f3950",
+  "public_baseline_commit": "b5d7dc06776b3db9343aac899a5fde4e5449ea54",
+  "scope": "47 files under src/backend/app; byte-for-byte identical to the original evaluation application snapshot",
+  "hash_format": "Exact Git blob bytes (not checkout line endings)",
+  "files": [
+    {
+      "path": "src/backend/app/__init__.py",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "src/backend/app/api/__init__.py",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "src/backend/app/api/connections.py",
+      "bytes": 5903,
+      "sha256": "665b64c8b77b83f8fa45f36ab63e14bb4d86665a3af28bc788ebf42a8bfff8c7"
+    },
+    {
+      "path": "src/backend/app/api/core.py",
+      "bytes": 6175,
+      "sha256": "f7cab453df2eb36f788034d135018c7c0c375cc464dbe96b30459e2bbbd62fd4"
+    },
+    {
+      "path": "src/backend/app/api/documents.py",
+      "bytes": 3798,
+      "sha256": "96cb832623f06d598ae57d2a036fcdf9b2988acd527bc96fbf18bd65057504d9"
+    },
+    {
+      "path": "src/backend/app/api/drafts.py",
+      "bytes": 7114,
+      "sha256": "01e37e02568e5bf0a6e523d48777395a7bc9858262040f0bd14c793cdf5796c0"
+    },
+    {
+      "path": "src/backend/app/api/messages.py",
+      "bytes": 8012,
+      "sha256": "43ca43ee1e2820618dd7bc3448c10c73263f5e9689d125e9f747a2c0b0c5dedb"
+    },
+    {
+      "path": "src/backend/app/api/plans.py",
+      "bytes": 7882,
+      "sha256": "00befc0bd0912578aa52f1ab34f23c736026d3ba6bf6e214b5b55b52b1412cce"
+    },
+    {
+      "path": "src/backend/app/api/tasks.py",
+      "bytes": 3529,
+      "sha256": "51bda571514f4819a9e1fcabced9248ae11f4e5abbffbc299e0e5d7b6862ff92"
+    },
+    {
+      "path": "src/backend/app/config.py",
+      "bytes": 5033,
+      "sha256": "87cce172feecb2f3f21d6c35425034cd3d70301ab880769ffd64dd497e85401b"
+    },
+    {
+      "path": "src/backend/app/db.py",
+      "bytes": 5070,
+      "sha256": "2b8f80ebaf7a4db524a08bdf719098052b66e472455a525f88f2e2ef3269104c"
+    },
+    {
+      "path": "src/backend/app/errors.py",
+      "bytes": 1655,
+      "sha256": "275a79c27bfddb24bc4cb1185f1394e0481d7a44f765e8cdeafa5028bfbbd713"
+    },
+    {
+      "path": "src/backend/app/llm/__init__.py",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "src/backend/app/llm/adapter.py",
+      "bytes": 7736,
+      "sha256": "b72fa666d05865ef38f56ed5f8b5617cac4f42081f492f4d4a648e027cf98092"
+    },
+    {
+      "path": "src/backend/app/main.py",
+      "bytes": 2325,
+      "sha256": "f00ede9b9dc57d5ee983ec66974ad7c24c1b3bf98288e221e6866b7c7fe90c56"
+    },
+    {
+      "path": "src/backend/app/providers/__init__.py",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "src/backend/app/providers/calendars.py",
+      "bytes": 4438,
+      "sha256": "5f63e5a17f1dffd4d9865b0b4f8d6ae1ffd0040bbfe28e598733969d940483f2"
+    },
+    {
+      "path": "src/backend/app/providers/mail_readers.py",
+      "bytes": 12483,
+      "sha256": "3629061d2f12b28a8eeec541a7a3435a5a0877829d0eec401bef882226801cb1"
+    },
+    {
+      "path": "src/backend/app/providers/net.py",
+      "bytes": 1648,
+      "sha256": "d75fb34131bf453866fba0518aae8781ab55050c1a04615376534053f6476b5d"
+    },
+    {
+      "path": "src/backend/app/providers/oauth.py",
+      "bytes": 16489,
+      "sha256": "3443dfc733ae0ed60b1496e3b05a01b45268b783eef89802bb6849e2524cb10e"
+    },
+    {
+      "path": "src/backend/app/providers/teams.py",
+      "bytes": 1909,
+      "sha256": "1be5ee50c2590c05c93e6553939b3bb20f06783d97ee871f5d602ee5650a5fbb"
+    },
+    {
+      "path": "src/backend/app/providers/tokens.py",
+      "bytes": 2671,
+      "sha256": "ad85ca22fc73f92377d2fb13b827aa53fe1f7ddf7c2a6ec5dad4d5d3d2e3d257"
+    },
+    {
+      "path": "src/backend/app/providers/writers.py",
+      "bytes": 15897,
+      "sha256": "136d7b980162d5b1a25860512871e7fa4bef238cf4f21783826c7d25bda5b603"
+    },
+    {
+      "path": "src/backend/app/schema.sql",
+      "bytes": 8928,
+      "sha256": "3497bafa890abfac3eb573327ca22a235e95178d26b1902f33391c577c5e3607"
+    },
+    {
+      "path": "src/backend/app/security.py",
+      "bytes": 2116,
+      "sha256": "b62c9bb9b6dbd0fea84e667cb43046e9d9c5efed0561cb8da5083651ceede185"
+    },
+    {
+      "path": "src/backend/app/services/__init__.py",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "src/backend/app/services/analysis_service.py",
+      "bytes": 9581,
+      "sha256": "88c36556f0e685d733f44ac8d66a1c9968f252132c92a68fb9dbb3a80c9460c8"
+    },
+    {
+      "path": "src/backend/app/services/calibration.py",
+      "bytes": 4748,
+      "sha256": "00836c238c66cfbcf0608e1598bfed6a56e10d604563db28425505a5922274ec"
+    },
+    {
+      "path": "src/backend/app/services/calibration_service.py",
+      "bytes": 11570,
+      "sha256": "8469a6c8393d57883586903af4d9d17424927bfb0d2372eda83ba244fb268ea0"
+    },
+    {
+      "path": "src/backend/app/services/chat_service.py",
+      "bytes": 9547,
+      "sha256": "8044d0c0accfc0703793d44d64aa897fa822ce47ae9804fd27fa71e00347fdd2"
+    },
+    {
+      "path": "src/backend/app/services/doc_rules.py",
+      "bytes": 10349,
+      "sha256": "d019d43eeb97bb598824a06bf0a22ec2f0f5d9bd330512fc6af24a07d9d52c04"
+    },
+    {
+      "path": "src/backend/app/services/document_service.py",
+      "bytes": 22100,
+      "sha256": "f82e362a4ff5ec1587fcc6313fdcef2bf57a0881c859a35458a8059f82c1f32e"
+    },
+    {
+      "path": "src/backend/app/services/draft_service.py",
+      "bytes": 13072,
+      "sha256": "4d530ed7ae3afff7faa8e9d92f782333bb10ff7a059af831c9c9916a73876321"
+    },
+    {
+      "path": "src/backend/app/services/import_service.py",
+      "bytes": 11385,
+      "sha256": "6c072682dc6493beb0eaa4114206eddca564ff8c33e2a818130555021d817744"
+    },
+    {
+      "path": "src/backend/app/services/importance.py",
+      "bytes": 2367,
+      "sha256": "023a08c6cad73b44b7c64a6bfd0867f10f4ed3e04df2ad19ad11747cdceb3075"
+    },
+    {
+      "path": "src/backend/app/services/jobs.py",
+      "bytes": 3691,
+      "sha256": "322d65371d9bcb4abbe8eded6fd34fac6b6a31d9cb987f7bfa06d9c36240c426"
+    },
+    {
+      "path": "src/backend/app/services/plan_service.py",
+      "bytes": 46393,
+      "sha256": "c22fca32991cb0b1447425477927c66495020d2c7e544d699102fb29a819ef43"
+    },
+    {
+      "path": "src/backend/app/services/planner.py",
+      "bytes": 25980,
+      "sha256": "41e216fba811ebb5745af5d9ac80f060364d118c2aa451423d3c07e79e940da2"
+    },
+    {
+      "path": "src/backend/app/services/preferences.py",
+      "bytes": 5453,
+      "sha256": "7a6d7f555a3e17af83bccdf567884708281eae7ab6f42b971cee9381d5611c86"
+    },
+    {
+      "path": "src/backend/app/services/privacy.py",
+      "bytes": 1725,
+      "sha256": "5b62e88384ce11292b9c0661a8423e457c3647bd6d68cf50ce7a89d26435e5fd"
+    },
+    {
+      "path": "src/backend/app/services/proposal_service.py",
+      "bytes": 18220,
+      "sha256": "5aebbe4bea7ddf25dae533be120c87eee004fbc3f25e8f08bfc2274b8a5fc6ab"
+    },
+    {
+      "path": "src/backend/app/services/ref_i18n.py",
+      "bytes": 1611,
+      "sha256": "3dcbacf7c41f032643c01c4160f46bb13d79a62e189fe6ebac5c320ec88eba13"
+    },
+    {
+      "path": "src/backend/app/services/reference_view.py",
+      "bytes": 1878,
+      "sha256": "d38bfe1588bd9ba1bd244d9eb91d3c0e4a628e0b1f7fc1ebe2f289b4f3d8253b"
+    },
+    {
+      "path": "src/backend/app/services/removal.py",
+      "bytes": 2317,
+      "sha256": "9a117c05c73b7bd4bb1985cd9394c5a01b4bf2c1a71fe26f83480e4cec9a5c71"
+    },
+    {
+      "path": "src/backend/app/services/repair.py",
+      "bytes": 9495,
+      "sha256": "322c2811b4443a43af723897bd689008bd1f7a0d13d7a9552b59f4f5670842e1"
+    },
+    {
+      "path": "src/backend/app/services/style_service.py",
+      "bytes": 7278,
+      "sha256": "9091b4500245bd6f6a55072fe81623b8b67b398079340a55e2a0cd6d7e70db7a"
+    },
+    {
+      "path": "src/backend/app/services/task_service.py",
+      "bytes": 19367,
+      "sha256": "c4dc22292da271775f8aca1a1d23b16586f00c5fc8c6fa56b6d63dbed9341233"
+    }
+  ]
+}

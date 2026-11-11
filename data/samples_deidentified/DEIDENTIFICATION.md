@@ -1,13 +1,16 @@
-# About the De-identified Copy
+# De-identification and Publication Notes
 
-本文件夹由 `AI项目数据源` 自动生成，原文件夹未做任何修改。
+This directory was derived from the data owner's private source package. The original folder/MBOX was not changed and is not included here.
 
-已替换为虚构内容：
-- 学校、学院、校区地址与域名（例如改为 Northbridge University / Harbor School of Global Management / Eastfield University，域名为 *.example）。
-- 课程编号与学校特有的学期写法（例如 CS 4310、CS 3120；“2025 Fall C”改为“2025 Fall”）。
-- 城市/州名称：时区写法改为“Mountain Standard Time”或 UTC-7；原来带城市名的 IANA 时区改为规则相同的 Etc/GMT+7（UTC-7，无夏令时），日期计算结果不变。
-- 人名：占位符（含原本残留真实姓氏的 [PROF_…]、[CONTACT_…]）、正文中的真实姓名、姓名缩写和团队项目名都换成虚构名字。
+Replaced with fictional content:
 
-保持不变：邮件/链接/电话等已去标识的占位（[EMAIL_…]、[LINK_…] 等）、公司与产品名、日期与时间、邮件结构和建议标注的含义。
-date_candidates.jsonl 的字符位置已按新正文重新计算并逐条核对。
-对照表不保存在本文件夹中。去标识不等于完全匿名：课程内容、日期组合仍可能间接识别个人，请勿公开发布。
+- Universities, schools, campus addresses and domains, including Northbridge University, Harbor School of Global Management and Eastfield University. Fictional organisation domains use `*.example`; replacement mail addresses use `example.invalid`.
+- Course identifiers and institution-specific term notation, including CS 4310/CS 3120 and changing the original '2025 Fall C' to '2025 Fall'.
+- City/state references in time zones. Descriptions use Mountain Standard Time or UTC-7; the original city-based IANA zone became `Etc/GMT+7`, the same fixed UTC-7 offset without daylight saving. Date calculations are unchanged.
+- Personal names in placeholders, body text, initials and team/project names, including role placeholders that retained real surnames.
+
+Existing minimised email/link/phone placeholders, product/company names, dates, times, mail structure and annotation meanings were preserved. `date_candidates.jsonl` offsets were recalculated against the changed bodies and checked individually.
+
+Private replacement mappings are not stored here. **De-identification is not anonymity:** content/date combinations can indirectly identify someone. These samples are published with this public repository for demonstration/testing. Review residual risk before republishing or combining datasets. Public availability does not authorise reconstructing identities, contacting people or uploading the original mailbox.
+
+Documentation is English. Source bodies, exact quotes, original reviewer notes and Chinese test inputs retain their original language to preserve evidence and evaluation meaning.

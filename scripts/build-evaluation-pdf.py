@@ -2,11 +2,14 @@
 
     python3 scripts/build-evaluation-pdf.py
 
-Needs pandoc and Google Chrome (used headless, with a throwaway profile). The text of each PDF is the Markdown file
+Needs pandoc and Chrome, Chromium or Edge (used headless, with a throwaway profile).
+Use --browser PATH or CHROME_PATH to override browser discovery. The text of each PDF is the Markdown file
 itself; only the title block of the report is changed. Re-run after editing either file.
 """
 from __future__ import annotations
 
+import argparse
+import os
 import shutil
 import subprocess
 import sys
@@ -16,7 +19,6 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[1]
 SRC = ROOT / "docs" / "evaluation" / "RESULTS.md"
 OUT = ROOT / "docs" / "evaluation" / "Evaluation.pdf"
-CHROME = "/Applications/Google Chrome.app/Contents/MacOS/Google Chrome"
 OLD_HEAD = "# Evaluation results - Student Work Assistant (Group 09, Track 4)\n\nDraft for `Evaluation.pdf`. Run on"
 NEW_HEAD = ("# Evaluation\n\n<p class=\"subtitle\">Student Work Assistant &middot; Group 09 &middot; "
             "Track 4, Student Productivity Agent</p>\n\nRun on")
@@ -52,7 +54,27 @@ strong { font-weight: 600; }
 """
 
 
-def render(text: str, out: Path, title: str, footer: str) -> int:
+def find_browser(override: str | None = None) -> str | None:
+    explicit = override or os.environ.get("CHROME_PATH")
+    if explicit:
+        return str(Path(explicit).resolve()) if Path(explicit).is_file() else shutil.which(explicit)
+    for name in ("google-chrome", "chrome", "chromium", "chromium-browser", "msedge"):
+        found = shutil.which(name)
+        if found:
+            return found
+    candidates = [
+        Path("/Applications/Google Chrome.app/Contents/MacOS/Google Chrome"),
+        Path("/Applications/Microsoft Edge.app/Contents/MacOS/Microsoft Edge"),
+    ]
+    for env in ("PROGRAMFILES", "PROGRAMFILES(X86)", "LOCALAPPDATA"):
+        if os.environ.get(env):
+            base = Path(os.environ[env])
+            candidates.extend((base / "Google/Chrome/Application/chrome.exe",
+                               base / "Microsoft/Edge/Application/msedge.exe"))
+    return next((str(path) for path in candidates if path.is_file()), None)
+
+
+def render(text: str, out: Path, title: str, footer: str, browser: str) -> int:
     with tempfile.TemporaryDirectory(prefix="evalpdf-") as tmp:
         t = Path(tmp)
         (t / "report.md").write_text(text, encoding="utf-8")
@@ -60,7 +82,7 @@ def render(text: str, out: Path, title: str, footer: str) -> int:
         subprocess.run(["pandoc", str(t / "report.md"), "-f", "gfm", "-t", "html5", "--standalone", "--columns=100000", "-M", "document-css=false",
                         "--metadata", f"pagetitle={title}", "--metadata", "lang=en",
                         "-H", str(t / "head.html"), "-o", str(t / "report.html")], check=True)
-        r = subprocess.run([CHROME, "--headless=new", "--disable-gpu", "--no-pdf-header-footer", "--no-first-run",
+        r = subprocess.run([browser, "--headless=new", "--disable-gpu", "--no-pdf-header-footer", "--no-first-run",
                             f"--user-data-dir={t / 'profile'}", f"--print-to-pdf={out}", (t / "report.html").as_uri()],
                            capture_output=True, text=True, timeout=120)
         if r.returncode != 0 or not out.is_file():
@@ -71,21 +93,25 @@ def render(text: str, out: Path, title: str, footer: str) -> int:
 
 
 def main() -> int:
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument("--browser", help="Path to Chrome, Chromium or Edge; overrides CHROME_PATH")
+    args = parser.parse_args()
     if not shutil.which("pandoc"):
         print("pandoc not found")
         return 1
-    if not Path(CHROME).is_file():
-        print("Google Chrome not found at", CHROME)
+    browser = find_browser(args.browser)
+    if not browser:
+        print("Browser not found. Install Chrome, Chromium or Edge, or set --browser PATH / CHROME_PATH.")
         return 1
     text = SRC.read_text(encoding="utf-8")
     if OLD_HEAD not in text:
         print("RESULTS.md no longer starts with the expected title block; update OLD_HEAD in this script")
         return 1
-    rc = render(text.replace(OLD_HEAD, NEW_HEAD, 1), OUT, "Evaluation - Student Work Assistant (Group 09, Track 4)", "Evaluation")
+    rc = render(text.replace(OLD_HEAD, NEW_HEAD, 1), OUT, "Evaluation - Student Work Assistant (Group 09, Track 4)", "Evaluation", browser)
     brief = SRC.with_name("SLIDE_BRIEF.md")
     if rc == 0 and brief.is_file():
         rc = render(brief.read_text(encoding="utf-8"), SRC.with_name("Slide_brief.pdf"),
-                    "Evaluation - brief for the slides (Group 09)", "Slide brief")
+                    "Evaluation - brief for the slides (Group 09)", "Slide brief", browser)
     return rc
 
 

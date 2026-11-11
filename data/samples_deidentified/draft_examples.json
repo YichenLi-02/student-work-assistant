@@ -1,7 +1,7 @@
 [
   {
     "example_id": "D01",
-    "name": "供电确认：未知事实先留空",
+    "name": "Power confirmation: leave unknown facts blank",
     "provenance": "new_draft_based_on_selected_real_mail",
     "source_ids": [
       "M18"
@@ -24,7 +24,7 @@
   },
   {
     "example_id": "D02",
-    "name": "展示尺寸：不复制旧邮件答案",
+    "name": "Demo dimensions: do not reuse an old answer",
     "provenance": "new_draft_based_on_selected_real_mail",
     "source_ids": [
       "M19"
@@ -48,7 +48,7 @@
   },
   {
     "example_id": "D03",
-    "name": "教授已谅解迟交：可选简短致谢",
+    "name": "Optional thanks after a professor accepts a late submission",
     "provenance": "new_draft_based_on_selected_real_mail",
     "source_ids": [
       "M22"
@@ -72,7 +72,7 @@
   },
   {
     "example_id": "D04",
-    "name": "审阅附件来信：可选确认收到，不声称已阅读",
+    "name": "Acknowledge attachments without claiming to have read them",
     "provenance": "new_draft_based_on_selected_real_mail",
     "source_ids": [
       "M21"
@@ -96,7 +96,7 @@
   },
   {
     "example_id": "D05",
-    "name": "延期通知日期冲突：请求澄清",
+    "name": "Request clarification of a conflicting extension date",
     "provenance": "new_draft_based_on_selected_real_mail",
     "source_ids": [
       "M03"
@@ -121,7 +121,7 @@
   },
   {
     "example_id": "D06",
-    "name": "延期申请：没有原因时禁止编造",
+    "name": "Extension request: never invent a missing reason",
     "provenance": "synthetic_scenario",
     "source_ids": [],
     "split_use": "development_example_only",

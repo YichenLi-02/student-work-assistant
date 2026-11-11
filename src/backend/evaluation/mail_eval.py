@@ -7,7 +7,8 @@ against an answer key that the system never reads.
 Two mail sets share one scorer:
   synthetic  data/synthetic/mail_eval_v1 (80 fictional mails), served to the app through a simulated Gmail API;
   samples    the 40 de-identified inbound samples already in the repository, imported the normal way. Their labels
-             are AI-assisted drafts that nobody has reviewed yet, so every number on them is provisional.
+             began as AI-assisted drafts and were checked by the data owner on 10 November 2026. Review status
+             is read from the files; a future unreviewed copy must still be treated as provisional.
 
 Predictions are saved first and scored afterwards, so the scoring can be re-run or corrected without calling the
 model again. Nothing here changes the app: prompts, rules and thresholds are used exactly as shipped.

@@ -2,11 +2,14 @@
 
 How well the assistant works and where it fails. Results and failure analysis: [RESULTS.md](RESULTS.md).
 
+These are historical model results, not a fresh measurement of the current code. [PROVENANCE.md](PROVENANCE.md) maps the original private evaluation SHA to an identical public backend snapshot and lists subsequent changes, including the privacy fix. The saved predictions and PDF remain historical evidence.
+
 ## What is here
 
 | Path | What it is |
 |---|---|
 | `RESULTS.md` | The written evaluation: measures, how the sets were built, results by category, 15 failure cases, next steps |
+| `PROVENANCE.md`, `baseline-code.json` | Public baseline mapping, per-file source hashes and post-evaluation changes |
 | `results/mail_summary.md` | Triage and deadline numbers for every run side by side |
 | `results/mail_<set>_run<n>.report.md` | One run in full: tables, confusion matrices and every single error |
 | `results/mail_<set>_run<n>.predictions.json` | Raw output of that run (labels, model candidates, tasks, stored text) |
@@ -20,6 +23,8 @@ How well the assistant works and where it fails. Results and failure analysis: [
 
 From the repository root, after the normal setup in the main README. The mail and safety runs need the model
 settings in `.env` and spend tokens (about 1,400 per mail; the whole evaluation used roughly half a million).
+
+The commands below use macOS/Linux virtual-environment paths. On Windows replace `src/backend/.venv/bin/python` with `src/backend/.venv/Scripts/python.exe`. To reproduce the original analysis rather than evaluate the fixes, use the public baseline described in `PROVENANCE.md`. Back up saved results before a new run: the run/score/merge commands write under `docs/evaluation/results/`.
 
 ```bash
 src/backend/.venv/bin/python data/synthetic/mail_eval_v1/build_dataset.py --check   # dataset matches its manifest
@@ -45,9 +50,8 @@ with every mail and calendar provider replaced by a recorder.
 ## Rules we kept
 
 - The answer key was frozen (`MANIFEST.json`) before the first run and is never read by the app.
-- No prompt, rule or threshold of the app was changed for or during the evaluation.
-- Checks are not loosened after seeing results. The three changes that were made afterwards (one scorer fix, one
-  corrected safety scenario, one added second reading) are listed in `RESULTS.md` section 2.
+- No prompt, rule or threshold of the app was changed for or during the historical evaluation. Subsequent application changes are listed separately in `PROVENANCE.md`.
+- Checks were not loosened after seeing results. The five subsequent scoring/scenario/review changes are listed in `RESULTS.md` section 2, including the human label reviews completed on 10 November.
 - If the app is changed in response to these results, this mail set becomes development data and a new set is needed.
 
 ## Time-saved pilot (needs people)
@@ -66,7 +70,11 @@ not measured.
 
 ## Still to do by people
 
-1. Two team members check the synthetic answer key and the 40 sample labels; record agreement; re-score.
+1. The data owner has checked the synthetic answer key and all 40 inbound sample labels, and saved runs have been re-scored. A second independent labeller is still needed to measure agreement.
 2. Collect and label a fresh real-mail hold-out.
 3. Run the time pilot.
 4. Check the expected values of the 27 fixed planner scenarios.
+
+## Rebuilding the PDF (optional)
+
+Install Pandoc and Chrome, Chromium or Edge, then run `python scripts/build-evaluation-pdf.py`. Browser discovery supports Windows, macOS and Linux; override it with `--browser PATH` or `CHROME_PATH`. The PDF renders `RESULTS.md`; rebuilding it does not run an evaluation or update the historical numbers. Keep new post-fix results separately labelled.

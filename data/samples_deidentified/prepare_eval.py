@@ -16,7 +16,7 @@ def inputs(rows, split):
     for r in rows:
         if r['split']!=split or r['direction']!='inbound': continue
         yield {'sample_id':r['sample_id'],'input':{
-            'user_request':'按收到这封邮件时的可见内容分类，保留不确定性；不执行操作。',
+            'user_request':'Classify using only information visible at receipt; preserve uncertainty and take no action.',
             'reference_datetime':r['message_datetime_original'],'user_timezone':None,
             'message':{'source_id':r['sample_id'],'direction':r['direction'],
                 'sent_at':r['message_datetime_original'],'subject':r['subject'],

@@ -1,55 +1,39 @@
 # Your Email Style Profile
 
-依据：181 封带 Sent 标签的邮件中，挑选 10 封有明确用途的本人已发送邮件作为参考。画像是待你确认的初稿；并非对每封历史邮件都作了写作风格标注。
+Ten clearly purposed sent messages were selected from 181 carrying a Sent label. This is a provisional profile for the student to confirm, not a style annotation of every historical message. Sent labels support selection but do not provide forensic proof of authorship.
 
-## Formal Academic Requests and Follow-ups
+## Formal academic requests and follow-ups
 
-证据：M41, M42, M43, M47；支持程度：supported。
+Evidence: M41, M42, M43, M47. Support: **supported**.
 
-表达顺序：说明课程/项目与事实背景 → 清楚提出一个请求 → 感谢时间与帮助 → Best regards / Best wishes + 用户签名。
+State course/project and factual context, make one clear request, thank the recipient, then close with 'Best regards' or 'Best wishes' and the student's signature. Length follows the information needed; a formal explanation can take several paragraphs without making every reply long.
 
-长度：根据事项完整程度决定；正式说明可有数段，不要求所有邮件同样长度。
+## Confirmations with familiar professors and administrators
 
-## Confirmations with Familiar Professors and Administrators
+Evidence: M44, M45. Support: **supported**.
 
-证据：M44, M45；支持程度：supported。
+Brief thanks or a direct statement, a clear confirmation/question and a short closing. Usually one to three short paragraphs.
 
-表达顺序：简短感谢或直接说明 → 明确确认或问题 → 简短结尾。
+## Project communication with familiar colleagues
 
-长度：通常一至三个短段。
+Evidence: M46, M48. Support: **limited**.
 
-## Project Communication with Familiar Colleagues
+Natural acknowledgement, specific progress/ownership/next steps and a moderately friendly closing. Keep it brief, allowing a full paragraph for complex progress. Two examples do not establish a style for all team communication.
 
-证据：M46, M48；支持程度：limited。
+## Short corrections
 
-表达顺序：自然回应 → 具体进展、负责人、下一步 → 适度友好的结尾。
+Evidence: M50. Support: **limited**. 'Sorry, the correct time is...' followed by a concise correction, usually one or two sentences.
 
-长度：简短，进展复杂时可用完整一段；仅两份样本，不泛化为所有团队交流。
+## Recruiter correspondence and Chinese mail
 
-## Short Corrections
+Support: **unsupported** for both. No direct personal examples were selected. Use a concise, professional generic recruiter tone until relevant sent examples are supplied. English examples do not establish the student's personal Chinese style.
 
-证据：M50；支持程度：limited。
+## What to preserve and avoid
 
-表达顺序：Sorry, the correct time is…。
+Preserve polite greetings, facts before requests and short replies where the relationship permits. Retrieve formal requests and brief confirmations separately. Correct obvious grammar/spelling; greater complexity or length does not mean greater personal resemblance.
 
-长度：一两句。
+Old workload, lateness reasons, grades, completed work, equipment details and attachments are facts, not reusable background. A past explanation about clustered deadlines must not become a default extension reason. Do not add new promises.
 
-## Correspondence with Recruiters
+M49 has an AM/PM conflict in its subject and a long Zoom template. Only the student's introductory text is usable style evidence; M50 is the subsequent correction. Exclude quoted/forwarded text, peers' embedded drafts, signatures, credentials and calendar templates.
 
-证据：当前样本没有直接证据；支持程度：unsupported。
-
-先用简洁、专业、明确的通用语气，待用户提供本人给招聘人员的已发送邮件后再个性化。
-
-## Chinese Mail
-
-证据：当前样本没有直接证据；支持程度：unsupported。
-
-不能从英文样本宣称学会中文个人语气。
-
-## What to Keep and Avoid When Drafting
-
-保留礼貌称呼、先交代事实再明确请求的顺序，以及适合熟悉关系的短回复。正式长信和简短确认分别检索参考。修正明显语法错误；不把更复杂、更冗长当作更像你。
-
-历史邮件里的工作量、迟交原因、附件、成绩、已完成工作和设备情况属于事实，不能作为新草稿的默认背景。尤其不能因为你曾为迟交解释“多门课截止集中”，就给新的延期申请自动套用同一理由。
-
-M49 的主题有 pm/AM 矛盾，正文后半主要是 Zoom 模板，只将开头的个人说明用于语气；M50 是随后发出的短纠正。
+`style_profile.json` preserves original annotations. `annotation_en.json` supplies English display labels and limitations. Select only verified, authorised student-authored segments; retrieve at most two or three relevant references and never holdout answers.
