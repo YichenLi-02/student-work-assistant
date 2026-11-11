@@ -1,6 +1,6 @@
 # Outlook Study Calendar Writes: Acceptance Record
 
-Date: 2026-11-06. Project: Studyspace / DSS5105 Group 09.
+Date: 2026-11-06. Project: Student Work Assistant / DSS5105 Group 09.
 
 Conclusion: the core write path was verified on this machine's real FastAPI environment, the production frontend build and a real personal Outlook account. The review found and fixed two places where busy times from different calendars were mixed, and added 4 regression tests. The backend ended at **136 passed** at the time. This record does not mean that every account, every error branch or the whole system is free of defects.
 

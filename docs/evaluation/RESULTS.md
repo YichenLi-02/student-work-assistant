@@ -1,4 +1,4 @@
-# Evaluation results - Studyspace (Group 09, Track 4)
+# Evaluation results - Student Work Assistant (Group 09, Track 4)
 
 Draft for `Evaluation.pdf`. Run on 10 November 2026 against commit `14f3950` with the app code unchanged, model
 `gpt-6-luna`, prompt `p00-p02.v1`, schema `mail_analysis.v6`. Every number below is produced by a script in this

@@ -78,7 +78,7 @@ def prepare():
         now = datetime.now(tz)
         start = (now + timedelta(days=1)).replace(hour=9, minute=0, second=0, microsecond=0)
         deadline = (start + timedelta(days=3)).date()
-        title = f"[LIVE CHECK] Studyspace calendar integration {now.date().isoformat()}"
+        title = f"[LIVE CHECK] Student Work Assistant calendar integration {now.date().isoformat()}"
         task = require_json(client.post("/api/tasks", json={"title": title}))
         task = require_json(client.patch(f"/api/tasks/{task['id']}", json={
             "expected_revision": task["revision"], "official_date": deadline.isoformat(),

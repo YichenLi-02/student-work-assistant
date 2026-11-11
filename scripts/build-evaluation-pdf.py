@@ -17,13 +17,13 @@ ROOT = Path(__file__).resolve().parents[1]
 SRC = ROOT / "docs" / "evaluation" / "RESULTS.md"
 OUT = ROOT / "docs" / "evaluation" / "Evaluation.pdf"
 CHROME = "/Applications/Google Chrome.app/Contents/MacOS/Google Chrome"
-OLD_HEAD = "# Evaluation results - Studyspace (Group 09, Track 4)\n\nDraft for `Evaluation.pdf`. Run on"
-NEW_HEAD = ("# Evaluation\n\n<p class=\"subtitle\">Studyspace (Student Work Assistant) &middot; Group 09 &middot; "
+OLD_HEAD = "# Evaluation results - Student Work Assistant (Group 09, Track 4)\n\nDraft for `Evaluation.pdf`. Run on"
+NEW_HEAD = ("# Evaluation\n\n<p class=\"subtitle\">Student Work Assistant &middot; Group 09 &middot; "
             "Track 4, Student Productivity Agent</p>\n\nRun on")
 
 CSS = """
 @page { size: A4; margin: 16mm 15mm 17mm 15mm;
-  @bottom-center { content: "Studyspace  \\00B7  Group 09  \\00B7  Evaluation        " counter(page) " / " counter(pages);
+  @bottom-center { content: "Student Work Assistant  \\00B7  Group 09  \\00B7  Evaluation        " counter(page) " / " counter(pages);
                    font: 7.5pt -apple-system, "Helvetica Neue", Arial, sans-serif; color: #6b7780; } }
 html { font: 9.4pt/1.42 -apple-system, "Helvetica Neue", Arial, "PingFang SC", sans-serif; color: #1c2326; }
 body { margin: 0 !important; padding: 0 !important; max-width: none !important; hyphens: manual !important;
@@ -81,7 +81,7 @@ def main() -> int:
     if OLD_HEAD not in text:
         print("RESULTS.md no longer starts with the expected title block; update OLD_HEAD in this script")
         return 1
-    rc = render(text.replace(OLD_HEAD, NEW_HEAD, 1), OUT, "Evaluation - Studyspace (Group 09, Track 4)", "Evaluation")
+    rc = render(text.replace(OLD_HEAD, NEW_HEAD, 1), OUT, "Evaluation - Student Work Assistant (Group 09, Track 4)", "Evaluation")
     brief = SRC.with_name("SLIDE_BRIEF.md")
     if rc == 0 and brief.is_file():
         rc = render(brief.read_text(encoding="utf-8"), SRC.with_name("Slide_brief.pdf"),
