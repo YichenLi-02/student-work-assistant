@@ -11,10 +11,8 @@ This package contains **50 real-source messages: 40 inbound samples and 10 sent-
 | `reference_view.json` | Reference categories, summaries and task grouping used by the app |
 | `style_profile.json` | Provisional style patterns from the 10 sent messages |
 | `annotation_en.json` | English display translations of original reference annotations |
-| `draft_examples.json` | Five real-mail-based draft examples and one synthetic missing-reason example; all unsent |
 | `synthetic_safety_tests.jsonl` | 20 boundary specifications, including Chinese inputs |
 | `prompts.md` | P00-P09 design templates; the deployed model prompt is in `src/backend/app/llm/adapter.py` |
-| `prepare_eval.py` | Answer-free export and triage scoring against human-reviewed labels |
 | `sample_browser.html`, `sample_browser.css` | Offline display of the same samples and evidence |
 | `AI_SOURCE_MANIFEST.json` | File inventory and hashes, using UTF-8/LF for text |
 

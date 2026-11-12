@@ -23,19 +23,9 @@
       "sha256": "401768d4ba044a116bcf624575fac0796f75d80bd26a7d49907dcdef86480cc6"
     },
     {
-      "name": "draft_examples.json",
-      "bytes": 5116,
-      "sha256": "b64b0994fc74204e5256b05b0cbcef8d679b8c4093916a82c8e1b1a4a1f12d1c"
-    },
-    {
       "name": "GETTING_STARTED.md",
-      "bytes": 7043,
-      "sha256": "53d826e42040f33af39cd9f1a19ccc2e6ab7d9ce5fe04020be144a871d3d46d1"
-    },
-    {
-      "name": "prepare_eval.py",
-      "bytes": 4887,
-      "sha256": "b7bdb723d0734f2f0e6dd65250449971a76069ee9a6e882d64c6819b5b19f40e"
+      "bytes": 6834,
+      "sha256": "75ac3807f152cb42e6085f073542467cb489ba9b16640c5d7d51135866333996"
     },
     {
       "name": "prompts.md",
