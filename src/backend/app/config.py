@@ -30,7 +30,7 @@ class Settings:
     database_path: Path = REPO_ROOT / "local-data" / "app.sqlite3"
     display_timezone: str = "Asia/Singapore"
     sample_data_dir: Path = Path("data/samples_deidentified")
-    design_dir: Path = Path("D:/DSS5105-track4/软件设计与AI工作流")
+    design_dir: Path = REPO_ROOT / "design"
     llm_provider: str = "none"
     openai_api_key: str = ""
     openai_model: str = ""
@@ -77,7 +77,7 @@ def load_settings() -> Settings:
         data_dir=_path("DATA_DIR", REPO_ROOT / "local-data"),
         display_timezone=os.environ.get("DISPLAY_TIMEZONE", "Asia/Singapore"),
         sample_data_dir=_path("SAMPLE_DATA_DIR", REPO_ROOT / "data" / "samples_deidentified"),
-        design_dir=_path("DESIGN_DIR", Path("D:/DSS5105-track4/软件设计与AI工作流")),
+        design_dir=_path("DESIGN_DIR", REPO_ROOT / "design"),
         llm_provider=os.environ.get("LLM_PROVIDER", "none").strip().lower() or "none",
         openai_api_key=os.environ.get("OPENAI_API_KEY", "").strip(),
         openai_model=os.environ.get("OPENAI_MODEL", "").strip(),

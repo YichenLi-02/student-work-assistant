@@ -14,12 +14,6 @@ local development repository. [baseline-code.json](baseline-code.json) records t
 paths, byte counts and SHA-256 hashes using Git blob bytes, independent of checkout
 line endings. The original metadata is preserved rather than relabelled as a new run.
 
-Public commit `6d41088cd03243c58b85b4981d291db4933d2f5d` changed two sample-directory
-defaults in `app/config.py` to `data/samples_deidentified`; the remaining 46 application
-files stayed identical. It also translated documentation/headings. Commit
-`9a630dc554d02854a737796beebeb58d4006c027` standardised the project name in documents
-and the calendar verification helper; it did not change application behaviour.
-
 The public baseline already contains later scorer/label-review work described in
 `RESULTS.md` section 2. The 47-file equivalence concerns application code, not a claim
 that every evaluation script remained unchanged after the original runs.
@@ -42,35 +36,13 @@ for entry in snapshot['files']:
 print('All 47 baseline application files verified')
 ```
 
-## Changes after the model evaluation (11 November 2026)
+## Scope of the saved results
 
-- **Privacy fix:** Chinese verification-code phrases without word boundaries and
-  Singapore-format eight-digit phone numbers with spaces/hyphens are now scrubbed.
-  Regression tests cover those cases while retaining coursework dates/times. This
-  changes preprocessing for new mail/chat/document inputs. It does not automatically
-  scrub previously stored data; re-import/re-sync affected sources after removal if
-  needed. The historical secret-leak failure remains in the report as evidence of
-  the evaluated baseline.
-- **Setup reliability:** `run.ps1` checks each command's exit status, checks Python
-  dependencies against the lock constraints every run, handles incomplete virtual
-  environments, runs `npm ci`, and offers `-SetupOnly`.
-- **PDF tooling:** the generator discovers Chrome/Chromium/Edge on Windows, macOS
-  and Linux and accepts `--browser` / `CHROME_PATH`. Pandoc remains an explicit
-  optional dependency. This changes rendering tooling, not evaluation scores.
-- **Documentation and sample views:** README/setup/review status are reconciled;
-  sample-package guides and prompt design templates are English. The offline browser
-  uses existing English display annotations. The old duplicated source summary is
-  an English index. The package inventory can be rebuilt and checked. Source mail,
-  exact quotes, original annotations/reviewer notes, the original workbook and
-  bilingual boundary inputs remain in their original language.
+The current code differs from the evaluated application in two respects:
 
-The deployed model prompt and task-generation rules were not tuned in this revision.
-Changing preprocessing still means that the saved model scores describe the historical
-baseline, **not measured performance of the revised application**. The existing mail
-set is development evidence for these fixes. A new performance claim needs a fresh
-evaluation set and separately labelled post-fix runs. Deterministic regression tests
-do not replace a model evaluation, and no time-saving or blind-style result is claimed.
+- Input minimisation additionally removes Chinese verification-code phrases without word boundaries and Singapore-format eight-digit phone numbers. Regression tests cover these fixes. Previously stored inputs need removal/re-import if affected.
+- Default sample/prototype paths are portable within the public repository.
 
-The failures concerning injected instructions becoming task suggestions, ambiguous
-relative dates, duplicate deadlines and false-positive tasks are not declared fixed
-by these maintenance changes. Consult the original failure analysis before a demo.
+The model prompt and task-generation rules were not tuned. The saved model results have not been rerun after the privacy fix, so they describe the historical baseline. Existing inputs are development evidence for that fix; a new performance claim requires fresh evaluation data. Injected task suggestions, ambiguous relative dates, duplicate deadlines and false-positive tasks are not declared fixed.
+
+English report labels, consolidated documentation, setup tooling and PDF generation do not change the recorded model predictions or metric values. The raw prediction files and safety runs retain their original evidence. Fixed planner scenario titles/notes are translated; their inputs and expected answers are unchanged. On 12 November 2026, the project reviewer reviewed the Chinese summaries of all 27 inputs and expected outcomes and confirmed them as reasonable. The review is recorded in `scenarios.json`, including its scope, date and case hash. It took place after the saved evaluation and changes no recorded score.

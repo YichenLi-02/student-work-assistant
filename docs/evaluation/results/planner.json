@@ -9,7 +9,7 @@
   "results": [
    {
     "id": "S01",
-    "title": "单任务常规",
+    "title": "Standard single task",
     "category": "basic",
     "known_gap": null,
     "passed": true,
@@ -111,7 +111,7 @@
    },
    {
     "id": "S02",
-    "title": "每日上限把工作分到多天",
+    "title": "Daily cap spreads work across days",
     "category": "daily_cap",
     "known_gap": null,
     "passed": true,
@@ -213,7 +213,7 @@
    },
    {
     "id": "S03",
-    "title": "截止缓冲内放不下最后 15 分钟",
+    "title": "Deadline buffer leaves 15 minutes unplaced",
     "category": "deadline_buffer",
     "known_gap": null,
     "passed": true,
@@ -315,7 +315,7 @@
    },
    {
     "id": "S04",
-    "title": "容量明显不足",
+    "title": "Insufficient total capacity",
     "category": "infeasible",
     "known_gap": null,
     "passed": true,
@@ -408,7 +408,7 @@
    },
    {
     "id": "S05",
-    "title": "碎片空档",
+    "title": "Fragmented free intervals",
     "category": "fragmented_free_time",
     "known_gap": null,
     "passed": true,
@@ -488,7 +488,7 @@
    },
    {
     "id": "S06",
-    "title": "当天已完成部分工作",
+    "title": "Work already completed today",
     "category": "progress_today",
     "known_gap": null,
     "passed": true,
@@ -584,7 +584,7 @@
    },
    {
     "id": "S07",
-    "title": "已有本任务学习块",
+    "title": "Existing study block for the selected task",
     "category": "written_blocks",
     "known_gap": null,
     "passed": true,
@@ -676,7 +676,7 @@
    },
    {
     "id": "S08",
-    "title": "重复生成与保存后再生成",
+    "title": "Repeat generation and generation after saving",
     "category": "repeat_generation",
     "known_gap": null,
     "passed": true,
@@ -768,7 +768,7 @@
    },
    {
     "id": "S09",
-    "title": "其他任务的学习块占用时间和额度",
+    "title": "Other tasks consume time and daily allowance",
     "category": "written_blocks",
     "known_gap": null,
     "passed": true,
@@ -887,7 +887,7 @@
    },
    {
     "id": "S10",
-    "title": "剩余不足 30 分钟的任务",
+    "title": "Task with less than 30 minutes remaining",
     "category": "short_remainders",
     "known_gap": null,
     "passed": true,
@@ -967,7 +967,7 @@
    },
    {
     "id": "S11",
-    "title": "短尾并入前一段",
+    "title": "Merge a short remainder into the preceding session",
     "category": "short_remainders",
     "known_gap": null,
     "passed": true,
@@ -1047,7 +1047,7 @@
    },
    {
     "id": "S12",
-    "title": "跨天的短尾",
+    "title": "Short remainder across days",
     "category": "short_remainders",
     "known_gap": null,
     "passed": true,
@@ -1178,7 +1178,7 @@
    },
    {
     "id": "S13",
-    "title": "日历读取失败",
+    "title": "Calendar read failure",
     "category": "calendar_failure",
     "known_gap": null,
     "passed": true,
@@ -1225,7 +1225,7 @@
    },
    {
     "id": "S14",
-    "title": "密集截止（可行）",
+    "title": "Dense deadlines: feasible",
     "category": "dense_deadlines",
     "known_gap": null,
     "passed": true,
@@ -1348,7 +1348,7 @@
    },
    {
     "id": "S15",
-    "title": "密集截止（不可行）",
+    "title": "Dense deadlines: infeasible",
     "category": "dense_deadlines",
     "known_gap": null,
     "passed": true,
@@ -1416,7 +1416,7 @@
    },
    {
     "id": "S16",
-    "title": "每周弹性时间",
+    "title": "Weekly flex time",
     "category": "weekly_flex",
     "known_gap": null,
     "passed": true,
@@ -1515,7 +1515,7 @@
    },
    {
     "id": "S17",
-    "title": "被占用的上午",
+    "title": "Busy morning",
     "category": "busy_calendar",
     "known_gap": null,
     "passed": true,
@@ -1595,7 +1595,7 @@
    },
    {
     "id": "S18",
-    "title": "傍晚时间不够，不排到深夜",
+    "title": "Insufficient evening time without late-night scheduling",
     "category": "infeasible",
     "known_gap": null,
     "passed": true,
@@ -1697,7 +1697,7 @@
    },
    {
     "id": "S19",
-    "title": "当天额度已用完",
+    "title": "Daily allowance already exhausted",
     "category": "progress_today",
     "known_gap": null,
     "passed": true,
@@ -1769,7 +1769,7 @@
    },
    {
     "id": "S20",
-    "title": "已完成与已写入学习块同时占用额度",
+    "title": "Completed work and written blocks both consume the cap",
     "category": "progress_today",
     "known_gap": null,
     "passed": true,
@@ -1862,7 +1862,7 @@
    },
    {
     "id": "S21",
-    "title": "已写入块后只剩不足 30 分钟",
+    "title": "Short remainder after a written block",
     "category": "short_remainders",
     "known_gap": null,
     "passed": true,
@@ -1948,7 +1948,7 @@
    },
    {
     "id": "S22",
-    "title": "多任务：时段颗粒造成的真实缺口",
+    "title": "Multiple tasks: unavoidable gap from session granularity",
     "category": "dense_deadlines",
     "known_gap": null,
     "passed": true,
@@ -2080,7 +2080,7 @@
    },
    {
     "id": "S23",
-    "title": "多任务：换安排顺序才能全部排下",
+    "title": "Multiple tasks: a different ordering fits all work",
     "category": "dense_deadlines",
     "known_gap": null,
     "passed": true,
@@ -2193,7 +2193,7 @@
    },
    {
     "id": "S24",
-    "title": "比休息还短的会议",
+    "title": "Meeting shorter than the required break",
     "category": "busy_calendar",
     "known_gap": null,
     "passed": true,
@@ -2289,7 +2289,7 @@
    },
    {
     "id": "S25",
-    "title": "单个任务每日上限",
+    "title": "Per-task daily cap",
     "category": "task_cap",
     "known_gap": null,
     "passed": true,
@@ -2397,7 +2397,7 @@
    },
    {
     "id": "S26",
-    "title": "两个任务同一天各自不超过单任务上限",
+    "title": "Two tasks each respect the per-task daily cap",
     "category": "task_cap",
     "known_gap": null,
     "passed": true,
@@ -2554,7 +2554,7 @@
    },
    {
     "id": "S27",
-    "title": "单任务上限下截止前排不下（可证明）",
+    "title": "Provable infeasibility under the per-task daily cap",
     "category": "task_cap",
     "known_gap": null,
     "passed": true,

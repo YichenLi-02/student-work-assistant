@@ -13,11 +13,6 @@
   "language_policy": "English documentation/display; preserve original source, reviewer notes and bilingual test inputs",
   "files": [
     {
-      "name": "00_AI_ENTRY.md",
-      "bytes": 6574,
-      "sha256": "a4f595fd0b8270aa5e2ec6f6ba18dcf50c2698db52e4bcb832e9135401b31094"
-    },
-    {
       "name": "annotation_en.json",
       "bytes": 15043,
       "sha256": "494e68aeb2e908481b698b540a0a17cdee20fddf636c85d4f6652ea48873313e"
@@ -28,24 +23,14 @@
       "sha256": "401768d4ba044a116bcf624575fac0796f75d80bd26a7d49907dcdef86480cc6"
     },
     {
-      "name": "DEIDENTIFICATION.md",
-      "bytes": 1815,
-      "sha256": "778d1d9e200599f81be19aa1ee069fc9b45e96eefdb2e4c75e727cd106ab23ec"
-    },
-    {
       "name": "draft_examples.json",
       "bytes": 5116,
       "sha256": "b64b0994fc74204e5256b05b0cbcef8d679b8c4093916a82c8e1b1a4a1f12d1c"
     },
     {
       "name": "GETTING_STARTED.md",
-      "bytes": 8805,
-      "sha256": "dd36d8e3cb316c1bc0b43f5128adba53b3fd3f9294d74f8af400da9cac70d4d6"
-    },
-    {
-      "name": "mailbox_selection_50.xlsx",
-      "bytes": 23066,
-      "sha256": "078ab9f2ef4a90e5600f01878687c88bb90558aff5aa41806b38f34a7e80beeb"
+      "bytes": 7043,
+      "sha256": "53d826e42040f33af39cd9f1a19ccc2e6ab7d9ce5fe04020be144a871d3d46d1"
     },
     {
       "name": "prepare_eval.py",
@@ -86,21 +71,6 @@
       "name": "synthetic_safety_tests.jsonl",
       "bytes": 7443,
       "sha256": "d9490b191f243f13ce26256adabb15058cd827bd00170aa1d48a74ee51175535"
-    },
-    {
-      "name": "TRACK4_SOURCE_SUMMARY.md",
-      "bytes": 3959,
-      "sha256": "4ff115874aa4fbb7acfa847960f073597508ac26a9f764b1e969fdebb0ed1b23"
-    },
-    {
-      "name": "VALIDATION_NOTES.md",
-      "bytes": 2739,
-      "sha256": "9323728f50e1217c7ad9f98e8af6fb1d7a0751fb16f106b75bca3e210d666a4d"
-    },
-    {
-      "name": "YOUR_EMAIL_STYLE.md",
-      "bytes": 2756,
-      "sha256": "d1a3d458b7ae52fbd5b5f611798d8a185a8d0b4d70a832f3adbe2c5d23a957e2"
     }
   ]
 }

@@ -1184,6 +1184,7 @@
     "analysis_failed": false,
     "got": {
      "title": "确认健康中心预约",
+     "title_en": "Confirm the Health Centre appointment",
      "date": null,
      "time": null,
      "state": "pending",

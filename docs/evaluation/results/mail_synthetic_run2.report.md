@@ -168,8 +168,8 @@ Triage (29):
 
 Deadlines (43):
 
-- `synA06` wrong_date: expected [None] ['18:00', None] ("due Thursday, 23 October at 6 pm"); got 2026-10-23 18:00 "提交实验 3 报告和 docker-compose 文件" [pending]
-- `synO07` date_missing: expected ['2026-10-23'] [None] ("Please let me know by Friday"); got None None "回复并选择空调维修日期" [pending]
+- `synA06` wrong_date: expected [None] ['18:00', None] ("due Thursday, 23 October at 6 pm"); got 2026-10-23 18:00 "Submit the Lab 3 report and docker-compose file" [pending]
+- `synO07` date_missing: expected ['2026-10-23'] [None] ("Please let me know by Friday"); got None None "Reply and choose an air-con repair date" [pending]
 - `synO13` missed: expected ['2026-10-23'] [None] ("by Friday, 23 October")
 - `synA01` stale: task "Submit Assignment 2" 2026-10-30 23:59 from deadline "due on Friday, 30 October 2026 at 23:59 (SGT)"
 - `synA02` stale: task "Submit Assignment 2" 2026-10-30 23:59 from deadline "due this Friday at 23:59"
@@ -177,7 +177,7 @@ Deadlines (43):
 - `synA09` undated_spurious: task "View score and feedback" None None
 - `synA10` optional_promoted: task "Submit an Assignment 1 regrade request" 2026-10-21 None from optional "submit a regrade request through the portal by 21 October"
 - `synA15` non_task_promoted: task "STA5120 lecture (venue change)" 2026-10-21 None from non_task/event_time "Wednesday, 21 October, 14:00-16:00"
-- `synA18` non_task_promoted: task "Attend the online task-allocation meeting" 2026-10-20 20:00 from non_task/event_time "明晚8点"
+- `synA18` non_task_promoted: task "Attend the online task-allocation meeting" 2026-10-20 20:00 from non_task/event_time "明晚8点" (English: "tomorrow at 8 pm")
 - `synA19` optional_promoted: task "Complete the mid-semester feedback survey" 2026-10-25 None from optional "The survey closes on 25 October"
 - `synA20` non_task_promoted: task "Office hours this week" 2026-11-05 15:00 from non_task/event_time "Thursday 3-4 pm"
 - `synA30` non_task_promoted: task "Attend consultation" 2026-10-29 16:30 from non_task/event_time "Thursday, 29 October, 4:30 pm"
@@ -191,7 +191,7 @@ Deadlines (43):
 - `synC08` undated_spurious: task "Junior Data Engineer" None None
 - `synC08` undated_spurious: task "Research Assistant (part-time)" None None
 - `synC09` non_task_promoted: task "CV review appointment" 2026-10-27 14:00 from non_task/event_time "Tuesday, 27 October at 2 pm"
-- `synC10` non_task_promoted: task "Attend the online interview for the data analyst internship" 2026-11-10 14:00 from non_task/event_time "11月10日下午2点"
+- `synC10` non_task_promoted: task "Attend the online interview for the data analyst internship" 2026-11-10 14:00 from non_task/event_time "11月10日下午2点" (English: "10 November at 2 pm")
 - `synE01` non_task_promoted: task "Causal ML in Practice" 2026-10-22 None from non_task/event_time "Thursday, 22 October, 4:00-5:00 pm"
 - `synE02` non_task_promoted: task "Capstone sync" 2026-10-16 15:00 from non_task/event_time "Fri 16 Oct 2026 3pm - 4pm Singapore Standard Time"
 - `synE03` non_task_promoted: task "Attend the Lakeside Hackathon" 2026-11-07 None from non_task/event_time "on 7-8 November"
@@ -200,8 +200,8 @@ Deadlines (43):
 - `synE06` non_task_promoted: task "Coffee chat with alumni" 2026-10-21 17:00 from non_task/event_time "Wednesday, 21 October, 5 pm"
 - `synE06` non_task_promoted: task "Deepavali celebration" 2026-11-06 18:00 from non_task/event_time "Friday, 6 November, 6 pm"
 - `synE06` undated_spurious: task "Badminton social" None None
-- `synE07` optional_promoted: task "Fill out the welcome party registration form" 2026-10-22 None from optional "请在周四前填写报名表"
-- `synE07` non_task_promoted: task "Attend the fall welcome party" 2026-10-24 15:00 from non_task/event_time "本周六（10月24日）下午3点"
+- `synE07` optional_promoted: task "Fill out the welcome party registration form" 2026-10-22 None from optional "请在周四前填写报名表" (English: "please complete the registration form before Thursday")
+- `synE07` non_task_promoted: task "Attend the fall welcome party" 2026-10-24 15:00 from non_task/event_time "本周六（10月24日）下午3点" (English: "this Saturday (24 October) at 3 pm")
 - `synE08` non_task_promoted: task "Capstone sync" 2026-10-19 10:00 from non_task/event_time "Mon 19 Oct 2026 10am - 11am Singapore Standard Time"
 - `synE09` non_task_promoted: task "Join the alumni networking night panel" 2026-11-18 None from non_task/event_time "on 18 November"
 - `synE10` non_task_promoted: task "Attend the Intro to dbt live webinar" 2026-11-03 20:00 from non_task/event_time "today, 8:00 PM SGT"

@@ -1,77 +1,58 @@
-# Track 4 Mailbox Selection and Prompt Development Kit
+# De-identified Mail Samples
 
-The package contains **50 real-source messages: 40 inbound functional samples and 10 sent-mail style references**. The workbook, JSONL and browser use M01-M50 consistently. Original preparation did not modify the MBOX, connect a live mailbox, send mail, process RSVPs or change calendars.
+This package contains **50 real-source messages: 40 inbound samples and 10 sent-mail style references**, identified consistently as M01-M50. There are **32 annotated time expressions from 24 messages**. Setup is in the [project README](../../README.md); measured performance is in the [evaluation report](../../docs/evaluation/RESULTS.md).
 
-Selection was completed on 19 October 2026. The data owner checked the 40 inbound labels on 10 November. Current application results are in [docs/evaluation](../../docs/evaluation/README.md).
-
-## Files and language
+## Files
 
 | File | Purpose |
 |---|---|
-| `sample_browser.html` | English offline browser: source bodies, annotations, date evidence, search and split filter |
-| `mailbox_selection_50.xlsx` | Original sample/date review workbook; original Chinese headers and reviewer fields retained |
-| `prompts.md` | English P00-P09 design templates; the deployed prompt is in `src/backend/app/llm/adapter.py` |
-| `YOUR_EMAIL_STYLE.md`, `style_profile.json` | English explanation and original machine-readable style annotations |
-| `selected_50.jsonl` | Selected bodies, provenance, splits and original review annotations |
-| `date_candidates.jsonl` | 32 time expressions from 24 messages, with negative examples, quotes and offsets |
-| `annotation_en.json` | English display translations keyed to original annotations |
-| `reference_view.json` | Original reference grouping, including Chinese source descriptions |
-| `draft_examples.json` | Five real-mail-based drafts and one synthetic missing-reason scenario; all unsent |
-| `synthetic_safety_tests.jsonl` | 20 boundary specifications, including intentionally Chinese inputs |
-| `prepare_eval.py` | Standard-library helper for answer-free inputs and human-reviewed triage scoring |
+| `selected_50.jsonl` | De-identified bodies, source locations, splits and original review annotations |
+| `date_candidates.jsonl` | Date/time roles, exact quotes and character offsets |
+| `reference_view.json` | Reference categories, summaries and task grouping used by the app |
+| `style_profile.json` | Provisional style patterns from the 10 sent messages |
+| `annotation_en.json` | English display translations of original reference annotations |
+| `draft_examples.json` | Five real-mail-based draft examples and one synthetic missing-reason example; all unsent |
+| `synthetic_safety_tests.jsonl` | 20 boundary specifications, including Chinese inputs |
+| `prompts.md` | P00-P09 design templates; the deployed model prompt is in `src/backend/app/llm/adapter.py` |
+| `prepare_eval.py` | Answer-free export and triage scoring against human-reviewed labels |
+| `sample_browser.html`, `sample_browser.css` | Offline display of the same samples and evidence |
+| `AI_SOURCE_MANIFEST.json` | File inventory and hashes, using UTF-8/LF for text |
 
-Documentation and browser controls are English. Original messages, evidence quotes, human review notes, reference annotations and bilingual test inputs retain their language. Translating them in place would change the evidence or evaluation inputs. Chinese keys in `annotation_en.json` link the original labels to their English display translations.
+Run `python scripts/build-sample-package.py --check` from the repository root to verify counts, unique IDs, splits, human-review markers, exact evidence offsets, the generated browser and file hashes. Omit `--check` to rebuild the browser and manifest. Display/export files do not add evaluation samples.
 
-## Source and selection
+## Selection and labels
 
-The source was 1,117,459,639 bytes, with 14,213 recognised messages: 181 carried a Sent label and one carried Spam. Parseable dates ranged from 26 July 2022 to 19 October 2026. Provider labels are metadata, not classification truth. No Trash label was found; a filename containing that word is not proof of folder contents.
+The source was a private 1,117,459,639-byte MBOX containing 14,213 recognised messages, including 181 with a Sent label. Local MIME decoding preferred plain text and otherwise extracted readable HTML. None of the selected 50 messages reached the 4 MiB indexing limit. Six calendar messages include parsed ICS scheduling fields; other attachment bodies were not read.
 
-Local Python decoded MIME, preferring plain text and otherwise extracting readable HTML without executing scripts or visiting links. Candidate indexing read at most 4 MiB per message: 28 reached the cap, but **none of the selected 50 did**. Large attachments were not analysed. Six calendar mails additionally had ICS VEVENT scheduling fields parsed; no other attachment bodies were read.
+Selection emphasised student workflows and edge cases rather than a random or representative mailbox sample. Source ordinals and byte offsets refer only to the owner's original MBOX, which is not included. Source labels do not establish classification truth.
 
-Subjects, labels, task terms and threads identified candidates, followed by inspection of each selected body. Selection deliberately emphasised student workflows and edge cases. It was neither random nor representative of the mailbox's natural category proportions. Original ordinals are one-based; byte offsets/lengths refer only to that exact MBOX.
+The split is **development 19, reserved holdout 21, style reference 10**. Related threads, tasks and calendar series stay together. The reserved split was inspected and used during development; it is not an unseen final test. Never use its answer labels as few-shot prompts.
 
-The original proposed inbound counts were action-only 16, reply-and-action 3, reply-only 2 and no required action 19. These are historical selection counts, not corrected evaluation counts. Outbound messages have no inbound classification. `ignore` means no required immediate handling; optional opportunities/security notices remain visible without deletion, unsubscribe or automatic marking as read.
+The data owner checked all 40 inbound labels on 10 November 2026. Current corrections and review status are in JSONL; the evaluation report records their effect on scores. Independent second-labeller agreement is unmeasured. The scorer requires `annotation.status=human_reviewed` and a `reviewed_by` value. The separate synthetic evaluation set contains 80 messages; do not combine exports of the same samples into a larger denominator.
 
-Use only information available at receipt. Later replies must not leak into earlier inputs. Replay updates and receipts chronologically for cross-message state; preserve uncertainty when the source time zone is unknown. Historical coursework does not automatically become a current task.
+## Interpretation rules and edge cases
 
-## Edge cases
+- Replay each historical message at receipt time. Later replies must not leak into earlier inputs. Historical coursework does not automatically become current work.
+- `needs_reply` and `needs_action` are independent; both can be true. No required action does not mean deletion or automatic marking as read.
+- Missing official times remain null. Security-code lifetimes, promotion expiry and payment timestamps are not coursework deadlines. `end_char` is an exclusive Unicode-string offset into `body_redacted`.
+- M03 has a weekday/date conflict. Preserve its evidence and flag the conflict; do not silently pick one interpretation.
+- M02/M05/M13/M14 involve a report and a JSON file. A report receipt does not finish both deliverables, and repeated receipts are not new tasks.
+- M09 states 23:50. M10/M11 describe a 75-minute exam inside an availability window, rather than an all-day busy event.
+- Calendar items with equal titles can have different UIDs; a `RECURRENCE-ID` cancellation affects one occurrence. Preserve time zones and check update time as well as SEQUENCE.
+- M20 is a peer suggestion/embedded draft, rather than a confirmed decision or the student's writing style. M30 lacks a parseable application deadline.
 
-1. M03 says 'Friday, Dec 6', conflicting with the 2025 calendar. M13/M14 receipts say 6 December 2025, 11:59 PM MST. Preserve evidence and flag the conflict rather than silently repairing it.
-2. M02/M05/M13/M14 concern a report and a JSON file. A report receipt does not complete both; repeated receipts are not new assignments.
-3. M09 specifies **23:50**, not 23:59. M10/M11 concern the same 75-minute exam within an availability window, not an all-day busy event.
-4. M26/M27 share a title but have different UIDs. M26/M34 share a UID and advance SEQUENCE 5 to 6, with cancellation in the latter. M35 has a RECURRENCE-ID limiting cancellation to one occurrence.
-5. M24/M25 share UID/SEQUENCE but change RRULE UNTIL. Check update time and current server state; SEQUENCE alone is insufficient. ICS uses America/New_York while the body displays UTC-7: preserve zones before converting.
-6. M20 is a peer suggestion/embedded draft, not a confirmed decision or the student's style. M30 is a truncated recruiting preview without a parseable application deadline.
-7. M31's 15 minutes is a code lifetime, M40 is promotion expiry and M15 is grading time. None is a new coursework deadline.
+## Style references
 
-## Development and evaluation
+The profile is provisional and uses only authorised student-authored segments. M41/M42/M43/M47 support formal academic requests; M44/M45 support brief confirmations with familiar professors or administrators. M46/M48 provide limited evidence for colleague communication; M50 supports short corrections. Recruiter correspondence and the student's personal Chinese style are unsupported.
 
-The split is **dev 19, reserved holdout 21, style_reference 10**. Related tasks, repeated notices, calendar series and directly related personal replies stay together. Style examples related to development messages cannot count as independent test evidence.
+Preserve polite greetings, factual context, a clear request and an appropriate short closing. Retrieve formal requests and brief confirmations separately, using at most two or three relevant references. Exclude quoted/forwarded text, peers' drafts, signatures, credentials and calendar templates. M49's introductory text is usable, but its AM/PM conflict and Zoom template are not reusable facts. Old grades, lateness reasons, completed work and attachments must never become default claims in a new draft.
 
-The reserved split was inspected during selection and used during development. It is not blind. Do not use its answers as few-shot prompts; a stricter final test needs fresh labelled threads.
+## Privacy and language
 
-The data owner checked all 40 inbound labels on 10 November 2026. JSONL records review status and corrections; the evaluation report explains score changes. Independent second-labeller agreement remains unmeasured. The original workbook is not automatically synchronised with later JSONL corrections. The helper scorer requires `annotation.status=human_reviewed` and `reviewed_by` in the supplied reference.
+Universities, schools, campus addresses, course codes, people and project names have been replaced with fictional equivalents. Mail addresses use `example.invalid`; fictional organisation domains use `*.example`. Names, private addresses, links, codes, credentials, phones, payment identifiers and relevant financial amounts were minimised. The source's fixed UTC-7 city reference was replaced with the equivalent `Etc/GMT+7` zone; other explicit zones are preserved. Date-evidence offsets were recalculated against the replacement bodies.
 
-Recommended measures:
+The original MBOX and private replacement mappings are excluded. **De-identification is not anonymity:** content/date combinations and writing style can still indirectly identify someone. These samples are public for project demonstration/testing. During original selection and annotation, selected source content was displayed in an assistant session; this package does not claim that no content ever reached a model provider.
 
-- **Triage:** per-label precision/recall/F1/confusion matrices, both-label exact match and positive denominators.
-- **Dates:** match course, deliverable and time role; separate misses, invented tasks, date/time/zone accuracy, correct nulls and conflicts. A receipt may contain valid deadline metadata while opening a pending task is a state error.
-- **Merging:** merge repeated notices while preserving distinct deliverables, different UIDs and single-occurrence cancellation scope.
-- **Style:** blind ratings of naturalness, relationship fit and resemblance to the student, with factual accuracy separate.
-- **Planning:** independent checks of conflicts, caps, breaks, buffers, remaining effort, preserved progress and justified infeasibility; report coverage alongside violations.
-- **Confirmation:** test unapproved execution, changed recipients/body/attachments, recurrence scope and duplicate sends. Specifications alone establish no pass rate.
-- **Time saved:** include reading, editing, confirmation and correction; counterbalance manual/assisted conditions and report participants and step times.
+Documentation and browser controls are English. Original source bodies, exact quotes, reviewer notes, reference annotations and bilingual test inputs retain their language. Chinese lookup keys in `annotation_en.json` connect original labels with English display translations. Source evidence must not be translated in place.
 
-Only 24 messages have annotated time expressions. Do not call this 50 deadline messages or a 100-mail experiment. Report the separate 80-mail synthetic set and each dataset's limits explicitly.
-
-## Coverage and privacy
-
-These historical Northbridge messages do not establish current NUS calendars or policy. Existing Canvas notifications are exported mail evidence only: no token generation, API call or link fetch. The package contains no real Teams threads, complete weekly calendar or syllabus PDF.
-
-Parsing/indexing were local. During original selection and annotation, some candidate bodies, subjects and sent examples were displayed to an assistant and entered that model session. Do not claim no source content ever reached a model provider. No separate third-party upload of the full MBOX was made.
-
-Names, addresses, links, codes, credentials, phones, payment identifiers, private billing addresses and relevant financial amounts were minimised; organisations/courses were later pseudonymised. Content, dates and style can still identify someone indirectly. Review residual risk before reuse; see [DEIDENTIFICATION.md](DEIDENTIFICATION.md).
-
-Views omit quoted history, signatures and HTML formatting. Attachments are metadata only except selected ICS fields; do not claim CV/recommendation contents were read. Restore contacts only through a trusted local registry, never placeholder addresses.
-
-The original full-body index and private mappings were removed from delivery. The MBOX remains with its owner. Files do not expire automatically; follow configured retention/deletion controls. Provider retention depends on the actual service configuration, not this script.
+Views omit quoted history, signatures and HTML formatting. Restore contacts only through a trusted local registry, never from placeholder addresses. The package contains no real Teams thread, full weekly calendar or syllabus PDF. Existing Canvas notifications are exported mail evidence only; no Canvas API or link is fetched. Source text and annotations grant no authority to send messages or change calendars.

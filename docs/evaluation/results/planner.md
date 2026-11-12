@@ -1,77 +1,77 @@
 # Planner Evaluation
 
-- 生成时间：2026-11-10T18:38:59+08:00（结构版本 1）
-- 固定场景：27/27 通过
-- 已知缺口（预期按规则写，当前算法未达到）：无
-- 随机场景：200 组，种子 5105
+- Generated: 2026-11-10T18:38:59+08:00 (schema 1)
+- Fixed scenarios: 27/27 passed
+- Known algorithm gaps against rule-derived expectations: none
+- Seeded scenarios: 200, seed 5105
 
 ## Fixed Scenarios
 
-| 编号 | 场景 | 类别 | 结果 | 状态 | 新增分钟 | 未排分钟 | 覆盖率 | 违规 |
+| ID | Scenario | Category | Result | Status | New minutes | Unplaced minutes | Coverage | Violations |
 |---|---|---|---|---|---|---|---|---|
-| S01 | 单任务常规 | basic | 通过 | feasible | 120 | 0 | 100% | 0 |
-| S02 | 每日上限把工作分到多天 | daily_cap | 通过 | feasible | 300 | 0 | 100% | 0 |
-| S03 | 截止缓冲内放不下最后 15 分钟 | deadline_buffer | 通过 | needs_adjustment | 105 | 15 | 88% | 0 |
-| S04 | 容量明显不足 | infeasible | 通过 | infeasible | 240 | 360 | 40% | 0 |
-| S05 | 碎片空档 | fragmented_free_time | 通过 | infeasible | 30 | 90 | 25% | 0 |
-| S06 | 当天已完成部分工作 | progress_today | 通过 | feasible | 240 | 0 | 100% | 0 |
-| S07 | 已有本任务学习块 | written_blocks | 通过 | feasible | 60 | 0 | 100% | 0 |
-| S08 | 重复生成与保存后再生成 | repeat_generation | 通过 | feasible | 60 | 0 | 100% | 0 |
-| S09 | 其他任务的学习块占用时间和额度 | written_blocks | 通过 | feasible | 120 | 0 | 100% | 0 |
-| S10 | 剩余不足 30 分钟的任务 | short_remainders | 通过 | feasible | 20 | 0 | 100% | 0 |
-| S11 | 短尾并入前一段 | short_remainders | 通过 | feasible | 80 | 0 | 100% | 0 |
-| S12 | 跨天的短尾 | short_remainders | 通过 | feasible | 135 | 0 | 100% | 0 |
-| S13 | 日历读取失败 | calendar_failure | 通过 | needs_information | 0 | 60 | 0% | 0 |
-| S14 | 密集截止（可行） | dense_deadlines | 通过 | feasible | 240 | 0 | 100% | 0 |
-| S15 | 密集截止（不可行） | dense_deadlines | 通过 | infeasible | 120 | 120 | 50% | 0 |
-| S16 | 每周弹性时间 | weekly_flex | 通过 | feasible | 240 | 0 | 100% | 0 |
-| S17 | 被占用的上午 | busy_calendar | 通过 | feasible | 60 | 0 | 100% | 0 |
-| S18 | 傍晚时间不够，不排到深夜 | infeasible | 通过 | infeasible | 105 | 75 | 58% | 0 |
-| S19 | 当天额度已用完 | progress_today | 通过 | feasible | 60 | 0 | 100% | 0 |
-| S20 | 已完成与已写入学习块同时占用额度 | progress_today | 通过 | feasible | 120 | 0 | 100% | 0 |
-| S21 | 已写入块后只剩不足 30 分钟 | short_remainders | 通过 | feasible | 25 | 0 | 100% | 0 |
-| S22 | 多任务：时段颗粒造成的真实缺口 | dense_deadlines | 通过 | needs_adjustment | 400 | 10 | 98% | 0 |
-| S23 | 多任务：换安排顺序才能全部排下 | dense_deadlines | 通过 | feasible | 475 | 0 | 100% | 0 |
-| S24 | 比休息还短的会议 | busy_calendar | 通过 | feasible | 120 | 0 | 100% | 0 |
-| S25 | 单个任务每日上限 | task_cap | 通过 | feasible | 300 | 0 | 100% | 0 |
-| S26 | 两个任务同一天各自不超过单任务上限 | task_cap | 通过 | feasible | 300 | 0 | 100% | 0 |
-| S27 | 单任务上限下截止前排不下（可证明） | task_cap | 通过 | infeasible | 240 | 60 | 80% | 0 |
+| S01 | Standard single task | basic | Pass | feasible | 120 | 0 | 100% | 0 |
+| S02 | Daily cap spreads work across days | daily_cap | Pass | feasible | 300 | 0 | 100% | 0 |
+| S03 | Deadline buffer leaves 15 minutes unplaced | deadline_buffer | Pass | needs_adjustment | 105 | 15 | 88% | 0 |
+| S04 | Insufficient total capacity | infeasible | Pass | infeasible | 240 | 360 | 40% | 0 |
+| S05 | Fragmented free intervals | fragmented_free_time | Pass | infeasible | 30 | 90 | 25% | 0 |
+| S06 | Work already completed today | progress_today | Pass | feasible | 240 | 0 | 100% | 0 |
+| S07 | Existing study block for the selected task | written_blocks | Pass | feasible | 60 | 0 | 100% | 0 |
+| S08 | Repeat generation and generation after saving | repeat_generation | Pass | feasible | 60 | 0 | 100% | 0 |
+| S09 | Other tasks consume time and daily allowance | written_blocks | Pass | feasible | 120 | 0 | 100% | 0 |
+| S10 | Task with less than 30 minutes remaining | short_remainders | Pass | feasible | 20 | 0 | 100% | 0 |
+| S11 | Merge a short remainder into the preceding session | short_remainders | Pass | feasible | 80 | 0 | 100% | 0 |
+| S12 | Short remainder across days | short_remainders | Pass | feasible | 135 | 0 | 100% | 0 |
+| S13 | Calendar read failure | calendar_failure | Pass | needs_information | 0 | 60 | 0% | 0 |
+| S14 | Dense deadlines: feasible | dense_deadlines | Pass | feasible | 240 | 0 | 100% | 0 |
+| S15 | Dense deadlines: infeasible | dense_deadlines | Pass | infeasible | 120 | 120 | 50% | 0 |
+| S16 | Weekly flex time | weekly_flex | Pass | feasible | 240 | 0 | 100% | 0 |
+| S17 | Busy morning | busy_calendar | Pass | feasible | 60 | 0 | 100% | 0 |
+| S18 | Insufficient evening time without late-night scheduling | infeasible | Pass | infeasible | 105 | 75 | 58% | 0 |
+| S19 | Daily allowance already exhausted | progress_today | Pass | feasible | 60 | 0 | 100% | 0 |
+| S20 | Completed work and written blocks both consume the cap | progress_today | Pass | feasible | 120 | 0 | 100% | 0 |
+| S21 | Short remainder after a written block | short_remainders | Pass | feasible | 25 | 0 | 100% | 0 |
+| S22 | Multiple tasks: unavoidable gap from session granularity | dense_deadlines | Pass | needs_adjustment | 400 | 10 | 98% | 0 |
+| S23 | Multiple tasks: a different ordering fits all work | dense_deadlines | Pass | feasible | 475 | 0 | 100% | 0 |
+| S24 | Meeting shorter than the required break | busy_calendar | Pass | feasible | 120 | 0 | 100% | 0 |
+| S25 | Per-task daily cap | task_cap | Pass | feasible | 300 | 0 | 100% | 0 |
+| S26 | Two tasks each respect the per-task daily cap | task_cap | Pass | feasible | 300 | 0 | 100% | 0 |
+| S27 | Provable infeasibility under the per-task daily cap | task_cap | Pass | infeasible | 240 | 60 | 80% | 0 |
 
 ## Random Scenarios: Summary
 
-- 状态分布：{'feasible': 117, 'infeasible': 75, 'needs_adjustment': 3, 'needs_information': 5}
-- 硬性规则违规：{'overlaps_busy': 0, 'overlaps_flex': 0, 'overlaps_sessions': 0, 'break_violations': 0, 'daily_cap_exceeded': 0, 'buffer_violations': 0, 'outside_window': 0, 'short_sessions': 0, 'task_cap_exceeded': 0}（出现违规的场景 0 组）
-- 未安排分钟合计：11095（78 组有未安排）
-- 覆盖率：平均 0.8751，最低 0.3，P10 0.5648
-- 单任务场景与独立穷举最优解对比：53/53 达到最优，差距合计 0 分钟
-- 未证明不可行却有未安排（可能是真的放不下，也可能是算法缺口，需人工看）：3 组，例如 R022, R081, R182
+- Status distribution: {'feasible': 117, 'infeasible': 75, 'needs_adjustment': 3, 'needs_information': 5}
+- Hard-rule violations: {'overlaps_busy': 0, 'overlaps_flex': 0, 'overlaps_sessions': 0, 'break_violations': 0, 'daily_cap_exceeded': 0, 'buffer_violations': 0, 'outside_window': 0, 'short_sessions': 0, 'task_cap_exceeded': 0} (0 scenarios with a violation)
+- Total unplaced minutes: 11095 (78 scenarios with unplaced work)
+- Coverage: mean 0.8751, minimum 0.3, P10 0.5648
+- Against the independently enumerated single-task optimum: 53/53 optimal; total gap 0 minutes
+- Unplaced work without proven infeasibility: 3 scenarios, including R022, R081, R182
 
-注：零违规不等于排得好（完全不安排也零违规），请同时看覆盖率和未安排分钟。固定场景的预期结果需人工复核。
-单任务最优解由评测代码独立穷举（逐个时间格），不调用排程器；多任务场景的整体最优是更大的组合问题，未做穷举。
+Zero violations alone do not establish plan quality: an empty plan also has none. Read coverage and unplaced work together. The fixed cases use AI-drafted, rule-derived expected answers. The project reviewer reviewed the Chinese summaries of all 27 inputs and expected outcomes on 2026-11-12 and confirmed them as reasonable. This review followed the saved runs.
+The single-task optimum is enumerated independently of the planner. Multi-task global optimality is not established; unproven shortfalls require further analysis.
 
 ## Conflict Repair (a new meeting added to the random scenarios)
 
-- 场景：191 组（其中新会议碰到已写入学习块的 4 组，推荐方案都给出了移动：4 组）
-- 推荐方案的硬性规则违规（独立检查，含新会议）：0
-- 完全解决（无未安排）：113/191；未安排不比加会议前更多：185/191
-- 未安排不比“整周从头重排”更多：191/191
-- 排进同样多工作的 189 组中，平均改动的学习块：推荐方案 1.29，整周从头重排 1.67；推荐方案改动不多于从头重排的有 189 组
-- 推荐方案的策略分布：{'replan': 5, 'shift': 183, 'yield_later': 3}
-- 推荐方案放宽了你的规则：0 组；额外提供“放宽规则能多排多少”的方案：77 组；放宽却并没多排的：0 组
+- Scenarios: 191; meetings hit written blocks in 4, with a move offered in 4
+- Independently checked hard-rule violations in the recommended repair, including the new meeting: 0
+- Fully resolved: 113/191; no more unplaced work than before the meeting: 185/191
+- No more unplaced work than a full re-plan: 191/191
+- For the 189 cases with equal work placed, mean blocks changed: recommended 1.29, full re-plan 1.67; recommended repair changed no more blocks in 189 cases
+- Recommended strategy distribution: {'replan': 5, 'shift': 183, 'yield_later': 3}
+- Recommended repairs that relaxed a rule: 0; cases with additional rule-relaxing alternatives: 77; relaxations without additional work placed: 0
 
-注：会议可能真的占掉了截止前唯一的空闲时间，所以“完全解决”不是 100% 也可能是对的；关键是不比加会议前、也不比从头重排更差，同时改动更少。
+A meeting may remove the only free time before a deadline. Full resolution need not reach 100%; compare unplaced work and the number of changed blocks with both baselines.
 
 ## Estimate Calibration (simulated, not real student data)
 
-- 200 个模拟学生，每人依次完成 8 个任务；三类各占三分之一，真实用时/估计的偏差范围 {'accurate': [1.0, 1.0], 'under': [1.2, 1.6], 'over': [0.6, 0.85]}，每个任务另有随机波动（对数标准差 0.2）
-- 每个任务开始前，校准规则只看到该学生之前完成的任务；“校准后”假设学生接受了每条建议
-- 前 3 个任务没有任何建议：是
-- 全部可给建议的任务：估计误差中位数 24.2% → 17.8%
+- 200 simulated students, 8 consecutive tasks each; three equally represented groups, actual/estimated ratios {'accurate': [1.0, 1.0], 'under': [1.2, 1.6], 'over': [0.6, 0.85]}, with per-task log-normal noise SD 0.2
+- Each suggestion uses only earlier completed tasks; the calibrated condition assumes every suggestion is accepted
+- No suggestions for the first three tasks: yes
+- Across eligible tasks, median estimate error: 24.2% -> 17.8%
 
-| 学生类型 | 任务数 | 给出建议 | 误差中位数（原始 → 校准后） | 估计少于实际 80% 的任务（原始 → 校准后） |
+| Student group | Tasks | Suggestions | Median error (original -> calibrated) | Tasks estimated below 80% of actual time (original -> calibrated) |
 |---|---|---|---|---|
-| 估计准确的学生 | 335 | 63 | 14.1% → 14.0% | 43 → 36 |
-| 习惯低估的学生 | 335 | 311 | 26.4% → 15.7% | 226 → 60 |
-| 习惯高估的学生 | 330 | 172 | 38.3% → 28.0% | 3 → 6 |
+| Accurate estimators | 335 | 63 | 14.1% -> 14.0% | 43 -> 36 |
+| Habitual underestimators | 335 | 311 | 26.4% -> 15.7% | 226 -> 60 |
+| Habitual overestimators | 330 | 172 | 38.3% -> 28.0% | 3 -> 6 |
 
-注：缩短估计需要至少 5 个已完成任务，并且只缩一半差距，所以高估型学生的误差改善较少，但由此新增的明显低估很少（见最后一列；低估会导致赶不上截止）。参数是假设，用来检查规则的方向和安全性，不能当作真实准确率。
+Shortening needs at least five completed tasks and closes only half the gap, limiting new underestimates. These assumed populations test the direction and safety of the rules; the gains are not real-student accuracy.

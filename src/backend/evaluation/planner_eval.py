@@ -1,8 +1,8 @@
 """Repeatable evaluation of the study planner.
 
 Two parts:
-  * fixed scenarios (scenarios.json): inputs plus expected results written by hand from the rules, to be checked by
-    the group. They are compared with what the planner produced.
+  * fixed scenarios (scenarios.json): inputs plus AI-drafted expected results derived from the rules, with the
+    project reviewer's subsequent review recorded in that file. They are compared with planner outputs.
   * seeded scenarios: N inputs generated from a fixed random seed. They have no hand-written expectations; they
     are scored on hard-rule violations and on how much of the demand was actually scheduled.
 
@@ -13,6 +13,7 @@ always reported next to them.
 from __future__ import annotations
 
 import json
+import hashlib
 import math
 import random
 from dataclasses import asdict, dataclass, field
@@ -517,62 +518,72 @@ def build_report(n: int = 200, seed: int = SEED) -> dict:
 
 def markdown(rep: dict) -> str:
     f, s = rep["fixed"], rep["seeded"]
-    lines = ["# Planner Evaluation", "", f"- 生成时间：{rep['generated_at']}（结构版本 {rep['schema_version']}）",
-             f"- 固定场景：{f['passed']}/{f['total']} 通过" + (f"；未通过：{', '.join(f['failed'])}" if f["failed"] else ""),
-             f"- 已知缺口（预期按规则写，当前算法未达到）：{', '.join(f['known_gaps']) or '无'}",
-             f"- 随机场景：{s['count']} 组，种子 {s['seed']}", "",
-             "## Fixed Scenarios", "", "| 编号 | 场景 | 类别 | 结果 | 状态 | 新增分钟 | 未排分钟 | 覆盖率 | 违规 |",
+    case_data = json.loads(SCENARIOS.read_text(encoding="utf-8"))
+    review = case_data.get("review") or {}
+    case_hash = hashlib.sha256(json.dumps(case_data["scenarios"], ensure_ascii=False, sort_keys=True,
+                                         separators=(",", ":")).encode("utf-8")).hexdigest()
+    reviewed = (review.get("status") == "human_reviewed" and bool(case_data.get("reviewed_by"))
+                and review.get("scenarios_sha256") == case_hash
+                and review.get("scenario_ids") == [x["id"] for x in f["results"]])
+    review_note = (f"The project reviewer reviewed the Chinese summaries of all {f['total']} inputs and expected outcomes "
+                   f"on {review['reviewed_on']} and confirmed them as reasonable. This review followed the saved runs."
+                   if reviewed else "No matching human-review record is available for these expected outcomes.")
+    lines = ["# Planner Evaluation", "", f"- Generated: {rep['generated_at']} (schema {rep['schema_version']})",
+             f"- Fixed scenarios: {f['passed']}/{f['total']} passed" + (f"; failed: {', '.join(f['failed'])}" if f["failed"] else ""),
+             f"- Known algorithm gaps against rule-derived expectations: {', '.join(f['known_gaps']) or 'none'}",
+             f"- Seeded scenarios: {s['count']}, seed {s['seed']}", "",
+             "## Fixed Scenarios", "", "| ID | Scenario | Category | Result | Status | New minutes | Unplaced minutes | Coverage | Violations |",
              "|---|---|---|---|---|---|---|---|---|"]
     for x in f["results"]:
         m = x["metrics"]
-        mark = "通过" if x["passed"] else ("已知缺口" if x["known_gap"] else "**未通过**")
+        mark = "Pass" if x["passed"] else ("Known gap" if x["known_gap"] else "**Fail**")
         lines.append(f"| {x['id']} | {x['title']} | {x['category']} | {mark} | {m['status']} | {m['planned_new']} | "
                      f"{m['unplaced']} | {m['coverage']:.0%} | {sum(m[k] for k in ('overlaps_busy', 'overlaps_flex', 'overlaps_sessions', 'break_violations', 'daily_cap_exceeded', 'buffer_violations', 'outside_window', 'short_sessions', 'task_cap_exceeded'))} |")
     for x in f["results"]:
         bad = [c for c in x["checks"] if not c["ok"]]
         if bad:
-            lines += ["", f"**{x['id']} 不一致项**：" + "；".join(f"{c['check']} 预期 {c['expected']}，实际 {c['actual']}" for c in bad)]
+            lines += ["", f"**{x['id']} mismatches**: " + "; ".join(f"{c['check']} expected {c['expected']}, actual {c['actual']}" for c in bad)]
             if x["known_gap"]:
-                lines.append(f"说明：{x['known_gap']}")
-    lines += ["", "## Random Scenarios: Summary", "", f"- 状态分布：{s['by_status']}",
-              f"- 硬性规则违规：{s['violations']}（出现违规的场景 {s['scenarios_with_any_violation']} 组）",
-              f"- 未安排分钟合计：{s['unplaced_minutes_total']}（{s['scenarios_with_unplaced']} 组有未安排）",
-              f"- 覆盖率：平均 {s['coverage']['mean']}，最低 {s['coverage']['min']}，P10 {s['coverage']['p10']}",
-              f"- 单任务场景与独立穷举最优解对比：{s['single_task_optimality']['optimal']}/{s['single_task_optimality']['checked']} 达到最优，"
-              f"差距合计 {s['single_task_optimality']['gap_minutes']} 分钟"
-              + (f"（{', '.join(s['single_task_optimality']['gaps'][:10])}）" if s['single_task_optimality']['gaps'] else ""),
-              f"- 未证明不可行却有未安排（可能是真的放不下，也可能是算法缺口，需人工看）：{len(s['heuristic_gaps'])} 组"
-              + (f"，例如 {', '.join(s['heuristic_gaps'][:10])}" if s["heuristic_gaps"] else ""),
-              "", "注：零违规不等于排得好（完全不安排也零违规），请同时看覆盖率和未安排分钟。固定场景的预期结果需人工复核。",
-              "单任务最优解由评测代码独立穷举（逐个时间格），不调用排程器；多任务场景的整体最优是更大的组合问题，未做穷举。"]
+                lines.append(f"Note: {x['known_gap']}")
+    lines += ["", "## Random Scenarios: Summary", "", f"- Status distribution: {s['by_status']}",
+              f"- Hard-rule violations: {s['violations']} ({s['scenarios_with_any_violation']} scenarios with a violation)",
+              f"- Total unplaced minutes: {s['unplaced_minutes_total']} ({s['scenarios_with_unplaced']} scenarios with unplaced work)",
+              f"- Coverage: mean {s['coverage']['mean']}, minimum {s['coverage']['min']}, P10 {s['coverage']['p10']}",
+              f"- Against the independently enumerated single-task optimum: {s['single_task_optimality']['optimal']}/{s['single_task_optimality']['checked']} optimal; "
+              f"total gap {s['single_task_optimality']['gap_minutes']} minutes"
+              + (f" ({', '.join(s['single_task_optimality']['gaps'][:10])})" if s['single_task_optimality']['gaps'] else ""),
+              f"- Unplaced work without proven infeasibility: {len(s['heuristic_gaps'])} scenarios"
+              + (f", including {', '.join(s['heuristic_gaps'][:10])}" if s["heuristic_gaps"] else ""),
+              "", "Zero violations alone do not establish plan quality: an empty plan also has none. Read coverage and unplaced work together. "
+              "The fixed cases use AI-drafted, rule-derived expected answers. " + review_note,
+              "The single-task optimum is enumerated independently of the planner. Multi-task global optimality is not established; unproven shortfalls require further analysis."]
     rp = rep.get("repairs")
     if rp:
         lines += ["", "## Conflict Repair (a new meeting added to the random scenarios)", "",
-                  f"- 场景：{rp['count']} 组（其中新会议碰到已写入学习块的 {rp['written_hits']} 组，推荐方案都给出了移动：{rp['written_moved']} 组）",
-                  f"- 推荐方案的硬性规则违规（独立检查，含新会议）：{rp['hard_violations']}",
-                  f"- 完全解决（无未安排）：{rp['fully_resolved']}/{rp['count']}；未安排不比加会议前更多：{rp['no_worse_than_before']}/{rp['count']}",
-                  f"- 未安排不比“整周从头重排”更多：{rp['no_worse_than_full_replan']}/{rp['count']}",
-                  f"- 排进同样多工作的 {rp['same_unmet_as_full_replan']} 组中，平均改动的学习块：推荐方案 {rp['avg_changed']}，"
-                  f"整周从头重排 {rp['avg_changed_full_replan']}；推荐方案改动不多于从头重排的有 {rp['fewer_or_equal_changes']} 组",
-                  f"- 推荐方案的策略分布：{rp['by_strategy']}",
-                  f"- 推荐方案放宽了你的规则：{rp['relaxed_recommended']} 组；"
-                  f"额外提供“放宽规则能多排多少”的方案：{rp['relaxed_offered']} 组；放宽却并没多排的：{rp['relaxed_needlessly']} 组",
-                  "", "注：会议可能真的占掉了截止前唯一的空闲时间，所以“完全解决”不是 100% 也可能是对的；"
-                  "关键是不比加会议前、也不比从头重排更差，同时改动更少。"]
+                  f"- Scenarios: {rp['count']}; meetings hit written blocks in {rp['written_hits']}, with a move offered in {rp['written_moved']}",
+                  f"- Independently checked hard-rule violations in the recommended repair, including the new meeting: {rp['hard_violations']}",
+                  f"- Fully resolved: {rp['fully_resolved']}/{rp['count']}; no more unplaced work than before the meeting: {rp['no_worse_than_before']}/{rp['count']}",
+                  f"- No more unplaced work than a full re-plan: {rp['no_worse_than_full_replan']}/{rp['count']}",
+                  f"- For the {rp['same_unmet_as_full_replan']} cases with equal work placed, mean blocks changed: recommended {rp['avg_changed']}, "
+                  f"full re-plan {rp['avg_changed_full_replan']}; recommended repair changed no more blocks in {rp['fewer_or_equal_changes']} cases",
+                  f"- Recommended strategy distribution: {rp['by_strategy']}",
+                  f"- Recommended repairs that relaxed a rule: {rp['relaxed_recommended']}; "
+                  f"cases with additional rule-relaxing alternatives: {rp['relaxed_offered']}; relaxations without additional work placed: {rp['relaxed_needlessly']}",
+                  "", "A meeting may remove the only free time before a deadline. Full resolution need not reach 100%; compare unplaced work and the number of changed blocks with both baselines."]
     cal = rep.get("calibration")
     if cal:
-        names = {"accurate": "估计准确的学生", "under": "习惯低估的学生", "over": "习惯高估的学生"}
+        names = {"accurate": "Accurate estimators", "under": "Habitual underestimators", "over": "Habitual overestimators"}
         lines += ["", "## Estimate Calibration (simulated, not real student data)", "",
-                  f"- {cal['students']} 个模拟学生，每人依次完成 {cal['tasks_per_student']} 个任务；三类各占三分之一，"
-                  f"真实用时/估计的偏差范围 {cal['groups']}，每个任务另有随机波动（对数标准差 {cal['noise_sd']}）",
-                  "- 每个任务开始前，校准规则只看到该学生之前完成的任务；“校准后”假设学生接受了每条建议",
-                  "- 前 3 个任务没有任何建议：" + ("是" if cal["first_tasks_without_suggestion"] else "否"),
-                  f"- 全部可给建议的任务：估计误差中位数 {cal['raw_median_error']:.1%} → {cal['calibrated_median_error']:.1%}", "",
-                  "| 学生类型 | 任务数 | 给出建议 | 误差中位数（原始 → 校准后） | 估计少于实际 80% 的任务（原始 → 校准后） |",
+                  f"- {cal['students']} simulated students, {cal['tasks_per_student']} consecutive tasks each; three equally represented groups, "
+                  f"actual/estimated ratios {cal['groups']}, with per-task log-normal noise SD {cal['noise_sd']}",
+                  "- Each suggestion uses only earlier completed tasks; the calibrated condition assumes every suggestion is accepted",
+                  "- No suggestions for the first three tasks: " + ("yes" if cal["first_tasks_without_suggestion"] else "no"),
+                  f"- Across eligible tasks, median estimate error: {cal['raw_median_error']:.1%} -> {cal['calibrated_median_error']:.1%}", "",
+                  "| Student group | Tasks | Suggestions | Median error (original -> calibrated) | Tasks estimated below 80% of actual time (original -> calibrated) |",
                   "|---|---|---|---|---|"]
         for g, v in cal["by_group"].items():
-            lines.append(f"| {names[g]} | {v['tasks']} | {v['suggested']} | {v['raw_median_error']:.1%} → {v['calibrated_median_error']:.1%} | "
-                         f"{v['raw_underestimated']} → {v['calibrated_underestimated']} |")
-        lines += ["", "注：缩短估计需要至少 5 个已完成任务，并且只缩一半差距，所以高估型学生的误差改善较少，"
-                  "但由此新增的明显低估很少（见最后一列；低估会导致赶不上截止）。参数是假设，用来检查规则的方向和安全性，不能当作真实准确率。"]
+            lines.append(f"| {names[g]} | {v['tasks']} | {v['suggested']} | {v['raw_median_error']:.1%} -> {v['calibrated_median_error']:.1%} | "
+                         f"{v['raw_underestimated']} -> {v['calibrated_underestimated']} |")
+        lines += ["", "Shortening needs at least five completed tasks and closes only half the gap, limiting new underestimates. "
+                  "These assumed populations test the direction and safety of the rules; the gains are not real-student accuracy."]
     return "\n".join(lines) + "\n"

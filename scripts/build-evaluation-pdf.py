@@ -1,10 +1,10 @@
-"""Build docs/evaluation/Evaluation.pdf from RESULTS.md, and Slide_brief.pdf from SLIDE_BRIEF.md.
+"""Build docs/evaluation/Evaluation.pdf from RESULTS.md.
 
     python3 scripts/build-evaluation-pdf.py
 
 Needs pandoc and Chrome, Chromium or Edge (used headless, with a throwaway profile).
 Use --browser PATH or CHROME_PATH to override browser discovery. The text of each PDF is the Markdown file
-itself; only the title block of the report is changed. Re-run after editing either file.
+itself; only the title block of the report is changed. Re-run after editing the report.
 """
 from __future__ import annotations
 
@@ -19,7 +19,7 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[1]
 SRC = ROOT / "docs" / "evaluation" / "RESULTS.md"
 OUT = ROOT / "docs" / "evaluation" / "Evaluation.pdf"
-OLD_HEAD = "# Evaluation results - Student Work Assistant (Group 09, Track 4)\n\nDraft for `Evaluation.pdf`. Run on"
+OLD_HEAD = "# Evaluation results - Student Work Assistant (Group 09, Track 4)\n\nRun on"
 NEW_HEAD = ("# Evaluation\n\n<p class=\"subtitle\">Student Work Assistant &middot; Group 09 &middot; "
             "Track 4, Student Productivity Agent</p>\n\nRun on")
 
@@ -34,7 +34,7 @@ h1 { font-size: 21pt; margin: 0 0 1pt; letter-spacing: -0.2pt; }
 .subtitle { color: #55626a; font-size: 10.5pt; margin: 0 0 9pt; }
 h2 { font-size: 13pt; margin: 15pt 0 5pt; padding-bottom: 2pt; border-bottom: 0.8pt solid #c9d1d8; break-after: avoid; }
 h3 { font-size: 10.8pt; margin: 11pt 0 4pt; break-after: avoid; }
-p { margin: 0 0 6pt; orphans: 3; widows: 3; }
+p { margin: 0 0 5pt; orphans: 3; widows: 3; }
 table { border-collapse: collapse; width: calc(100% - 1pt); margin: 5pt 0.5pt 9pt; font-size: 8.5pt; line-height: 1.34; }
 blockquote { margin: 4pt 0 8pt; padding: 5pt 10pt; border-left: 2.5pt solid #9fb3c2; background: #f5f7f9; }
 blockquote p { margin: 0; }
@@ -48,7 +48,7 @@ p:has(+ table), h3 + p { break-after: avoid; } /* the line that introduces a tab
 code { font: 8pt "SF Mono", Menlo, Consolas, monospace; background: #f1f4f6; padding: 0 1.8pt; border-radius: 2pt;
        overflow-wrap: anywhere; }
 ol, ul { margin: 0 0 6pt; padding-left: 15pt; }
-li { margin-bottom: 4.5pt; }
+li { margin-bottom: 3pt; }
 li > p { margin-bottom: 3pt; }
 strong { font-weight: 600; }
 """
@@ -108,10 +108,6 @@ def main() -> int:
         print("RESULTS.md no longer starts with the expected title block; update OLD_HEAD in this script")
         return 1
     rc = render(text.replace(OLD_HEAD, NEW_HEAD, 1), OUT, "Evaluation - Student Work Assistant (Group 09, Track 4)", "Evaluation", browser)
-    brief = SRC.with_name("SLIDE_BRIEF.md")
-    if rc == 0 and brief.is_file():
-        rc = render(brief.read_text(encoding="utf-8"), SRC.with_name("Slide_brief.pdf"),
-                    "Evaluation - brief for the slides (Group 09)", "Slide brief", browser)
     return rc
 
 

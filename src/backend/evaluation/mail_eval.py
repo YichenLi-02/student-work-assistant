@@ -521,7 +521,7 @@ def score_deadlines(key: dict, preds: dict) -> dict:
             failures.append({"kind": "missed_deadline", "detail": it["status"], "mail": sid, "deadline_id": it["deadline_id"],
                              "expected_dates": it["expected_dates"], "expected_times": it["expected_times"],
                              "anchor": it["anchor"], "analysis_failed": sid in failed,
-                             "got": {k: t.get(k) for k in ("title", "date", "time", "state", "model_status", "quote")} if t else None})
+                             "got": {k: t.get(k) for k in ("title", "title_en", "date", "time", "state", "model_status", "quote")} if t else None})
     for sid, t in tasks:
         if t["outcome"] in FALSE_POSITIVES:
             it = per[sid]["items"][t["item"]] if t.get("item") is not None else None
@@ -740,6 +740,31 @@ def _pct(r: dict | None) -> str:
     return f"{r['value']:.1%} ({r['k']}/{r['n']}" + (f", 95% CI {ci[0]:.0%}-{ci[1]:.0%})" if ci else ")")
 
 
+REPORT_TAGS_EN = {
+    "回复与行动并存": "Reply and action required",
+    "日期冲突与延期": "Date conflicts and extensions",
+    "相对日期与多任务": "Relative dates and multiple tasks",
+    "考试时间窗与重复": "Exam windows and duplicate notices",
+    "课程任务与截止日期": "Coursework tasks and deadlines",
+    "财务行政行动": "Financial and administrative action",
+    "需要回复": "Reply required",
+}
+
+
+REPORT_QUOTES_EN = {
+    "明晚8点": "tomorrow at 8 pm",
+    "11月10日下午2点": "10 November at 2 pm",
+    "请在周四前填写报名表": "please complete the registration form before Thursday",
+    "本周六（10月24日）下午3点": "this Saturday (24 October) at 3 pm",
+}
+
+
+def _report_quote(text: str) -> str:
+    original = f'"{text}"'
+    english = REPORT_QUOTES_EN.get(text)
+    return original + (f' (English: "{english}")' if english else "")
+
+
 def markdown(name: str, rep: dict) -> str:
     t, d, b, ak = rep["triage"], rep["deadlines"], rep["baseline"], rep["answer_key"]
     L = [f"# Mail evaluation - {name}", "",
@@ -797,7 +822,7 @@ def markdown(name: str, rep: dict) -> str:
           f"- Time zone on correctly dated tasks: {d['timezone'] or 'n/a'}"]
     for dim, vals in d["recall_by_group"].items():
         L += ["", f"Recall (each mail on its own) by {dim}", "", f"| {dim} | Recall |", "|---|---|"]
-        L += [f"| {v} | {_pct(x)} |" for v, x in vals.items()]
+        L += [f"| {REPORT_TAGS_EN.get(v, v)} | {_pct(x)} |" for v, x in vals.items()]
     p = rep["privacy"]
     if p["planted"]:
         L += ["", "## Data minimisation", "",
@@ -811,12 +836,12 @@ def markdown(name: str, rep: dict) -> str:
         if f["kind"] == "missed_deadline":
             got = f["got"]
             L.append(f"- `{f['mail']}` {f['detail']}: expected {f['expected_dates']} {f['expected_times']} (\"{f['anchor']}\")"
-                     + (f"; got {got['date']} {got['time']} \"{got['title']}\" [{got['state']}]" if got else "")
+                     + (f"; got {got['date']} {got['time']} \"{got.get('title_en') or got['title']}\" [{got['state']}]" if got else "")
                      + (" [analysis failed]" if f["analysis_failed"] else ""))
         else:
             tk, it = f["task"], f["item"]
             L.append(f"- `{f['mail']}` {f['detail']}: task \"{tk['title_en'] or tk['title']}\" {tk['date']} {tk['time']}"
-                     + (f" from {it['role']}" + (f"/{it['kind']}" if it.get("kind") else "") + f" \"{it['anchor']}\"" if it else "")
+                     + (f" from {it['role']}" + (f"/{it['kind']}" if it.get("kind") else "") + f" {_report_quote(it['anchor'])}" if it else "")
                      + (f" (first seen in {f['first_seen_in']})" if f.get("first_seen_in") else ""))
     return "\n".join(L) + "\n"
 

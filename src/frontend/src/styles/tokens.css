@@ -1,5 +1,5 @@
 /* Design tokens. Colours are the offline prototype's palette (软件设计与AI工作流/ui/index.html), unchanged;
-   the scales below were added in the Refactoring UI pass (docs/UI_AUDIT.md). Components use only these. */
+   the scales below are shared by all components. */
 :root{
   /* colour - neutrals: light steps blue-grey (hue ~215, chosen 2026-10-20); dark text greys unchanged */
   --bg:#eef2f7;

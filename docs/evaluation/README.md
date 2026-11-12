@@ -8,7 +8,7 @@ These are historical model results, not a fresh measurement of the current code.
 
 | Path | What it is |
 |---|---|
-| `RESULTS.md` | The written evaluation: measures, how the sets were built, results by category, 15 failure cases, next steps |
+| `RESULTS.md` | The written evaluation: measures, how the sets were built, results by category, 14 failure cases, next steps |
 | `PROVENANCE.md`, `baseline-code.json` | Public baseline mapping, per-file source hashes and post-evaluation changes |
 | `results/mail_summary.md` | Triage and deadline numbers for every run side by side |
 | `results/mail_<set>_run<n>.report.md` | One run in full: tables, confusion matrices and every single error |
@@ -18,6 +18,12 @@ These are historical model results, not a fresh measurement of the current code.
 | `../../data/synthetic/mail_eval_v1/` | The 80 fictional mails, their answer key and the labelling rules |
 | `../../src/backend/evaluation/` | `mail_eval.py`, `safety_eval.py`, `planner_eval.py` |
 | `../../src/backend/tests/test_mail_eval_scoring.py` | Tests of the scorer itself |
+
+## Tests, evaluation and expected answers
+
+`src/backend/tests/` checks application behaviour and regressions using temporary data and simulated providers. Mail evaluation compares outputs with reviewed labels; planning evaluation checks constraints, coverage and expected outcomes; safety evaluation checks approval boundaries and failure handling. These files are part of the reproducible submission evidence.
+
+The 27 fixed planning scenarios in `src/backend/evaluation/scenarios.json` contain tasks, deadlines, calendar conflicts, preferences and rule-derived expected results. S02, for example, splits 300 minutes across days as 120 + 120 + 60 under a 120-minute daily cap. All 27 pass the automated checks. Their expectations were AI-drafted from the rules. On 12 November 2026, the project reviewer checked the Chinese case-by-case summaries of all 27 inputs and expected outcomes and confirmed them as reasonable; reviewer, date, scope and case hash are recorded in `scenarios.json`. The 200 seeded cases, separate constraint checker and single-task exhaustive search provide complementary evidence.
 
 ## Reproduce
 

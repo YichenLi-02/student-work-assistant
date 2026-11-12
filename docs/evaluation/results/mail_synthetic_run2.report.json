@@ -1173,6 +1173,7 @@
     "analysis_failed": false,
     "got": {
      "title": "提交实验 3 报告和 docker-compose 文件",
+     "title_en": "Submit the Lab 3 report and docker-compose file",
      "date": "2026-10-23",
      "time": "18:00",
      "state": "pending",
@@ -1195,6 +1196,7 @@
     "analysis_failed": false,
     "got": {
      "title": "回复并选择空调维修日期",
+     "title_en": "Reply and choose an air-con repair date",
      "date": null,
      "time": null,
      "state": "pending",

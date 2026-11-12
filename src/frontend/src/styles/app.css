@@ -17,7 +17,7 @@ html[lang=en] .mode.mode-note{display:inline}
 @media(max-width:950px){html[lang=en] .mode.mode-note,.mode.mode-note{display:none}}
 .account{max-width:min(560px,60vw);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 
-/* ---- Refactoring UI pass (rule IDs refer to the vendored skill, see docs/UI_AUDIT.md) ---- */
+/* ---- Shared component styles ---- */
 /* §2.4 / §8.5.1: "important" is carried by one cue (accent edge), not border + tint + red tag together.
    Red is reserved for real warnings (security, date conflicts). */
 .mail-card.important{border-left:3px solid var(--danger)}

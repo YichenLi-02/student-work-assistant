@@ -1,10 +1,49 @@
 {
- "about": "固定排程场景（27 个）。预期结果按规则手工推算（AI 起草，待组内复核），不是运行程序得到的。时间均为 Asia/Singapore 本地时间；起点 2026-11-09（周一）09:00。默认偏好：每天 09:00–21:00，每日上限 120 分钟，单段 30–90 分钟（目标 60），休息 15 分钟，截止前缓冲 120 分钟，每周弹性 0（S16 除外），单个任务每日上限不单独设置（S25–S27 除外；应用默认 120，与每日总上限相同时不起作用）。expected 只列需要核对的项；所有场景都额外检查硬性规则零违规。 单任务场景另与评测代码独立穷举出的最优解对比（reaches_independent_optimum）。",
- "reviewed_by": [],
+ "about": "27 fixed planning scenarios. Expected results are AI-drafted calculations from the stated rules, not outputs copied from the planner; the project reviewer reviewed all 27 input/expected-outcome summaries and confirmed them as reasonable on 12 November 2026. All times are Asia/Singapore, starting Monday 9 November 2026 at 09:00. Defaults: study hours 09:00-21:00, daily cap 120 minutes, sessions 30-90 minutes (target 60), breaks 15 minutes, deadline buffer 120 minutes, weekly flex 0 except S16 and S23. No separate per-task cap except S25-S27. Expected fields specify selected outcomes; every case also requires zero hard-rule violations. Single-task cases are compared with an independently enumerated optimum.",
+ "reviewed_by": [
+  "Project team member"
+ ],
+ "review": {
+  "status": "human_reviewed",
+  "reviewed_on": "2026-11-12",
+  "timezone": "Asia/Singapore",
+  "scope": "Inputs, common planning rules and expected outcomes of S01-S27",
+  "method": "A team member read case-by-case summaries of the inputs and expected outcomes and confirmed that all 27 were reasonable.",
+  "scenario_ids": [
+   "S01",
+   "S02",
+   "S03",
+   "S04",
+   "S05",
+   "S06",
+   "S07",
+   "S08",
+   "S09",
+   "S10",
+   "S11",
+   "S12",
+   "S13",
+   "S14",
+   "S15",
+   "S16",
+   "S17",
+   "S18",
+   "S19",
+   "S20",
+   "S21",
+   "S22",
+   "S23",
+   "S24",
+   "S25",
+   "S26",
+   "S27"
+  ],
+  "scenarios_sha256": "b1f897309980eaf66a1acd4b510f8776e2083669aa88383e8567fa928f4d49d3"
+ },
  "scenarios": [
   {
    "id": "S01",
-   "title": "单任务常规",
+   "title": "Standard single task",
    "category": "basic",
    "start": "2026-11-09T09:00",
    "days": 3,
@@ -32,11 +71,11 @@
      ]
     ]
    },
-   "note": "目标单段 60 分钟，两段之间休息 15 分钟，周一正好用满 120。"
+   "note": "Two 60-minute sessions with a 15-minute break use exactly 120 minutes on Monday."
   },
   {
    "id": "S02",
-   "title": "每日上限把工作分到多天",
+   "title": "Daily cap spreads work across days",
    "category": "daily_cap",
    "start": "2026-11-09T09:00",
    "days": 4,
@@ -56,11 +95,11 @@
      "2026-11-11": 60
     }
    },
-   "note": "每天最多 120，300 分钟应为 120+120+60。"
+   "note": "A 120-minute daily cap splits 300 minutes into 120 + 120 + 60."
   },
   {
    "id": "S03",
-   "title": "截止缓冲内放不下最后 15 分钟",
+   "title": "Deadline buffer leaves 15 minutes unplaced",
    "category": "deadline_buffer",
    "start": "2026-11-09T09:00",
    "days": 2,
@@ -88,11 +127,11 @@
      ]
     ]
    },
-   "note": "截止 13:00 减 120 分钟缓冲，只能排到 11:00；09:00–11:00 共 120 分钟，扣掉 15 分钟休息，又受单段 ≥30 限制，最多排 105。容量上界（不计休息）为 120，不能证明不可行，所以是 needs_adjustment 而不是 infeasible。"
+   "note": "The 13:00 cutoff minus a 120-minute buffer leaves 09:00-11:00. A 15-minute break allows 105 minutes of study. The capacity upper bound ignores breaks and is 120, so it cannot prove infeasibility: needs_adjustment is appropriate."
   },
   {
    "id": "S04",
-   "title": "容量明显不足",
+   "title": "Insufficient total capacity",
    "category": "infeasible",
    "start": "2026-11-09T09:00",
    "days": 2,
@@ -111,11 +150,11 @@
      "2026-11-10": 120
     }
    },
-   "note": "两天 × 120 = 240 < 600，已证明不可行；不得超过每日上限或排到 21:00 以后。"
+   "note": "Two days provide at most 240 minutes for 600 minutes of work. Infeasibility is proven; the daily cap and 21:00 boundary must not be exceeded."
   },
   {
    "id": "S05",
-   "title": "碎片空档",
+   "title": "Fragmented free intervals",
    "category": "fragmented_free_time",
    "start": "2026-11-09T09:00",
    "days": 1,
@@ -155,11 +194,11 @@
      ]
     ]
    },
-   "note": "空档为 20、25、20、30 分钟，只有 12:30–13:00 达到单段下限 30。空档合计 95 < 120，可证明不可行。"
+   "note": "Free intervals are 20, 25, 20 and 30 minutes. Only 12:30-13:00 meets the 30-minute minimum. Total free time is 95 < 120, proving infeasibility."
   },
   {
    "id": "S06",
-   "title": "当天已完成部分工作",
+   "title": "Work already completed today",
    "category": "progress_today",
    "start": "2026-11-09T09:00",
    "days": 3,
@@ -182,11 +221,11 @@
      "2026-11-11": 60
     }
    },
-   "note": "周一已完成 60，只剩 60 额度。"
+   "note": "On Monday, 60 completed minutes leave 60 minutes of daily allowance."
   },
   {
    "id": "S07",
-   "title": "已有本任务学习块",
+   "title": "Existing study block for the selected task",
    "category": "written_blocks",
    "start": "2026-11-09T09:00",
    "days": 3,
@@ -216,11 +255,11 @@
      ]
     ]
    },
-   "note": "已写入的 60 分钟保留并从待排量中扣除，只新增 60；新块与旧块之间保留 15 分钟休息。"
+   "note": "The existing 60-minute block is retained and deducted from remaining work. Add only 60 minutes, with a 15-minute break after the retained block."
   },
   {
    "id": "S08",
-   "title": "重复生成与保存后再生成",
+   "title": "Repeat generation and generation after saving",
    "category": "repeat_generation",
    "start": "2026-11-09T09:00",
    "days": 3,
@@ -244,11 +283,11 @@
      ]
     ]
    },
-   "note": "同样输入两次结果相同；把结果当作已写入后再生成，不应新增任何时段。"
+   "note": "Identical inputs produce identical plans. Treating the result as already written must leave no additional sessions to create."
   },
   {
    "id": "S09",
-   "title": "其他任务的学习块占用时间和额度",
+   "title": "Other tasks consume time and daily allowance",
    "category": "written_blocks",
    "start": "2026-11-09T09:00",
    "days": 3,
@@ -287,11 +326,11 @@
      ]
     ]
    },
-   "note": "B 的 90 分钟已写入（B 未被选择也要计入）：周一只剩 30 额度，从 10:45 开始；其余 90 排到周二。"
+   "note": "Task B consumes 90 minutes even though it is not selected. Only 30 minutes remain on Monday, starting at 10:45; the other 90 minutes go to Tuesday."
   },
   {
    "id": "S10",
-   "title": "剩余不足 30 分钟的任务",
+   "title": "Task with less than 30 minutes remaining",
    "category": "short_remainders",
    "start": "2026-11-09T09:00",
    "days": 2,
@@ -313,11 +352,11 @@
      ]
     ]
    },
-   "note": "整个任务只剩 20 分钟时，允许一段 20 分钟。"
+   "note": "A task with only 20 minutes remaining may use one 20-minute session."
   },
   {
    "id": "S11",
-   "title": "短尾并入前一段",
+   "title": "Merge a short remainder into the preceding session",
    "category": "short_remainders",
    "start": "2026-11-09T09:00",
    "days": 2,
@@ -342,11 +381,11 @@
      ]
     ]
    },
-   "note": "60 + 20 会留下 20 分钟短尾；80 ≤ 单段上限 90，应合并为一段 80。"
+   "note": "Two sessions of 60 and 20 would leave a short remainder. Since 80 is within the 90-minute maximum, use one 80-minute session."
   },
   {
    "id": "S12",
-   "title": "跨天的短尾",
+   "title": "Short remainder across days",
    "category": "short_remainders",
    "start": "2026-11-09T09:00",
    "days": 3,
@@ -383,11 +422,11 @@
      ]
     ]
    },
-   "note": "135 分钟按规则可以完整排下：周一 60+45（上限内），周二 30。若周一排满 60+60，剩下的 15 分钟短于单段下限、无处可放。预期取“前面的天尽量多、单段尽量接近 60 分钟”的排法。（此前的纯贪心算法在这里少排 15 分钟，已改进。）"
+   "note": "All 135 minutes fit as 60 + 45 on Monday and 30 on Tuesday. Filling Monday with 60 + 60 would strand a 15-minute remainder. Prefer earlier days and sessions close to the 60-minute target."
   },
   {
    "id": "S13",
-   "title": "日历读取失败",
+   "title": "Calendar read failure",
    "category": "calendar_failure",
    "start": "2026-11-09T09:00",
    "days": 3,
@@ -403,11 +442,11 @@
     "status": "needs_information",
     "planned_new": 0
    },
-   "note": "读取失败不能当作空闲，不生成任何时段。"
+   "note": "An unreadable calendar must not be treated as free time; generate no sessions."
   },
   {
    "id": "S14",
-   "title": "密集截止（可行）",
+   "title": "Dense deadlines: feasible",
    "category": "dense_deadlines",
    "start": "2026-11-09T09:00",
    "days": 2,
@@ -449,11 +488,11 @@
      ]
     ]
    },
-   "note": "截止早的 A 先排，用满周一；B 在周二 13:00（缓冲后）前排完。"
+   "note": "Schedule earlier-due task A on Monday. Task B finishes on Tuesday before its buffer-adjusted 13:00 boundary."
   },
   {
    "id": "S15",
-   "title": "密集截止（不可行）",
+   "title": "Dense deadlines: infeasible",
    "category": "dense_deadlines",
    "start": "2026-11-09T09:00",
    "days": 1,
@@ -474,11 +513,11 @@
     "unplaced": 120,
     "planned_new": 120
    },
-   "note": "同一天两个任务共需 240，上限 120，可证明不可行；先保证截止早的 A。"
+   "note": "Two tasks require 240 minutes on a day capped at 120. Infeasibility is proven; prioritise earlier-due task A."
   },
   {
    "id": "S16",
-   "title": "每周弹性时间",
+   "title": "Weekly flex time",
    "category": "weekly_flex",
    "start": "2026-11-09T09:00",
    "days": 5,
@@ -501,11 +540,11 @@
      "2026-11-10": 120
     }
    },
-   "note": "从本周最晚可用处（周五 19:00 前）预留 120 分钟弹性，不安排工作。"
+   "note": "Reserve 120 minutes of weekly flex time at the latest available position, ending before Friday 19:00; place no study work there."
   },
   {
    "id": "S17",
-   "title": "被占用的上午",
+   "title": "Busy morning",
    "category": "busy_calendar",
    "start": "2026-11-09T09:00",
    "days": 1,
@@ -533,11 +572,11 @@
      ]
     ]
    },
-   "note": "会议结束后才能开始。"
+   "note": "Study starts only after the morning meeting ends."
   },
   {
    "id": "S18",
-   "title": "傍晚时间不够，不排到深夜",
+   "title": "Insufficient evening time without late-night scheduling",
    "category": "infeasible",
    "start": "2026-11-09T09:00",
    "days": 1,
@@ -574,11 +613,11 @@
      ]
     ]
    },
-   "note": "缓冲后只能用 17:00–19:00 的 120 分钟，扣休息最多 105；容量 120 < 180，可证明不可行。"
+   "note": "The buffer leaves 17:00-19:00. After a break, at most 105 minutes fit. Even the 120-minute capacity upper bound is below the required 180, proving infeasibility."
   },
   {
    "id": "S19",
-   "title": "当天额度已用完",
+   "title": "Daily allowance already exhausted",
    "category": "progress_today",
    "start": "2026-11-09T09:00",
    "days": 2,
@@ -599,11 +638,11 @@
      "2026-11-10": 60
     }
    },
-   "note": "周一已完成 120，不再安排。"
+   "note": "Monday already has 120 completed minutes; schedule no more work that day."
   },
   {
    "id": "S20",
-   "title": "已完成与已写入学习块同时占用额度",
+   "title": "Completed work and written blocks both consume the cap",
    "category": "progress_today",
    "start": "2026-11-09T09:00",
    "days": 3,
@@ -632,11 +671,11 @@
      "2026-11-10": 90
     }
    },
-   "note": "周一已完成 30，加上已写入的 60，只剩 30 额度。"
+   "note": "Monday has 30 completed minutes and a 60-minute written block, leaving 30 minutes of allowance."
   },
   {
    "id": "S21",
-   "title": "已写入块后只剩不足 30 分钟",
+   "title": "Short remainder after a written block",
    "category": "short_remainders",
    "start": "2026-11-09T09:00",
    "days": 2,
@@ -665,11 +704,11 @@
      ]
     ]
    },
-   "note": "55 分钟里 30 分钟已写入，剩余 25 分钟不足单段下限，按规则允许一段 25 分钟。（随机场景 R022 发现：校验器曾按扣除前的 55 判断，把这段判为违规。）"
+   "note": "Of 55 remaining minutes, 30 are already written. The remaining 25 minutes may form one short session under the remainder rule."
   },
   {
    "id": "S22",
-   "title": "多任务：时段颗粒造成的真实缺口",
+   "title": "Multiple tasks: unavoidable gap from session granularity",
    "category": "dense_deadlines",
    "start": "2026-11-09T09:00",
    "days": 5,
@@ -737,11 +776,11 @@
      "2026-11-13": 90
     }
    },
-   "note": "来自随机场景 R081。T3（40 分钟）只能排在周一（周二 10:00 前只有 30 分钟空档），周一剩余额度 20 分钟不足一段，其余四天每天 90 分钟全部用满，合计最多 400/410，所以少 10 分钟是最优结果。容量上界不计单段长度，无法证明不可行，因此状态为需调整。"
+   "note": "From seeded case R081: T3 needs 40 minutes and must use Monday because Tuesday has only a 30-minute interval before 10:00. Monday then has a stranded 20-minute allowance; the other four days each use 90 minutes. At most 400 of 410 minutes fit. The capacity bound ignores session length, so the status remains needs_adjustment."
   },
   {
    "id": "S23",
-   "title": "多任务：换安排顺序才能全部排下",
+   "title": "Multiple tasks: a different ordering fits all work",
    "category": "dense_deadlines",
    "start": "2026-11-09T09:00",
    "days": 5,
@@ -807,11 +846,11 @@
     "unplaced": 0,
     "planned_new": 475
    },
-   "note": "来自随机场景 R119。按截止顺序，15 分钟的 T1 会占掉周二的一部分，剩下 25 分钟谁也用不了，最终少排 20 分钟。若周二给 T4 80 + T3 40、周三给 T1 15 + T3 105、周四给 T3 30 + T2 85，475 分钟可以全部排下。"
+   "note": "From seeded case R119: deadline ordering strands time on Tuesday. Assign T4 80 + T3 40 on Tuesday, T1 15 + T3 105 on Wednesday, and T3 30 + T2 85 on Thursday to fit all 475 minutes."
   },
   {
    "id": "S24",
-   "title": "比休息还短的会议",
+   "title": "Meeting shorter than the required break",
    "category": "busy_calendar",
    "start": "2026-11-09T09:00",
    "days": 1,
@@ -844,11 +883,11 @@
      ]
     ]
    },
-   "note": "10:00–10:10 的短会比 15 分钟休息还短：第二段必须等到 10:15，不能在会议一结束（10:10）就开始。（压力测试发现：原贪心在这里只隔 10 分钟，会被校验器判为休息不足。）"
+   "note": "A 10:00-10:10 meeting is shorter than the required 15-minute break. The next session starts at 10:15, rather than immediately at 10:10."
   },
   {
    "id": "S25",
-   "title": "单个任务每日上限",
+   "title": "Per-task daily cap",
    "category": "task_cap",
    "start": "2026-11-09T09:00",
    "days": 4,
@@ -873,11 +912,11 @@
      "2026-11-11": 60
     }
    },
-   "note": "每天总上限 240，但同一个任务每天最多 120：周一、周二各 120，周三 60，不会因为总上限更高就在一天排满。"
+   "note": "The total daily cap is 240 but task A is capped at 120 per day: schedule 120 on Monday, 120 on Tuesday and 60 on Wednesday."
   },
   {
    "id": "S26",
-   "title": "两个任务同一天各自不超过单任务上限",
+   "title": "Two tasks each respect the per-task daily cap",
    "category": "task_cap",
    "start": "2026-11-09T09:00",
    "days": 3,
@@ -933,11 +972,11 @@
      ]
     ]
    },
-   "note": "A 先截止：周一排满它的 120 后，剩下的当天额度给 B（B 也只能 120）；A 余下 60 分钟放到周二。"
+   "note": "Task A is due first. On Monday place its allowed 120 minutes, then at most 120 minutes of task B. Put the remaining 60 minutes of A on Tuesday."
   },
   {
    "id": "S27",
-   "title": "单任务上限下截止前排不下（可证明）",
+   "title": "Provable infeasibility under the per-task daily cap",
    "category": "task_cap",
    "start": "2026-11-09T09:00",
    "days": 2,
@@ -961,7 +1000,7 @@
      "2026-11-10": 120
     }
    },
-   "note": "截止缓冲后只剩周一、周二两天，每天最多 120，最多 240 < 300：可以证明排不下，报 infeasible 而不是悄悄超出上限。"
+   "note": "Only Monday and Tuesday remain before the buffer boundary. At 120 minutes per task per day, capacity is 240 < 300. Report infeasible rather than exceeding the cap."
   }
  ]
 }

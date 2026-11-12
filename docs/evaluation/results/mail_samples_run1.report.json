@@ -778,6 +778,7 @@
     "analysis_failed": false,
     "got": {
      "title": "提交期末项目",
+     "title_en": "Submit the final project",
      "date": "2025-12-06",
      "time": null,
      "state": "pending",
@@ -801,6 +802,7 @@
     "analysis_failed": false,
     "got": {
      "title": "提交迷你实验 5",
+     "title_en": "Submit mini lab 5",
      "date": "2025-12-06",
      "time": null,
      "state": "pending",

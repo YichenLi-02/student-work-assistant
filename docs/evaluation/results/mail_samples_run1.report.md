@@ -107,13 +107,13 @@ Recall (each mail on its own) by tag
 
 | tag | Recall |
 |---|---|
-| 回复与行动并存 | 100.0% (1/1, 95% CI 21%-100%) |
-| 日期冲突与延期 | 100.0% (2/2, 95% CI 34%-100%) |
-| 相对日期与多任务 | 62.5% (5/8, 95% CI 31%-86%) |
-| 考试时间窗与重复 | 100.0% (2/2, 95% CI 34%-100%) |
-| 课程任务与截止日期 | 100.0% (5/5, 95% CI 57%-100%) |
-| 财务行政行动 | 100.0% (2/2, 95% CI 34%-100%) |
-| 需要回复 | 100.0% (1/1, 95% CI 21%-100%) |
+| Reply and action required | 100.0% (1/1, 95% CI 21%-100%) |
+| Date conflicts and extensions | 100.0% (2/2, 95% CI 34%-100%) |
+| Relative dates and multiple tasks | 62.5% (5/8, 95% CI 31%-86%) |
+| Exam windows and duplicate notices | 100.0% (2/2, 95% CI 34%-100%) |
+| Coursework tasks and deadlines | 100.0% (5/5, 95% CI 57%-100%) |
+| Financial and administrative action | 100.0% (2/2, 95% CI 34%-100%) |
+| Reply required | 100.0% (1/1, 95% CI 21%-100%) |
 
 ## Every error
 
@@ -134,8 +134,8 @@ Triage (12):
 
 Deadlines (23):
 
-- `M04` wrong_date: expected ['2025-12-05', None] [None] ("both the final project and mini lab 5 are due today"); got 2025-12-06 None "提交期末项目" [pending]
-- `M04` wrong_date: expected ['2025-12-05', None] [None] ("both the final project and mini lab 5 are due today"); got 2025-12-06 None "提交迷你实验 5" [pending]
+- `M04` wrong_date: expected ['2025-12-05', None] [None] ("both the final project and mini lab 5 are due today"); got 2025-12-06 None "Submit the final project" [pending]
+- `M04` wrong_date: expected ['2025-12-05', None] [None] ("both the final project and mini lab 5 are due today"); got 2025-12-06 None "Submit mini lab 5" [pending]
 - `M05` missed: expected ['2025-12-05'] [None] ("Quiz 13 and 14 will later be released and remain open until 12/05.")
 - `M03` duplicate_across_mails: task "Submit the project results JSON file" 2025-12-06 23:59 from deadline "New deadline: Friday, Dec 6, 11:59 PM" (first seen in M01)
 - `M03` invented: task "Receive 0.5% extra credit for submitting by the original deadline" 2025-12-05 None

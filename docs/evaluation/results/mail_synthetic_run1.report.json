@@ -1226,6 +1226,7 @@
     "analysis_failed": false,
     "got": {
      "title": "提交 Lab 3 报告及 Docker Compose 文件",
+     "title_en": "Submit the Lab 3 report and Docker Compose file",
      "date": "2026-10-23",
      "time": "18:00",
      "state": "pending",

@@ -92,6 +92,6 @@ Rules for dates:
 
 - 2026-11-10: v1 created and frozen. No changes.
 - 2026-11-10: every mail and answer checked by a person. Two answers corrected: `synP01` ("offer ends ... at
-  midnight") and `synP07` ("0点前") now carry the time 00:00 instead of no time. Both are promotion end times
+  midnight") and `synP07` ("0点前", before midnight) now carry the time 00:00 instead of no time. Both are promotion end times
   (`non_task`), so no score changed. Frozen v1 hash of `labels.json` before this change:
   `22e27bb9df04836a7d2b117dfccabe350fb7a5eff28c8155c949abeba78fe704`; `MANIFEST.json` now records the new hash.

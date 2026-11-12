@@ -1,182 +1,104 @@
 # Student Work Assistant
 
-The runnable version of our DSS5105 Track 4 group project.
+DSS5105 Group 09, Track 4: a local assistant for mail triage, deadline extraction, study planning, group discussion summaries and reply drafts. A FastAPI/SQLite backend serves a React/TypeScript frontend. Every send and calendar write requires review and confirmation; offline actions are simulated.
 
-- **What it does:** organises mail, extracts tasks and deadlines, builds a study plan, summarises group discussions and drafts replies. Every send and calendar write must be reviewed and confirmed first. The offline version only simulates them.
-- **How it is built:** a FastAPI + SQLite backend and a React + TypeScript + Vite frontend. The backend and built frontend run on one machine; no hosted server is needed.
+## Requirements
 
-This guide covers setup from a clean checkout, offline use and optional service connections.
+- Python 3.12+ (tested on 3.14.7).
+- Node.js 20.19+ or 22.12+ and Git.
+- Chrome or Edge for the interface.
 
----
-
-## 1. Prepare your environment
-
-| Software | Version | Check with |
-|---|---|---|
-| Python | 3.12 or later (tested on 3.14.7) | `python --version` |
-| Node.js | 20.19 or later, or 22.12 or later | `node --version` |
-| Git | Any recent version | `git --version` |
-
-If something is missing, install Python from python.org (on Windows, tick "Add Python to PATH" during setup) and the LTS version of Node.js from nodejs.org.
-
-## 2. Get the code
+## Install and run
 
 ```bash
 git clone https://github.com/YichenLi-02/student-work-assistant.git
 cd student-work-assistant
 ```
 
-## 3. Sample data (already in the repo)
-
-The de-identified mail samples are in `data/samples_deidentified/`, so you get them when you clone and have nothing else to prepare. Schools, courses and names have been replaced with fictional ones, and mail addresses now use `example.invalid`. See `DEIDENTIFICATION.md` in that folder for details.
-
-There are **40 inbound messages and 10 sent-mail style references**, with 32 annotated time expressions from 24 messages. The data owner checked the 40 inbound labels on 10 November 2026. The reserved 21-message split was used during development and is not an unseen final test.
-
-The package guides, prompt design templates and offline browser interface are English. Source messages, exact evidence quotes, original reviewer notes, reference annotations and Chinese safety-test inputs retain their original language. `annotation_en.json` supplies English display translations; its Chinese lookup keys refer to the original labels. The original review workbook retains its Chinese headers and is not automatically synchronised with later JSONL corrections. Start with [the sample guide](data/samples_deidentified/GETTING_STARTED.md) or open `sample_browser.html` locally.
-
-> These samples are published with this public repository. De-identified does not mean fully anonymous: course content and date combinations could still indirectly identify someone. Use them only for demonstrating and testing this project.
-
-## 4. Configure `.env`
-
-Copy the template in the project root:
-
-```bash
-# Windows PowerShell
-Copy-Item .env.example .env
-# macOS / Linux
-cp .env.example .env
-```
-
-The defaults work as they are. If `SAMPLE_DATA_DIR` is empty, the app uses the samples in the repo. You only need to set this path if you move the samples somewhere else.
-
-Leave the other settings at their defaults. Git ignores `.env`, so **do not commit it or post it in the group chat**.
-
-## 5. Start the app
-
-### Windows (one command)
+Copy `.env.example` to `.env`. The defaults support the offline demo; no API key or account connection is needed.
 
 ```powershell
+# Windows PowerShell
+Copy-Item .env.example .env
 powershell -ExecutionPolicy Bypass -File scripts/run.ps1
 ```
 
-The script creates or repairs the Python environment, checks dependencies against `requirements.lock`, runs `npm ci` and builds the frontend. A failed install or build stops startup; rerun the same command after fixing the cause. When ready, it shows `Uvicorn running on http://127.0.0.1:8000`.
+The script installs locked Python dependencies, runs `npm ci`, builds the frontend and starts the server. Add `-SetupOnly` to install/build without starting it. After setup, `Start-Local.cmd` and `Stop-Local.cmd` control the background service; Ctrl+C stops the foreground server.
 
-To install and build without starting a server, add `-SetupOnly`. After setup, `Start-Local.cmd` and `Stop-Local.cmd` start/stop the recorded background service. The foreground `run.ps1` process is stopped with Ctrl+C.
-
-### macOS / Linux (manual)
+On macOS/Linux:
 
 ```bash
-# Backend dependencies
+cp .env.example .env
 cd src/backend
 python3 -m venv .venv
 source .venv/bin/activate
 python -m pip install -r requirements-dev.txt -c requirements.lock
-
-# Frontend build
 cd ../frontend
 npm ci
 npm run build
-
-# Start (from src/backend)
 cd ../backend
 python -m uvicorn app.main:app --host 127.0.0.1 --port 8000
 ```
 
-### Open the app
+Open **http://127.0.0.1:8000**, go to **Mail** and click **Refresh mail**. The repository includes 40 inbound samples and 10 sent-mail style references. Leave `SAMPLE_DATA_DIR` empty to use them. Their timestamps are historical; review dates before planning current work. See the [sample guide](data/samples_deidentified/GETTING_STARTED.md) for labels, privacy and data limits, or open `data/samples_deidentified/sample_browser.html` locally.
 
-Go to **http://127.0.0.1:8000** in your browser, open the **Mail** page and click **Refresh mail** to import the samples.
+On **Study plan**, the offline demo supports **Simulate a new meeting** for conflict repair and **Load sample history** for estimate calibration. All generated actions still pass through review.
 
-Use Chrome or Edge. Some features may not work fully in the VS Code built-in preview browser.
+## Tests and evaluation
 
-## 6. Development (changes apply as you edit)
-
-Open two terminals:
-
-```bash
-# Terminal 1: backend (auto-reload)
+```powershell
+# Backend behaviour tests: temporary database, no real sends or calendar writes
 cd src/backend
-.venv\Scripts\python -m uvicorn app.main:app --host 127.0.0.1 --port 8000 --reload   # Windows
-# .venv/bin/python -m uvicorn app.main:app --host 127.0.0.1 --port 8000 --reload    # macOS / Linux
-
-# Terminal 2: frontend (hot reload)
-cd src/frontend
-npm run dev
-```
-
-During development, use **http://127.0.0.1:5173**.
-
-## 7. Run the tests
-
-```bash
-cd src/backend
-.venv\Scripts\python -m pytest -q     # macOS / Linux: .venv/bin/python -m pytest -q
+.venv/Scripts/python -m pytest -q
 cd ../frontend
-npm run build                          # also runs the TypeScript type check
-```
+npm run build
+cd ../..
 
-All backend tests should pass. They use a temporary database and disable model/provider writes. Tests that depend on sample data are skipped automatically if it is missing. The Windows setup and the manual commands both use the locked Python dependency constraints.
-
-Planner evaluation (27 fixed scenarios, 200 fixed-seed random scenarios and a conflict-repair evaluation; the report is written to `local-data/planner-eval/`):
-
-```bash
-src/backend/.venv/Scripts/python scripts/eval-planner.py      # macOS / Linux: src/backend/.venv/bin/python
-```
-
-Check the sample inventory, exact evidence offsets and generated English browser without any model/network call:
-
-```bash
+# Dataset and source-evidence checks: no model or network calls
 python scripts/build-sample-package.py --check
+python data/synthetic/mail_eval_v1/build_dataset.py --check
+
+# Planner evaluation: no model or network calls
+src/backend/.venv/Scripts/python scripts/eval-planner.py
 ```
 
-Omit `--check` to rebuild the sample browser, English source overview and manifest after changing a package source. Text hashes use UTF-8/LF so Windows line endings do not create false mismatches.
+On macOS/Linux, use `src/backend/.venv/bin/python` for the evaluation command and `.venv/bin/python` inside the backend directory. With the server running, `src/backend/.venv/Scripts/python scripts/smoke.py` checks sample import through HTTP.
 
-The [evaluation guide](docs/evaluation/README.md) covers saved-output scoring, safety results and optional model runs. [Evaluation provenance](docs/evaluation/PROVENANCE.md) maps the historical evaluation code to a public commit and records changes made afterwards. Saved model results describe that historical baseline, not a new run of the current code. Known failures include false-positive tasks, duplicate deadlines, injected instructions becoming task suggestions and ambiguous relative dates. Time saved and blind draft quality have not been measured.
+`src/backend/tests/` checks application behaviour, such as approval invalidation, duplicate-send prevention and planning constraints. `src/backend/evaluation/` measures system quality: mail classification, deadline extraction, planning and safety. The planner uses 27 fixed cases with rule-derived expected answers, 200 fixed-seed cases and conflict-repair scenarios. The project reviewer checked the Chinese summaries of all 27 inputs and expected outcomes on 12 November 2026 and confirmed them as reasonable. The review is recorded in `scenarios.json`.
 
-**To demo conflict handling (no real calendar needed):** in demo mode, generate a plan on the **Study plan** page, expand **Simulate a new meeting**, place a meeting on a study block and click **Add meeting and check** to list the conflicts. Click **Show fix suggestions** to compare the options, pick one, then review and save as usual. **Edit** on a study block changes its time or length by hand. For details, see the "Plan conflicts" section of `docs/IMPLEMENTATION.md`.
+The [evaluation guide](docs/evaluation/README.md) explains reproduction. [RESULTS.md](docs/evaluation/RESULTS.md) contains metrics and 14 failure analyses; [PROVENANCE.md](docs/evaluation/PROVENANCE.md) identifies the evaluated code. Saved model scores describe the historical baseline. Later privacy fixes have regression coverage but have not received a new model evaluation. Time saved and blind draft quality remain unmeasured.
 
-**To demo estimate calibration:** on the same page, open **Estimates from your own history** and click **Load sample history** (synthetic data). You will see a suggested estimate for the sample report, with expandable reasoning, and a completion-rate hint. After accepting a suggestion, click **Re-plan**. In real use, data builds up as you enter the actual time when marking a task complete. For details, see the "Calibrating estimates from check-ins" section of `docs/IMPLEMENTATION.md`.
+## Optional service connections
 
-## 8. Optional: connect real services
+| Feature | Configuration |
+|---|---|
+| Model analysis and drafting | Set `LLM_PROVIDER=openai`, `OPENAI_API_KEY`, `OPENAI_MODEL` and `ALLOW_MODEL_PROCESSING=true`; also allow processing in Settings. Fresh model calls incur usage charges. |
+| Gmail and Google Calendar | Supply your own Google OAuth client ID/secret. Register `http://127.0.0.1:8000/api/connections/google/callback`. Reading uses `gmail.readonly` and `calendar.events.freebusy`; study-calendar writes request an additional permission. A testing-mode OAuth app requires the account to be a test user. |
+| Outlook mail/calendar and optional Teams | Follow [OUTLOOK_SETUP.md](docs/OUTLOOK_SETUP.md). Register `http://localhost:8000/api/connections/microsoft/callback`. A school tenant may require admin consent; Teams requires a work/school account. |
+| Real sending and calendar writes | Set `APP_MODE=live` and `ENABLE_EXTERNAL_WRITES=true`, enable writes in Settings, grant the account permission and confirm each reviewed action. Sample placeholder addresses cannot be real recipients. |
 
-**Offline sample import, reference annotations, planning and simulated sends work without these services.** Fresh model analysis and model-written drafts need model configuration; real mailbox/calendar access needs OAuth.
+Offline import, reference annotations, planning and simulated actions work without these services. The model receives minimised input using `store=false`. Credentials belong only in `.env`; OAuth tokens are held by the system credential store. Live mode requires the one-time local session code printed at startup.
 
-| Feature | What you need | Notes |
-|---|---|---|
-| Model classification and drafting | Your own OpenAI API key | Set `LLM_PROVIDER=openai`, `OPENAI_API_KEY`, `OPENAI_MODEL` and `ALLOW_MODEL_PROCESSING=true` in `.env`, then allow it under **Settings → Data processing**. Model calls incur usage charges; cost depends on the chosen model and input |
-| Read Gmail / Google Calendar (read-only) | A Google OAuth client ID and secret | Either ask Yichen to add your Gmail as a **test user** of the Cloud project `dss5105-student` and get the client ID and secret privately, or create your own Google Cloud project using the steps in `docs/RUNNING.md`. The redirect URI must be `http://127.0.0.1:8000/api/connections/google/callback` |
-| Read Outlook mail / calendar (read-only; optionally send mail and write to the app's Outlook study calendar) | A client ID and secret from a Microsoft Entra app registration | Follow `docs/OUTLOOK_SETUP.md`. The redirect URI is `http://localhost:8000/api/connections/microsoft/callback`. Use a personal Outlook account for demos, because school accounts usually need admin consent. After setup, check it with `scripts/check-outlook.py` |
-| Teams chat | Same as above, work or school accounts only | Optional |
+Keep `.env`, `local-data/`, raw mail exports and credentials out of Git. Local data includes the SQLite database and uploaded PDFs. To reset it, stop the app and delete `local-data/app.sqlite3*`. After connecting a real mailbox, samples can be shown again under **Settings > Demo data**.
 
-Keep keys and secrets only in `.env` on your own computer. Do not put them in code, screenshots or uploads. Sign-in credentials are stored in your system credential store (Windows Credential Manager), not in the project files.
-
-## 9. Things to note
-
-- **Never commit** `.env`, `local-data/` (the local database and uploads) or raw, non-de-identified mail data. They are already in `.gitignore`, but check `git status` before you commit.
-- **Real writes are off by default.** In the offline version, sending mail, sending Teams messages and writing to calendars are only simulated, and the interface says that nothing was sent.
-- **To reset local data,** stop the app, delete `local-data/app.sqlite3*` and start it again.
-- **To see the demo samples** after connecting a real mailbox, where they hide automatically, turn them back on under **Settings → Demo data**.
-
-## 10. Troubleshooting
+## Troubleshooting
 
 | Problem | Fix |
 |---|---|
-| `python` is not recognised as a command | Reinstall Python with Add to PATH ticked, or use the `py` command |
-| PowerShell refuses to run the script | Use `-ExecutionPolicy Bypass` exactly as shown in step 5 |
-| Port 8000 is in use | Stop the app you started earlier (Ctrl+C in its terminal), or start on a different port |
-| The page still looks old | Click **Reload** when the update notice appears at the top, or press Ctrl+F5 |
-| **Refresh mail** says it cannot find the sample data | Check that `data/samples_deidentified/` exists, and leave `SAMPLE_DATA_DIR` in `.env` empty or set it to the correct path (use `/` on Windows) |
-| Google's sign-in page says the app is unverified | This is normal in testing mode, so choose to continue. If you are told you have no access, you are not a test user yet |
-| `npm ci` reports a Node version error | Upgrade to Node 20.19+ or 22.12+ |
+| Python or Node is not recognised | Install the required version and add it to PATH. |
+| PowerShell blocks the script | Use `-ExecutionPolicy Bypass` as shown above. |
+| Port 8000 is occupied | Stop the previous app process before starting another. |
+| The page shows an old build | Click Reload or press Ctrl+F5. |
+| Sample import fails | Check `data/samples_deidentified/` and the `SAMPLE_DATA_DIR` setting. |
+| Google sign-in is unavailable | Check the OAuth testing mode, test-user list and redirect URI. |
 
-## More documentation
+## Project files
 
-The project documentation is in English. Original source/reviewer material and bilingual test inputs retain their language as described above.
+- [IMPLEMENTATION.md](docs/IMPLEMENTATION.md): architecture, capabilities and limitations.
+- [OUTLOOK_SETUP.md](docs/OUTLOOK_SETUP.md): Microsoft account configuration.
+- [Sample guide](data/samples_deidentified/GETTING_STARTED.md): data inventory, annotation rules and privacy.
+- [Evaluation](docs/evaluation/README.md): methods, evidence and reproduction commands.
 
-- `docs/RUNNING.md`: details on starting, testing and configuring external services
-- `docs/OUTLOOK_SETUP.md`: how to connect a real Outlook mailbox, and common errors
-- `docs/IMPLEMENTATION.md`: what is implemented, how it differs from the design contract, and what is still simulated
-- `docs/UI_AUDIT.md`: the interface design audit (based on the open-source refactoring-ui guidelines)
-- `docs/evaluation/README.md`: evaluation methods, reproduction commands and optional time-pilot protocol
-- `docs/evaluation/PROVENANCE.md`: public baseline mapping and changes after the saved model evaluation
+Project documentation and generated report labels are English. Original messages, exact evidence quotes, reviewer notes and bilingual test inputs retain their source language. They are evidence, rather than untranslated instructions.
 
-To rebuild the historical evaluation PDF, install Pandoc and Chrome, Chromium or Edge, then run `python scripts/build-evaluation-pdf.py`. The script discovers the browser on Windows, macOS and Linux; use `--browser PATH` or `CHROME_PATH` to select one explicitly. This is optional and is not needed to run the app. Keep historical results distinct from any new post-fix evaluation.
+To rebuild `docs/evaluation/Evaluation.pdf`, install Pandoc and Chrome/Chromium/Edge, then run `python scripts/build-evaluation-pdf.py`. Use `--browser PATH` or `CHROME_PATH` if needed. This optional tooling is not required to run the app.
