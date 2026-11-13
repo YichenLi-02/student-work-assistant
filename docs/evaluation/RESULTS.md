@@ -17,9 +17,9 @@ English report labels and consolidated documentation do not change the saved met
 
 | Part | Data | Status of the "ground truth" |
 |---|---|---|
-| Triage and deadlines, main set | 80 synthetic mails, 3 runs | Written with each mail from fixed quotas and frozen before the first run; **checked by a person** |
-| Triage and deadlines, real mail | 40 de-identified real mails, 1 run | **Checked by a person** |
-| Planning | 27 hand-written scenarios, 200 seeded scenarios | Independent rule checks; all 27 rule-derived expected outcomes human-reviewed on 12 November 2026 using case-by-case Chinese summaries |
+| Triage and deadlines, main set | 80 synthetic mails, 3 runs | Written with each mail from fixed quotas and frozen before the first run; **checked by the team** |
+| Triage and deadlines, real mail | 40 de-identified real mails, 1 run | **Checked by the team** |
+| Planning | 27 hand-written scenarios, 200 seeded scenarios | Independent rule checks; all 27 rule-derived expected outcomes checked by the team on 12 November 2026 using case-by-case Chinese summaries |
 | Safety | 20 written specifications, 3 runs | Pass/fail criteria coded before the first run |
 | Time saved | not run | Tool and protocol ready; needs people |
 
@@ -47,7 +47,7 @@ own definitions in `prompts.md`, written weeks before this evaluation. Dates and
 two files were hashed and frozen before the system saw any mail (`MANIFEST.json`). A quarter of the set are hard
 cases on purpose: relative dates, an extension that replaces an earlier date, the same deadline in three mails, a
 weekday that contradicts its date, a date that needs an academic calendar, receipts, code lifetimes, false urgency
-and a phishing mail with an injected instruction. Every mail and its answer was afterwards checked by a person
+and a phishing mail with an injected instruction. Every mail and its answer was afterwards checked by the team
 (change 5 below).
 
 **The mail reaches the system the way real mail does.** A simulated Gmail API serves the 80 mails; from there the
@@ -57,11 +57,10 @@ the tasks in the task list.
 
 **De-identified real mail (40 mails).** The sample set already in the repository, split by the data owner into 19
 development and 21 hold-out mails with no thread shared between them. It was used while building the app, so it is
-reported as a second view, not as the test set. Every label was checked by a person: the student who received
-these mails (change 4 below).
+reported as a second view, not as the test set. Every label was checked by the team against the source messages (change 4 below).
 
 **Nothing was tuned on either set.** No prompt, rule or threshold was changed after seeing results. The real-mail
-labels were corrected by that person checking the mails themselves, not by looking at the system's output.
+labels were corrected by the team through checks against source messages, without using the system's output as the answer key.
 
 **Biases that remain.** The synthetic mails are clean text with no long threads, HTML or attachments, so results are
 an upper bound. One author wrote all 80 and knew the system's weak points. The mails were written by one model
@@ -77,13 +76,13 @@ on the synthetic set (it scores 74% there and 65% on real mail).
 2. Safety specification S20: the first run planned over four days instead of the three in the specification, so its
    240-minute threshold did not apply. The scenario was corrected and run 1 of S20 is not counted.
 3. A second reading of precision ("if tasks to attend an event were accepted") was added. The primary number is unchanged.
-4. Real-mail labels checked by a person, the student who received them (10 November); the saved run was then
+4. Real-mail labels checked by the team against the source messages (10 November); the saved run was then
    re-scored with no new model call. Five labels changed: `M29` needs action (a conditional offer acceptance by 5 December); `M04` "due today"
    is 5 December, the sender's local day (two deadlines); `M10` and `M11` the exam window closes at 23:59, which is
    the deadline, not the 00:00 opening. Effect: both labels right 80.0% to 82.5%; deadline recall per mail 95.2% to
    85.7% and precision per mail 72.0% to 64.0%, because the run had given `M04` the UTC day (failure 13), which the
    draft had accepted. Task-list precision is unchanged at 44.0%.
-5. Synthetic answer key checked by a person (10 November), every mail and answer. Two answers corrected: the promotion
+5. Synthetic answer key checked by the team (10 November), every mail and answer. Two answers corrected: the promotion
    end times in `synP01` ("at midnight") and `synP07` ("0点前", before midnight) now carry 00:00 instead of no time. Both are
    `non_task` items, so no score changed; the dataset change log keeps the frozen v1 hash.
 
@@ -121,7 +120,7 @@ mislabelled mails were wrong in all three runs, so this is systematic, not noise
 "Hard" scores highest because the hard mails mostly carry real deadlines, which the system flags correctly; the
 errors sit in ordinary notices, invitations and adverts.
 
-Real mail (40, labels checked by a person): `needs_reply` F1 0.91 (5 TP, 1 FP, 0 FN), `needs_action` F1 0.89
+Real mail (40, labels checked by the team): `needs_reply` F1 0.91 (5 TP, 1 FP, 0 FN), `needs_action` F1 0.89
 (20 TP, 5 FP, 0 FN), both right 82.5% (33/40; development 17/19, hold-out 16/21), category 77.5% (31/40). Keyword
 baseline: both right 65.0%. One mail got no output at all (see failure 12).
 
@@ -175,18 +174,22 @@ a task. A reader who accepts "attend the seminar" as a task would get a task-lis
 | Weekday contradicts the date | **33.3% (1/3)** left unknown; guessed twice |
 | Chinese | 100% (15/15) |
 
-Real mail (40, labels checked by a person): recall 85.7% (18/21) per mail and 13/13 unique deadlines;
+Real mail (40, labels checked by the team): recall 85.7% (18/21) per mail and 13/13 unique deadlines;
 precision 64.0% (16/25) per mail but **44.0% (11/25) for the task list**, because five tasks repeat a deadline that
-another mail in the same course thread already produced. The two misses per mail are both from `M04`: "due today"
-was given the UTC day, 6 December, instead of the sender's 5 December (failure 13). Regex baseline: recall 23.8%.
+another mail in the same course thread already produced. Of the three per-mail recall failures, two are from `M04`:
+"due today" was given the UTC day, 6 December, instead of the sender's 5 December (failure 13). The third is Quiz 14
+in `M05`. The app did create one combined task, "Complete Quizzes 13 and 14", dated 5 December; the scorer's
+one-to-one matching credits it to Quiz 13 and leaves Quiz 14 unmatched. This is a task-granularity/scoring limitation,
+not the absence of any quiz task. `M06` lists both quizzes separately, so unique-deadline recall remains 13/13.
+Regex baseline: recall 23.8%.
 
 ### 3.3 Planning constraints
 
 A fixed scenario specifies tasks, deadlines, busy time and preferences, together with an expected outcome.
 For example, 300 minutes of work under a 120-minute daily cap should occupy 120 + 120 + 60 minutes over
 three days (S02). The 27/27 result means the code matches those expected outcomes. The expectations were
-AI-drafted from the rules. On 12 November 2026, the project reviewer checked the Chinese summaries of
-all 27 inputs and expected outcomes and confirmed them as reasonable. The reviewer, scope and date are
+AI-drafted from the rules. On 12 November 2026, the team checked the Chinese summaries of
+all 27 inputs and expected outcomes and confirmed them as reasonable. The review scope and date are
 recorded in `scenarios.json`; this review occurred after the saved runs and did not change any expected
 answer or score. The separate constraint checker and single-task exhaustive search provide additional checks.
 

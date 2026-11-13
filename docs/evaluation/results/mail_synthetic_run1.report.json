@@ -36,7 +36,7 @@
  "answer_key": {
   "version": "mail_eval_v1",
   "verified": true,
-  "label_status": "checked by a person",
+  "label_status": "checked by the team",
   "mails": 80
  },
  "triage": {

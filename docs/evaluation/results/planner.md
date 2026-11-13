@@ -46,7 +46,7 @@
 - Against the independently enumerated single-task optimum: 53/53 optimal; total gap 0 minutes
 - Unplaced work without proven infeasibility: 3 scenarios, including R022, R081, R182
 
-Zero violations alone do not establish plan quality: an empty plan also has none. Read coverage and unplaced work together. The fixed cases use AI-drafted, rule-derived expected answers. The project reviewer reviewed the Chinese summaries of all 27 inputs and expected outcomes on 2026-11-12 and confirmed them as reasonable. This review followed the saved runs.
+Zero violations alone do not establish plan quality: an empty plan also has none. Read coverage and unplaced work together. The fixed cases use AI-drafted, rule-derived expected answers. The team checked the Chinese summaries of all 27 inputs and expected outcomes on 2026-11-12 and confirmed them as reasonable. This review followed the saved runs.
 The single-task optimum is enumerated independently of the planner. Multi-task global optimality is not established; unproven shortfalls require further analysis.
 
 ## Conflict Repair (a new meeting added to the random scenarios)

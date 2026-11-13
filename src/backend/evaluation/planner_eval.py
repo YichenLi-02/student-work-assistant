@@ -2,7 +2,7 @@
 
 Two parts:
   * fixed scenarios (scenarios.json): inputs plus AI-drafted expected results derived from the rules, with the
-    project reviewer's subsequent review recorded in that file. They are compared with planner outputs.
+    team's subsequent review recorded in that file. They are compared with planner outputs.
   * seeded scenarios: N inputs generated from a fixed random seed. They have no hand-written expectations; they
     are scored on hard-rule violations and on how much of the demand was actually scheduled.
 
@@ -525,7 +525,7 @@ def markdown(rep: dict) -> str:
     reviewed = (review.get("status") == "human_reviewed" and bool(case_data.get("reviewed_by"))
                 and review.get("scenarios_sha256") == case_hash
                 and review.get("scenario_ids") == [x["id"] for x in f["results"]])
-    review_note = (f"The project reviewer reviewed the Chinese summaries of all {f['total']} inputs and expected outcomes "
+    review_note = (f"The team checked the Chinese summaries of all {f['total']} inputs and expected outcomes "
                    f"on {review['reviewed_on']} and confirmed them as reasonable. This review followed the saved runs."
                    if reviewed else "No matching human-review record is available for these expected outcomes.")
     lines = ["# Planner Evaluation", "", f"- Generated: {rep['generated_at']} (schema {rep['schema_version']})",

@@ -3,7 +3,7 @@
   "runs": [
    "mail_samples_run1"
   ],
-  "label_status": "checked by a person",
+  "label_status": "checked by the team",
   "aggregate": {
    "needs_reply_f1": {
     "mean": 0.909,
@@ -164,7 +164,7 @@
    "mail_synthetic_run2",
    "mail_synthetic_run3"
   ],
-  "label_status": "checked by a person",
+  "label_status": "checked by the team",
   "aggregate": {
    "needs_reply_f1": {
     "mean": 0.916,

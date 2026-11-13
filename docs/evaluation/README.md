@@ -23,7 +23,7 @@ These are historical model results, not a fresh measurement of the current code.
 
 `src/backend/tests/` checks application behaviour and regressions using temporary data and simulated providers. Mail evaluation compares outputs with reviewed labels; planning evaluation checks constraints, coverage and expected outcomes; safety evaluation checks approval boundaries and failure handling. These files are part of the reproducible submission evidence.
 
-The 27 fixed planning scenarios in `src/backend/evaluation/scenarios.json` contain tasks, deadlines, calendar conflicts, preferences and rule-derived expected results. S02, for example, splits 300 minutes across days as 120 + 120 + 60 under a 120-minute daily cap. All 27 pass the automated checks. Their expectations were AI-drafted from the rules. On 12 November 2026, the project reviewer checked the Chinese case-by-case summaries of all 27 inputs and expected outcomes and confirmed them as reasonable; reviewer, date, scope and case hash are recorded in `scenarios.json`. The 200 seeded cases, separate constraint checker and single-task exhaustive search provide complementary evidence.
+The 27 fixed planning scenarios in `src/backend/evaluation/scenarios.json` contain tasks, deadlines, calendar conflicts, preferences and rule-derived expected results. S02, for example, splits 300 minutes across days as 120 + 120 + 60 under a 120-minute daily cap. All 27 pass the automated checks. Their expectations were AI-drafted from the rules. On 12 November 2026, the team checked the Chinese case-by-case summaries of all 27 inputs and expected outcomes and confirmed them as reasonable; reviewer, date, scope and case hash are recorded in `scenarios.json`. The 200 seeded cases, separate constraint checker and single-task exhaustive search provide complementary evidence.
 
 ## Reproduce
 
@@ -74,12 +74,11 @@ category mix. Time with the assistant includes checking and correcting it. Repor
 number of participants, state the weekly mail volume you assume, and do not extend it to planning time, which is
 not measured.
 
-## Still to do by people
+## Review status and remaining work
 
-1. The data owner has checked the synthetic answer key and all 40 inbound sample labels, and saved runs have been re-scored. A second independent labeller is still needed to measure agreement.
+1. The team has checked the synthetic answer key, all 40 inbound sample labels and the 27 fixed planning expectations. Saved runs have been re-scored. A second independent labeller is still needed to measure agreement.
 2. Collect and label a fresh real-mail hold-out.
 3. Run the time pilot.
-4. Check the expected values of the 27 fixed planner scenarios.
 
 ## Rebuilding the PDF (optional)
 

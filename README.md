@@ -64,7 +64,7 @@ src/backend/.venv/Scripts/python scripts/eval-planner.py
 
 On macOS/Linux, use `src/backend/.venv/bin/python` for the evaluation command and `.venv/bin/python` inside the backend directory. With the server running, `src/backend/.venv/Scripts/python scripts/smoke.py` checks sample import through HTTP.
 
-`src/backend/tests/` checks application behaviour, such as approval invalidation, duplicate-send prevention and planning constraints. `src/backend/evaluation/` measures system quality: mail classification, deadline extraction, planning and safety. The planner uses 27 fixed cases with rule-derived expected answers, 200 fixed-seed cases and conflict-repair scenarios. The project reviewer checked the Chinese summaries of all 27 inputs and expected outcomes on 12 November 2026 and confirmed them as reasonable. The review is recorded in `scenarios.json`.
+`src/backend/tests/` checks application behaviour, such as approval invalidation, duplicate-send prevention and planning constraints. `src/backend/evaluation/` measures system quality: mail classification, deadline extraction, planning and safety. The planner uses 27 fixed cases with rule-derived expected answers, 200 fixed-seed cases and conflict-repair scenarios. The team checked the Chinese summaries of all 27 inputs and expected outcomes on 12 November 2026 and confirmed them as reasonable. The review is recorded in `scenarios.json`.
 
 The [evaluation guide](docs/evaluation/README.md) explains reproduction. [RESULTS.md](docs/evaluation/RESULTS.md) contains metrics and 14 failure analyses; [PROVENANCE.md](docs/evaluation/PROVENANCE.md) identifies the evaluated code. Saved model scores describe the historical baseline. Later privacy fixes have regression coverage but have not received a new model evaluation. Time saved and blind draft quality remain unmeasured.
 
@@ -92,12 +92,15 @@ Keep `.env`, `local-data/`, raw mail exports and credentials out of Git. Local d
 | Sample import fails | Check `data/samples_deidentified/` and the `SAMPLE_DATA_DIR` setting. |
 | Google sign-in is unavailable | Check the OAuth testing mode, test-user list and redirect URI. |
 
+To use another port, stop the server, set `APP_ORIGIN=http://127.0.0.1:8010` in `.env`, then run `python -m uvicorn app.main:app --host 127.0.0.1 --port 8010` from `src/backend` with the virtual environment active. Open that same address. If using OAuth, update the callback port in `.env` and the registered redirect URIs as well.
+
 ## Project files
 
 - [IMPLEMENTATION.md](docs/IMPLEMENTATION.md): architecture, capabilities and limitations.
 - [OUTLOOK_SETUP.md](docs/OUTLOOK_SETUP.md): Microsoft account configuration.
 - [Sample guide](data/samples_deidentified/GETTING_STARTED.md): data inventory, annotation rules and privacy.
 - [Evaluation](docs/evaluation/README.md): methods, evidence and reproduction commands.
+- [Strategic recommendations](docs/strategy/Strategic_Recommendations.pdf): three higher-education opportunities, demand evidence and implementation approaches; [LaTeX source](docs/strategy/Strategic_Recommendations.tex).
 
 Project documentation and generated report labels are English. Original messages, exact evidence quotes, reviewer notes and bilingual test inputs retain their source language. They are evidence, rather than untranslated instructions.
 

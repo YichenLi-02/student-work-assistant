@@ -1,0 +1,207 @@
+\documentclass[11pt,a4paper]{article}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage[margin=22mm,headheight=15pt]{geometry}
+\usepackage{microtype,xcolor,booktabs,tabularx,array,enumitem,xurl}
+\usepackage[hidelinks]{hyperref}
+\usepackage{fancyhdr,titlesec}
+\definecolor{studyink}{RGB}{26,49,64}
+\titleformat{\section}{\large\bfseries\color{studyink}}{\thesection}{0.65em}{}
+\titlespacing*{\section}{0pt}{11pt}{5pt}
+\setlength{\parindent}{0pt}\setlength{\parskip}{5pt}
+\setlength{\emergencystretch}{2em}
+\clubpenalty=10000\widowpenalty=10000
+\setlist[enumerate]{leftmargin=1.8em,itemsep=3pt,topsep=3pt}
+\newcolumntype{Y}{>{\raggedright\arraybackslash}X}
+\newcommand{\src}[1]{\textsuperscript{[#1]}}
+\pagestyle{fancy}\fancyhf{}
+\lhead{\small Student Work Assistant / Group 09}
+\rhead{\small Strategic Recommendations}
+\cfoot{\small\thepage}\renewcommand{\headrulewidth}{0.3pt}
+\hypersetup{pdftitle={Student Work Assistant - Strategic Recommendations},pdfauthor={DSS5105 Group 09}}
+\begin{document}
+\begin{center}
+{\LARGE\bfseries Student Work Assistant}\par
+\vspace{3pt}{\large Strategic Recommendations}\par
+\vspace{3pt}{\small DSS5105 Group 09 \quad | \quad Higher education and student services}
+\end{center}
+
+\section{Strategic focus and opportunity selection}
+Develop three focused student services: review course changes, confirm group
+commitments, and follow up multi-step administrative requirements. Each turns
+unstructured messages into a source-linked decision the student can check.
+GenAI interprets the language; explicit states and student review control what
+becomes an obligation. These are proposed extensions of Student Work Assistant.
+
+The target is the handoff between receiving information and knowing what to do
+next. Table~\ref{tab:opportunities} ranks the opportunities by relevance to the
+current user, consequence of misunderstanding, and reuse of existing components.
+The initial versions use selected emails, text-based documents and pasted
+notes. They require no new model training, LMS connection or campus-wide rollout.
+
+\begin{table}[!ht]
+\centering\small\renewcommand{\arraystretch}{1.12}
+\begin{tabularx}{\linewidth}{@{}>{\raggedright\arraybackslash}p{0.23\linewidth}YY@{}}
+\toprule
+\textbf{Priority / user} & \textbf{Decision worth improving} & \textbf{Smallest useful implementation} \\
+\midrule
+1. Course changes / students managing several courses & Which deadline or requirement is current, and what changed? & Link messages to a deliverable; show old and proposed values beside their sources. \\
+2. Group commitments / project teams & Who accepted which action, by when? & Extract actions from imported notes; record explicit acknowledgement before personal planning. \\
+3. Administrative follow-up / incoming students & Which required steps remain open after a notice or receipt? & A personal checklist linking each step to an instruction and completion evidence. \\
+\bottomrule
+\end{tabularx}
+\caption{Three student-service opportunities, ordered by fit and component reuse.}
+\label{tab:opportunities}
+\end{table}
+
+\section{Opportunity 1: review course changes}
+\textbf{User and demand evidence.} Students managing several courses need to
+identify relevant instructions before deciding which date applies. A qualitative
+University of Leeds study interviewed staff and 17 students. Students described
+excessive, duplicated or irrelevant email and difficulty finding important
+information; they wanted shorter, more relevant communication\src{1}. This
+supports a focused course-action view rather than another general inbox summary.
+
+\textbf{Existing alternative and specific need.} A student can copy a date into
+Google Tasks, use a planner, or search the original thread. The proposed service
+addresses the next question: when another notice arrives, which existing
+obligation does it change? Our saved real-mail evaluation contains five duplicate
+entries among 25 scored dated tasks; the sample also contains an explicit
+24-hour extension\src{5}. These examples identify a concrete reconciliation
+problem to solve.
+
+\textbf{Expected impact.} Make superseded dates and unresolved contradictions
+visible before the student commits study time. The useful output is one reviewed
+obligation with its revision history. Assess its value through source-lookup
+and correction time, missed requirements and duplicate tasks.
+
+\textbf{Low-effort implementation.} Reuse mail intake, source quotes, task review
+and the planner. Add a deliverable identifier and revision records. GenAI proposes
+whether two messages concern the same work and explains the change; the student
+accepts the link and authoritative date. The preview then shows the effect on
+the plan. Start with one course and selected notices, including extensions and
+receipts. This isolates the new work to linking, revision display and review.
+
+\clearpage
+\section{Opportunity 2: confirm group commitments}
+\textbf{User and demand evidence.} Student project teams need an agreed action
+list after discussions. Wang et al.'s 2025 study includes a student-led review of
+group-project practice at Imperial College London. Interviews identified unclear
+tasks, mismatched expectations, coordination difficulties and scheduling
+conflicts. One reported case required the group to rework an assignment two days
+before submission following ineffective task division\src{2}. This is evidence
+of a coordination problem with consequences for deadline pressure and rework.
+
+\textbf{Existing alternative and specific need.} Teams can maintain a shared
+task board or use meeting notes. Microsoft Facilitator already captures meeting
+information, and its Planner task-tracking integration is in public preview.
+The proposed service focuses on the review step: distinguish a suggestion from
+a decision, retain unresolved questions, and obtain acknowledgement from the
+named owner before adding work to a personal plan.
+
+\textbf{Expected impact.} Detect disagreements about responsibility before they
+become last-minute rework. The output is a short list of accepted actions,
+owners, dates and source quotations. Track incorrect owner assignments,
+unacknowledged actions and the effort needed to prepare the next meeting's
+status update. Acknowledgement documents an agreement; it does not establish
+how much work a member eventually contributes.
+
+\textbf{Low-effort implementation.} Reuse the group-text importer, source
+references, review controls and planner. Add proposed, accepted, completed and
+superseded states. In the first version, the team reviews an imported discussion
+together and the student records each owner's acknowledgement. This avoids
+building a meeting bot or a multi-user workspace. Accepted work is then offered
+in the existing personal planning preview.
+
+\textbf{Route to users.} Recruit volunteer course-project teams and approach
+module coordinators to sponsor a class pilot. Students review the actions and
+keep control over which accepted work enters their own plans.
+
+\section{Opportunity 3: follow up administrative requirements}
+\textbf{User and demand evidence.} Incoming students must turn instructions from
+different offices into completed steps. Corwin et al.'s 2026 study draws on a
+three-year research-practice partnership across two US campuses. The authors'
+research summary reports that redundant or unclear email can obscure actionable
+messages about registration, financial aid and academic standing\src{3}.
+Locally, NUS describes onboarding as an email-invited process with separate
+check-in and onboarding steps; graduate student-card instructions also come
+from programme administrators\src{4}. These sources support a practical need
+for following a process through, beyond reading its first notification.
+
+\textbf{Existing alternative and specific need.} Institutional portals remain
+the authority. Navigate360 already provides school to-dos, holds and
+notifications at partner institutions. The proposed personal view links the
+student's selected notices and receipts to individual checklist steps. A receipt
+for one step must not close every requirement in the process.
+
+\textbf{Expected impact.} Help the student see what is still pending and which
+office or source to consult next. The target is fewer overlooked required steps
+and fewer unnecessary repeat submissions. Measure correct step states, missed
+requirements and time spent reconstructing the process from messages.
+
+\textbf{Low-effort implementation.} Seed one checklist from a published guide
+and let the student review it. Reuse extraction, evidence links and draft review;
+add step IDs and links to acknowledgements. GenAI proposes which step a message
+concerns. Completion comes from explicit evidence or student confirmation. The
+first version stores step labels and dates, excludes identity and medical
+attachments, and leaves submissions and official status changes in the portal.
+
+\clearpage
+\section{Competitive position and adoption}
+Existing tools cover planning, meeting capture and campus reminders.
+Table~\ref{tab:competition} locates our focus: reviewing which version applies,
+who accepted work and which steps remain pending. Product names link to the
+official documentation used in the comparison.
+
+\begin{table}[!ht]
+\centering\small\renewcommand{\arraystretch}{1.12}
+\begin{tabularx}{\linewidth}{@{}>{\raggedright\arraybackslash}p{0.26\linewidth}YY@{}}
+\toprule
+\textbf{Alternative} & \textbf{Documented offer} & \textbf{Recommended focus} \\
+\midrule
+\href{https://support.google.com/mail/answer/9920317?hl=en}{Google Tasks} / \href{https://support.microsoft.com/en-gb/outlook/frequently-asked-questions-about-copilot-in-outlook}{Outlook Copilot} & Mail-to-task or email/calendar assistance. & Source-linked review when a later notice changes an existing obligation. \\
+\href{https://mystudylife.com/}{MyStudyLife Scout} / \href{https://reclaim.ai/pricing}{Reclaim} & Weekly study planning or automatic scheduling; Reclaim offers a free tier. & Settle the obligation and its evidence before scheduling it. \\
+\href{https://learn.microsoft.com/en-us/microsoftteams/facilitator-teams}{Teams Facilitator} & Collaborative meeting notes; Planner task tracking in public preview. & Review acceptance of ownership across imported discussions. \\
+\href{https://play.google.com/store/apps/details?hl=en-US\&id=com.eab.se}{Navigate360 Student} & School to-dos, holds and notifications, dependent on an institutional partnership. & A student-controlled checklist linked to selected instructions and receipts. \\
+\bottomrule
+\end{tabularx}
+\caption{Coverage described by selected product documentation, accessed 13 November 2026.}
+\label{tab:competition}
+\end{table}
+
+\textbf{Positioning.} Use the project's evidence links, local storage and
+content-bound approval\src{5} to make obligation changes, ownership and
+completion inspectable. Market scarcity and willingness to pay remain research
+questions.
+
+\textbf{Adoption and funding.} Offer free additions to the existing assistant,
+starting with selected imports and setup help at one course or onboarding
+session. Approach programme offices, module coordinators and student-support
+teams as pilot sponsors. Base any later support pricing on measured setup costs
+and user demand.
+
+\textbf{Implementation priority.} Preserve candidate status and date roles and
+reject unsafe suggestions before adding cross-message linking; the current
+handoff can promote conditional candidates to required work\src{5}. Share
+evidence, review and state history across services. Use payload review, minimal
+data retention and content-bound approval for external writes.
+
+\textbf{Decision test.} After the reliability fixes, compare both versions on the
+same fresh, independently labelled examples. Plan matched review tasks with
+8--12 volunteers against their existing workflow, counting setup, import,
+lookup, correction and confirmation time. Continue if median paired active time
+falls by at least 30\% without more missed required actions; otherwise narrow
+or stop the feature. This is a proposed pilot rule.
+
+\section*{Research sources}
+{\small
+The research below supplies the demand evidence; linked product documentation in
+Table~\ref{tab:competition} supplies the competitor evidence.
+\begin{enumerate}[label={[\arabic*]},leftmargin=2.1em,itemsep=2pt]
+\item Simpson, J. et al. (2025). \emph{Spamming our students? The use of email as a mass communication tool in higher education}. Staff and student interview evidence. \href{https://eprints.whiterose.ac.uk/id/eprint/221158/}{University of Leeds repository and full paper}.
+\item Wang, Z. et al. (2025). \emph{Group project practices and guidance in higher education contexts}. Student-led interview findings and cases. \href{https://www.frontiersin.org/journals/education/articles/10.3389/feduc.2025.1614627/full}{Frontiers in Education}.
+\item Corwin, Z. et al. (2026). \emph{Email Overload: Rethinking University Communication with At-Promise Students}. \href{https://doi.org/10.1080/19496591.2026.2639502}{Research article}; \href{https://pass.pullias.usc.edu/news/email-overload-rethinking-university-communication-with-at-promise-students/}{USC PASS author summary}.
+\item NUS Registrar. \emph{Administrative Matters: Onboarding Procedures}. Official process and graduate student-card instructions. \href{https://www.nus.edu.sg/registrar/academic-activities/onboarding/administrative-matters}{NUS guidance}, accessed 13 November 2026.
+\item Group 09. \emph{Student Work Assistant evaluation results}. Saved application evidence, implementation limits and version history. \href{https://github.com/YichenLi-02/student-work-assistant/blob/77ebc7c/docs/evaluation/RESULTS.md}{Repository report}.
+\end{enumerate}}
+\end{document}

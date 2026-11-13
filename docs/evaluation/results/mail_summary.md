@@ -2,7 +2,7 @@
 
 ## samples
 
-Runs: mail_samples_run1. Labels: checked by a person.
+Runs: mail_samples_run1. Labels: checked by the team.
 
 | Measure | Mean | Min | Max |
 |---|---|---|---|
@@ -35,7 +35,7 @@ Runs: mail_samples_run1. Labels: checked by a person.
 
 ## synthetic
 
-Runs: mail_synthetic_run1, mail_synthetic_run2, mail_synthetic_run3. Labels: checked by a person.
+Runs: mail_synthetic_run1, mail_synthetic_run2, mail_synthetic_run3. Labels: checked by the team.
 
 | Measure | Mean | Min | Max |
 |---|---|---|---|

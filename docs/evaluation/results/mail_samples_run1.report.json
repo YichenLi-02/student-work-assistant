@@ -43,7 +43,7 @@
  "answer_key": {
   "version": "selected_50 (de-identified real mail)",
   "verified": true,
-  "label_status": "checked by a person",
+  "label_status": "checked by the team",
   "mails": 40
  },
  "triage": {
